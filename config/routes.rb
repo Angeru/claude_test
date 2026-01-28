@@ -41,6 +41,11 @@ Rails.application.routes.draw do
         patch :update_subscriptions
       end
     end
+    resources :warbands do
+      member do
+        patch :remove_from_campaign
+      end
+    end
   end
 
   # Health check

@@ -3,7 +3,17 @@
     "allow": [
       "Bash(ruby --version:*)",
       "Bash(rails:*)",
-      "Bash(bundle install:*)"
+      "Bash(bundle install:*)",
+      "Bash(bin/rails generate:*)",
+      "Bash(bin/rails db:migrate:*)",
+      "Bash(bin/rails db:rollback:*)",
+      "Bash(bin/rails test:*)",
+      "Bash(bin/rails routes:*)",
+      "Bash(bin/rails db:migrate:status:*)",
+      "Bash(bin/rails runner:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAñadir sistema completo de warbands\n\nImplementa sistema de warbands que permite a cada usuario crear múltiples \nwarbands con nombre, donde cada warband puede ser asignada a una única \ncampaña a la vez.\n\nCaracterísticas:\n- Cada usuario puede tener múltiples warbands\n- Una warband por usuario por campaña \\(garantizado por índice único\\)\n- Solo asignables a campañas en las que el usuario esté suscrito\n- Warbands permanecen asignadas aunque el usuario se desuscriba\n- Visibilidad: usuarios en la misma campaña pueden ver warbands de otros\n- Control de permisos: solo el propietario puede modificar/eliminar\n\nIncluye:\n- Migración y modelo Warband con validaciones completas\n- Controlador con CRUD completo y control de acceso\n- Vistas con Tailwind CSS integradas con dashboard y campañas\n- Suite completa de tests \\(modelo y controlador\\)\n- Fixtures para testing\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push)"
     ]
   }
 }

@@ -1,0 +1,53 @@
+<%= form_with(model: [:admin, @warband], local: true, class: "space-y-6") do |f| %>
+  <% if @warband.errors.any? %>
+    <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+      <h2 class="text-red-800 font-semibold mb-2">
+        <%= pluralize(@warband.errors.count, "error") %> impidieron guardar la warband:
+      </h2>
+      <ul class="list-disc list-inside text-red-700 text-sm">
+        <% @warband.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "Nombre", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= f.text_field :name,
+                     class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                     placeholder: "Nombre de la warband",
+                     required: true %>
+    <p class="mt-1 text-sm text-gray-500">Mínimo 3 caracteres</p>
+  </div>
+
+  <div>
+    <%= f.label :user_id, "Usuario", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= f.collection_select :user_id,
+                            @users,
+                            :id,
+                            :name,
+                            { prompt: "Selecciona un usuario" },
+                            { class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+                              required: true } %>
+    <p class="mt-1 text-sm text-gray-500">Usuario propietario de la warband</p>
+  </div>
+
+  <div>
+    <%= f.label :campaign_id, "Campaña (opcional)", class: "block text-sm font-medium text-gray-700 mb-2" %>
+    <%= f.collection_select :campaign_id,
+                            @campaigns,
+                            :id,
+                            :name,
+                            { prompt: "Sin asignar", include_blank: true },
+                            { class: "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" } %>
+    <p class="mt-1 text-sm text-gray-500">
+      Asigna la warband a una campaña. El usuario debe estar suscrito a la campaña.
+    </p>
+  </div>
+
+  <div class="flex gap-4 pt-4 border-t border-gray-200">
+    <%= f.submit "Guardar", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    <%= link_to "Cancelar", admin_warbands_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-gray-500" %>
+  </div>
+<% end %>
