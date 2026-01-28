@@ -4,6 +4,7 @@ class Campaign < ApplicationRecord
   belongs_to :user
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
+  has_many :warbands, dependent: :nullify
 
   validates :name, presence: true, length: { minimum: 3 }
   validates :description, presence: true
@@ -24,6 +25,10 @@ class Campaign < ApplicationRecord
 
   def finished?
     status == "finalizada"
+  end
+
+  def warbands_with_users
+    warbands.includes(:user)
   end
 
   private

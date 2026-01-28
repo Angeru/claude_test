@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :created_campaigns, class_name: "Campaign", dependent: :destroy
   has_many :subscriptions, dependent: :destroy
   has_many :campaigns, through: :subscriptions
+  has_many :warbands, dependent: :destroy
 
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },

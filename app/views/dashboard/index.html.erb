@@ -32,6 +32,13 @@
       </div>
     </div>
 
+    <div class="mt-6 p-4 bg-teal-50 border border-teal-200 rounded-lg">
+      <h3 class="font-semibold text-teal-800 mb-3">Warbands</h3>
+      <div class="space-y-2">
+        <%= link_to "Mis Warbands", warbands_path, class: "block w-full text-center bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-teal-500" %>
+      </div>
+    </div>
+
     <% if current_user.admin? %>
       <div class="mt-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
         <h3 class="font-semibold text-purple-800 mb-3">Panel de Administración</h3>

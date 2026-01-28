@@ -1,0 +1,50 @@
+<div class="max-w-6xl mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Mis Warbands</h1>
+    <%= link_to "Nueva Warband", new_warband_path,
+        class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
+
+  <% if @warbands.empty? %>
+    <div class="bg-gray-100 border border-gray-300 rounded p-8 text-center">
+      <p class="text-gray-600 mb-4">No tienes warbands creadas todavía</p>
+      <%= link_to "Crear mi primera Warband", new_warband_path,
+          class: "text-blue-500 hover:text-blue-700 font-semibold" %>
+    </div>
+  <% else %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @warbands.each do |warband| %>
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+          <h3 class="text-xl font-semibold mb-3"><%= warband.name %></h3>
+
+          <div class="mb-4">
+            <% if warband.in_campaign? %>
+              <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                En Campaña
+              </span>
+              <p class="text-sm text-gray-600 mt-2">
+                Campaña: <%= link_to warband.campaign.name, campaign_path(warband.campaign),
+                           class: "text-blue-500 hover:underline" %>
+              </p>
+            <% else %>
+              <span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
+                Disponible
+              </span>
+            <% end %>
+          </div>
+
+          <div class="flex gap-2 mt-4">
+            <%= link_to "Ver", warband_path(warband),
+                class: "text-blue-500 hover:text-blue-700 text-sm" %>
+            <%= link_to "Editar", edit_warband_path(warband),
+                class: "text-gray-600 hover:text-gray-800 text-sm" %>
+            <%= button_to "Eliminar", warband_path(warband),
+                method: :delete,
+                data: { turbo_confirm: "¿Estás seguro?" },
+                class: "text-red-500 hover:text-red-700 text-sm" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

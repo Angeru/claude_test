@@ -25,6 +25,13 @@ Rails.application.routes.draw do
     end
   end
 
+  # Warbands
+  resources :warbands do
+    member do
+      patch :remove_from_campaign
+    end
+  end
+
   # Admin backoffice
   namespace :admin do
     resources :users

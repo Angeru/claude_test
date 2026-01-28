@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_28_181104) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_28_185004) do
   create_table "campaigns", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
@@ -50,7 +50,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_28_181104) do
     t.index ["role"], name: "index_users_on_role"
   end
 
+  create_table "warbands", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "user_id", null: false
+    t.integer "campaign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_warbands_on_campaign_id"
+    t.index ["user_id", "campaign_id"], name: "index_warbands_on_user_and_campaign", unique: true, where: "campaign_id IS NOT NULL"
+    t.index ["user_id"], name: "index_warbands_on_user_id"
+  end
+
   add_foreign_key "campaigns", "users"
   add_foreign_key "subscriptions", "campaigns"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "warbands", "campaigns"
+  add_foreign_key "warbands", "users"
 end

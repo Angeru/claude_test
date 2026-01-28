@@ -1,0 +1,19 @@
+one:
+  name: Los Lobos de Fenris
+  user: two
+  campaign: one
+
+two:
+  name: Guardia Imperial
+  user: two
+  campaign:
+
+three:
+  name: Orks Salvajes
+  user: three
+  campaign:
+
+four:
+  name: Eldars Oscuros
+  user: one
+  campaign: four

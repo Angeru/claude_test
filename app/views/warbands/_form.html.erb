@@ -1,0 +1,42 @@
+<%= form_with model: warband, class: "space-y-4" do |form| %>
+  <% if warband.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <h3 class="font-bold"><%= pluralize(warband.errors.count, "error") %> impidieron guardar:</h3>
+      <ul class="list-disc list-inside mt-2">
+        <% warband.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Nombre de la Warband",
+        class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :name,
+        class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+        required: true,
+        placeholder: "Ej: Los Lobos de Fenris" %>
+  </div>
+
+  <div>
+    <%= form.label :campaign_id, "Asignar a Campaña (opcional)",
+        class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.collection_select :campaign_id,
+        current_user.campaigns.active,
+        :id,
+        :name,
+        { include_blank: "Sin asignar (disponible)" },
+        class: "shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    <p class="text-xs text-gray-500 mt-1">
+      Solo puedes asignar a campañas en las que estés suscrito
+    </p>
+  </div>
+
+  <div class="flex items-center justify-between pt-4">
+    <%= form.submit warband.new_record? ? "Crear Warband" : "Actualizar Warband",
+        class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to "Cancelar", warbands_path,
+        class: "text-gray-600 hover:text-gray-800" %>
+  </div>
+<% end %>
