@@ -23,5 +23,17 @@
         ¡Has iniciado sesión correctamente!
       </p>
     </div>
+
+    <% if current_user.admin? %>
+      <div class="mt-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-semibold text-purple-800">Panel de Administración</h3>
+            <p class="text-purple-600 text-sm">Gestiona los usuarios del sistema</p>
+          </div>
+          <%= link_to "Ir al Backoffice", admin_users_path, class: "bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-purple-500" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

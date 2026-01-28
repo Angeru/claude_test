@@ -14,6 +14,11 @@ Rails.application.routes.draw do
   # Dashboard
   get "/dashboard", to: "dashboard#index", as: :dashboard
 
+  # Admin backoffice
+  namespace :admin do
+    resources :users
+  end
+
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 

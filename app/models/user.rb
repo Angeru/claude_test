@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  ROLES = %w[user admin].freeze
+
   has_secure_password
 
   validates :email, presence: true,
@@ -6,6 +8,15 @@ class User < ApplicationRecord
                     format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :name, presence: true
   validates :password, length: { minimum: 6 }, if: -> { new_record? || !password.nil? }
+  validates :role, inclusion: { in: ROLES }
+
+  def admin?
+    role == "admin"
+  end
+
+  def user?
+    role == "user"
+  end
 
   before_save :downcase_email
 
