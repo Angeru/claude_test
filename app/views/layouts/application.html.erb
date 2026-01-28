@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ClaudeTest - Sistema de Autenticación</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="bg-gray-100 min-h-screen">
+    <main class="container mx-auto mt-10 px-5">
+      <% if notice %>
+        <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          <%= alert %>
+        </div>
+      <% end %>
+      <%= yield %>
+    </main>
+  </body>
+</html>

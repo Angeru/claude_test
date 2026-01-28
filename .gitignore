@@ -1,0 +1,39 @@
+# Rails
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+
+# Environment and credentials
+.env
+.env.*
+/config/master.key
+/config/credentials/*.key
+
+# Database
+/db/*.sqlite3
+/db/*.sqlite3-*
+
+# Assets
+/public/assets
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+# Node
+/node_modules
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Byebug
+.byebug_history

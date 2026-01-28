@@ -1,0 +1,87 @@
+es:
+  activerecord:
+    models:
+      user: Usuario
+    attributes:
+      user:
+        name: Nombre
+        email: Email
+        password: Contraseña
+        password_confirmation: Confirmar contraseña
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: no puede estar vacío
+              taken: ya está en uso
+              invalid: no es válido
+            name:
+              blank: no puede estar vacío
+            password:
+              blank: no puede estar vacío
+              too_short: es demasiado corto (mínimo %{count} caracteres)
+            password_confirmation:
+              confirmation: no coincide con la contraseña
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: no puede estar vacío
+      taken: ya está en uso
+      invalid: no es válido
+      too_short: es demasiado corto (mínimo %{count} caracteres)
+      confirmation: no coincide
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      long: "%d de %B de %Y"
+      short: "%d %b"
+    day_names:
+      - domingo
+      - lunes
+      - martes
+      - miércoles
+      - jueves
+      - viernes
+      - sábado
+    abbr_day_names:
+      - dom
+      - lun
+      - mar
+      - mié
+      - jue
+      - vie
+      - sáb
+    month_names:
+      - ~
+      - enero
+      - febrero
+      - marzo
+      - abril
+      - mayo
+      - junio
+      - julio
+      - agosto
+      - septiembre
+      - octubre
+      - noviembre
+      - diciembre
+    abbr_month_names:
+      - ~
+      - ene
+      - feb
+      - mar
+      - abr
+      - may
+      - jun
+      - jul
+      - ago
+      - sep
+      - oct
+      - nov
+      - dic
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
+      long: "%d de %B de %Y a las %H:%M"
+      short: "%d %b %H:%M"
