@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ruby --version:*)",
+      "Bash(rails:*)",
+      "Bash(bundle install:*)"
+    ]
+  }
+}
