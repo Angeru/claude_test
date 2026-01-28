@@ -1,0 +1,14 @@
+one:
+  user: two
+  campaign: one
+  subscribed_at: 2026-01-15 10:00:00
+
+two:
+  user: two
+  campaign: two
+  subscribed_at: 2026-01-20 14:30:00
+
+three:
+  user: two
+  campaign: three
+  subscribed_at: 2025-12-15 09:15:00

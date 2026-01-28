@@ -14,9 +14,26 @@ Rails.application.routes.draw do
   # Dashboard
   get "/dashboard", to: "dashboard#index", as: :dashboard
 
+  # Campaigns (for regular users)
+  resources :campaigns, only: [:index, :show] do
+    member do
+      post :subscribe
+      delete :unsubscribe
+    end
+    collection do
+      get :my_campaigns
+    end
+  end
+
   # Admin backoffice
   namespace :admin do
     resources :users
+    resources :campaigns do
+      member do
+        get :manage_subscriptions
+        patch :update_subscriptions
+      end
+    end
   end
 
   # Health check
