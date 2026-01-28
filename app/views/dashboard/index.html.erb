@@ -23,5 +23,23 @@
         ¡Has iniciado sesión correctamente!
       </p>
     </div>
+
+    <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+      <h3 class="font-semibold text-blue-800 mb-3">Campañas</h3>
+      <div class="space-y-2">
+        <%= link_to "Ver Campañas Disponibles", campaigns_path, class: "block w-full text-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        <%= link_to "Mis Campañas", my_campaigns_campaigns_path, class: "block w-full text-center bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
+    </div>
+
+    <% if current_user.admin? %>
+      <div class="mt-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+        <h3 class="font-semibold text-purple-800 mb-3">Panel de Administración</h3>
+        <div class="space-y-2">
+          <%= link_to "Gestión de Usuarios", admin_users_path, class: "block w-full text-center bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-purple-500" %>
+          <%= link_to "Gestión de Campañas", admin_campaigns_path, class: "block w-full text-center bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-purple-600" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

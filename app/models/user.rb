@@ -1,11 +1,26 @@
 class User < ApplicationRecord
+  ROLES = %w[user admin].freeze
+
   has_secure_password
+
+  has_many :created_campaigns, class_name: "Campaign", dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
+  has_many :campaigns, through: :subscriptions
 
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },
                     format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :name, presence: true
   validates :password, length: { minimum: 6 }, if: -> { new_record? || !password.nil? }
+  validates :role, inclusion: { in: ROLES }
+
+  def admin?
+    role == "admin"
+  end
+
+  def user?
+    role == "user"
+  end
 
   before_save :downcase_email
 

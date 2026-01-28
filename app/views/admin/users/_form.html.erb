@@ -1,0 +1,42 @@
+<%= form_with model: [:admin, @user], class: "space-y-4" do |form| %>
+  <% if @user.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <h3 class="font-bold"><%= pluralize(@user.errors.count, "error") %> impidieron guardar:</h3>
+      <ul class="list-disc list-inside mt-2">
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, "Nombre", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", required: true %>
+  </div>
+
+  <div>
+    <%= form.label :email, "Email", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.email_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", required: true %>
+  </div>
+
+  <div>
+    <%= form.label :role, "Rol", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.select :role, User::ROLES.map { |r| [r.capitalize, r] }, {}, class: "shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+  </div>
+
+  <div>
+    <%= form.label :password, "Contraseña#{' (dejar en blanco para mantener)' unless @user.new_record?}", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.password_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", required: @user.new_record? %>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation, "Confirmar Contraseña", class: "block text-gray-700 text-sm font-bold mb-2" %>
+    <%= form.password_field :password_confirmation, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", required: @user.new_record? %>
+  </div>
+
+  <div class="flex items-center justify-between pt-4">
+    <%= form.submit @user.new_record? ? "Crear Usuario" : "Actualizar Usuario", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to "Cancelar", admin_users_path, class: "text-gray-600 hover:text-gray-800" %>
+  </div>
+<% end %>

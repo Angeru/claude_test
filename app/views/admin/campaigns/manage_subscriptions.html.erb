@@ -1,0 +1,56 @@
+<div class="max-w-4xl mx-auto">
+  <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Gestionar Suscripciones</h1>
+      <%= link_to "Volver", admin_campaign_path(@campaign), class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-500" %>
+    </div>
+
+    <div class="mb-6 p-4 bg-blue-50 rounded">
+      <h2 class="text-lg font-semibold text-gray-800 mb-2"><%= @campaign.name %></h2>
+      <p class="text-sm text-gray-600"><%= truncate(@campaign.description, length: 150) %></p>
+      <p class="text-xs text-gray-500 mt-2">Estado:
+        <% if @campaign.active? %>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Activa</span>
+        <% elsif @campaign.paused? %>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pausada</span>
+        <% else %>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Finalizada</span>
+        <% end %>
+      </p>
+    </div>
+
+    <%= form_with model: @campaign, url: update_subscriptions_admin_campaign_path(@campaign), method: :patch, class: "space-y-4" do |form| %>
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold text-gray-700 mb-3">Seleccionar Usuarios Suscritos</h3>
+        <p class="text-sm text-gray-600 mb-4">Marca los usuarios que deseas suscribir a esta campaña:</p>
+
+        <% if @all_users.any? %>
+          <div class="space-y-2 max-h-96 overflow-y-auto border rounded p-4">
+            <% @all_users.each do |user| %>
+              <div class="flex items-center p-2 hover:bg-gray-50 rounded">
+                <label class="flex items-center cursor-pointer w-full">
+                  <%= check_box_tag "campaign[subscriber_ids][]", user.id, @subscriber_ids.include?(user.id), class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+                  <span class="ml-3 flex-1">
+                    <span class="text-sm font-medium text-gray-900"><%= user.name %></span>
+                    <span class="text-sm text-gray-500 ml-2">(<%= user.email %>)</span>
+                  </span>
+                </label>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="mt-4 text-sm text-gray-600">
+            Total de usuarios disponibles: <%= @all_users.count %> | Actualmente suscritos: <%= @subscriber_ids.count %>
+          </div>
+        <% else %>
+          <p class="text-gray-500 text-sm">No hay usuarios disponibles para suscribir.</p>
+        <% end %>
+      </div>
+
+      <div class="flex items-center justify-between pt-4 border-t">
+        <%= form.submit "Actualizar Suscripciones", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" %>
+        <%= link_to "Cancelar", admin_campaign_path(@campaign), class: "text-gray-600 hover:text-gray-800" %>
+      </div>
+    <% end %>
+  </div>
+</div>
