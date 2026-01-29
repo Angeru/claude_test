@@ -1,0 +1,109 @@
+<div class="max-w-6xl mx-auto">
+  <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">
+        Gestionar Warbands - <%= @campaign.name %>
+      </h1>
+      <div class="flex gap-2">
+        <%= link_to "Ver Campaña", campaign_path(@campaign),
+            class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+        <%= link_to "Volver", my_campaigns_campaigns_path,
+            class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+      </div>
+    </div>
+
+    <% if @warbands.any? %>
+      <div class="space-y-6">
+        <% @warbands.each do |warband| %>
+          <div class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <div class="flex justify-between items-start mb-4">
+              <div>
+                <h3 class="text-xl font-semibold text-gray-800">
+                  <%= warband.name %>
+                </h3>
+                <p class="text-sm text-gray-600 mt-1">
+                  Propietario: <%= warband.user.name %>
+                  <% if warband.user == current_user %>
+                    <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                      Tu warband
+                    </span>
+                  <% end %>
+                </p>
+              </div>
+              <div class="flex gap-2">
+                <%= link_to "Ver Detalles", warband_path(warband),
+                    class: "text-blue-600 hover:text-blue-800" %>
+                <%= link_to "Editar", edit_warband_path(warband),
+                    class: "text-green-600 hover:text-green-800" %>
+                <%= button_to "Remover", remove_from_campaign_warband_path(warband),
+                    method: :patch,
+                    data: { turbo_confirm: "¿Remover esta warband de la campaña?" },
+                    class: "text-red-600 hover:text-red-800" %>
+              </div>
+            </div>
+
+            <div class="border-t pt-4">
+              <div class="flex justify-between items-center mb-2">
+                <h4 class="font-semibold text-gray-700">
+                  Miembros (<%= warband.warband_members.count %>)
+                </h4>
+                <%= link_to "Añadir Miembro",
+                    new_warband_warband_member_path(warband),
+                    class: "text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded" %>
+              </div>
+
+              <% if warband.warband_members.any? %>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                  <% warband.warband_members.each do |member| %>
+                    <div class="bg-gray-50 p-3 rounded flex justify-between items-start">
+                      <div>
+                        <p class="font-medium"><%= member.name %></p>
+                        <p class="text-xs text-gray-600">
+                          <%= member.display_type %> -
+                          F:<%= member.fuerza %>
+                          D:<%= member.defensa %>
+                          H:<%= member.heridas %>
+                        </p>
+                      </div>
+                      <div class="flex gap-2">
+                        <%= link_to "Editar",
+                            edit_warband_warband_member_path(warband, member),
+                            class: "text-xs text-blue-600 hover:text-blue-800" %>
+                        <%= button_to "×",
+                            warband_warband_member_path(warband, member),
+                            method: :delete,
+                            data: { turbo_confirm: "¿Eliminar este miembro?" },
+                            class: "text-xs text-red-600 hover:text-red-800" %>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% else %>
+                <p class="text-sm text-gray-500 italic mt-2">
+                  Esta warband no tiene miembros aún.
+                </p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mt-4 text-gray-600 text-sm">
+        Total: <%= @warbands.count %> <%= @warbands.count == 1 ? 'warband' : 'warbands' %> en esta campaña
+      </div>
+    <% else %>
+      <div class="text-center py-12">
+        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+        <h3 class="mt-2 text-sm font-medium text-gray-900">
+          No hay warbands en esta campaña
+        </h3>
+        <p class="mt-1 text-sm text-gray-500">
+          Los jugadores aún no han asignado sus warbands a esta campaña.
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>

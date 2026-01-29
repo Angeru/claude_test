@@ -11,6 +11,21 @@
         <%= @warband.user.name %>
       </div>
 
+      <div class="flex gap-6">
+        <div>
+          <span class="font-semibold">Oro:</span>
+          <span class="inline-block bg-yellow-100 text-yellow-800 text-sm px-3 py-1 rounded ml-2">
+            💰 <%= @warband.gold %>
+          </span>
+        </div>
+        <div>
+          <span class="font-semibold">Influencia:</span>
+          <span class="inline-block bg-purple-100 text-purple-800 text-sm px-3 py-1 rounded ml-2">
+            ⭐ <%= @warband.influence %>
+          </span>
+        </div>
+      </div>
+
       <div>
         <span class="font-semibold">Estado:</span>
         <% if @warband.in_campaign? %>
@@ -33,12 +48,27 @@
       <% end %>
 
       <div>
+        <span class="font-semibold">Miembros:</span>
+        <%= link_to "#{@warband.member_count} miembros (#{@warband.hero_count} héroes, #{@warband.warrior_count} guerreros)",
+            warband_warband_members_path(@warband),
+            class: "text-blue-500 hover:underline ml-2" %>
+      </div>
+
+      <div>
         <span class="font-semibold">Creada:</span>
         <%= l(@warband.created_at, format: :long) %>
       </div>
     </div>
 
-    <% if @warband.user == current_user %>
+    <% if @warband.campaign.present? && campaign_owner?(@warband.campaign) && @warband.user != current_user %>
+      <div class="mt-6 mb-4 p-3 bg-purple-50 border border-purple-200 rounded">
+        <p class="text-purple-800 text-sm font-medium">
+          Estás gestionando esta warband como propietario de la campaña <%= @warband.campaign.name %>
+        </p>
+      </div>
+    <% end %>
+
+    <% if can_manage_warband?(@warband) %>
       <div class="flex gap-4 mt-8 pt-6 border-t">
         <%= link_to "Editar", edit_warband_path(@warband),
             class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
@@ -49,10 +79,12 @@
               class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" %>
         <% end %>
 
-        <%= button_to "Eliminar", warband_path(@warband),
-            method: :delete,
-            data: { turbo_confirm: "¿Estás seguro de eliminar esta warband?" },
-            class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+        <% if @warband.user == current_user %>
+          <%= button_to "Eliminar", warband_path(@warband),
+              method: :delete,
+              data: { turbo_confirm: "¿Estás seguro de eliminar esta warband?" },
+              class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+        <% end %>
       </div>
     <% end %>
   </div>

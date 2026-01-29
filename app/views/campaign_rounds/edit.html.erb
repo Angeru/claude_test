@@ -1,0 +1,12 @@
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <%= link_to "← Volver a la ronda", campaign_campaign_round_path(@campaign, @round), class: "text-blue-600 hover:text-blue-800" %>
+  </div>
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Editar Ronda</h1>
+    <p class="text-gray-600 mt-2">Editando <%= @round.display_name %> de <%= @campaign.name %></p>
+  </div>
+
+  <%= render "form" %>
+</div>

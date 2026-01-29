@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  campaign_round: one
+  warband_1_id: 1
+  warband_2_id: 1
+  warband_1_score: 1
+  warband_2_score: 1
+  warband_1_casualties: 1
+  warband_2_casualties: 1
+  warband_1_primary_objective: false
+  warband_2_primary_objective: false
+  warband_1_secondary_objective: false
+  warband_2_secondary_objective: false
+  winner_id: 1
+  result: MyString
+  notes: MyText
+
+two:
+  campaign_round: two
+  warband_1_id: 1
+  warband_2_id: 1
+  warband_1_score: 1
+  warband_2_score: 1
+  warband_1_casualties: 1
+  warband_2_casualties: 1
+  warband_1_primary_objective: false
+  warband_2_primary_objective: false
+  warband_1_secondary_objective: false
+  warband_2_secondary_objective: false
+  winner_id: 1
+  result: MyString
+  notes: MyText

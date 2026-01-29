@@ -1,7 +1,7 @@
 class WarbandsController < ApplicationController
   before_action :require_login
   before_action :set_warband, only: [:show, :edit, :update, :destroy, :remove_from_campaign]
-  before_action :authorize_warband_owner!, only: [:edit, :update, :destroy, :remove_from_campaign]
+  before_action :authorize_warband_access!, only: [:edit, :update, :destroy, :remove_from_campaign]
 
   def index
     @warbands = current_user.warbands.includes(:campaign).recent
@@ -42,6 +42,11 @@ class WarbandsController < ApplicationController
   end
 
   def destroy
+    unless @warband.user == current_user
+      redirect_to warbands_path, alert: "Solo el propietario puede eliminar la warband"
+      return
+    end
+
     @warband.destroy
     redirect_to warbands_path, notice: "Warband eliminada exitosamente"
   end
@@ -57,8 +62,8 @@ class WarbandsController < ApplicationController
     @warband = Warband.find(params[:id])
   end
 
-  def authorize_warband_owner!
-    unless @warband.user == current_user
+  def authorize_warband_access!
+    unless can_manage_warband?(@warband)
       redirect_to warbands_path, alert: "No tienes permiso para modificar esta warband"
     end
   end
@@ -77,6 +82,6 @@ class WarbandsController < ApplicationController
   end
 
   def warband_params
-    params.require(:warband).permit(:name, :campaign_id)
+    params.require(:warband).permit(:name, :campaign_id, :gold, :influence)
   end
 end

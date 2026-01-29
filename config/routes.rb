@@ -15,10 +15,14 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index", as: :dashboard
 
   # Campaigns (for regular users)
-  resources :campaigns, only: [:index, :show] do
+  resources :campaigns, only: [:index, :show, :new, :create] do
+    resources :campaign_rounds, path: 'rounds' do
+      resources :matchups
+    end
     member do
       post :subscribe
       delete :unsubscribe
+      get :manage_warbands
     end
     collection do
       get :my_campaigns
@@ -27,6 +31,10 @@ Rails.application.routes.draw do
 
   # Warbands
   resources :warbands do
+    resources :warband_members, path: 'members' do
+      resources :warband_equipments, path: 'equipment'
+      resources :warband_skills, path: 'skills'
+    end
     member do
       patch :remove_from_campaign
     end
@@ -42,6 +50,10 @@ Rails.application.routes.draw do
       end
     end
     resources :warbands do
+      resources :warband_members, path: 'members' do
+        resources :warband_equipments, path: 'equipment'
+        resources :warband_skills, path: 'skills'
+      end
       member do
         patch :remove_from_campaign
       end
@@ -52,5 +64,5 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Root path
-  root "sessions#new"
+  root "home#index"
 end

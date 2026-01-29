@@ -1,0 +1,163 @@
+<%= form_with model: [@warband, member], class: "space-y-6" do |form| %>
+  <% if member.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      <h3 class="font-bold"><%= pluralize(member.errors.count, "error") %> impidieron guardar:</h3>
+      <ul class="list-disc list-inside mt-2">
+        <% member.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Basic Info -->
+  <div class="bg-white p-6 rounded-lg shadow">
+    <h3 class="text-lg font-semibold mb-4">Información Básica</h3>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <%= form.label :name, "Nombre",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.text_field :name,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            required: true,
+            placeholder: "Ej: Aragorn" %>
+      </div>
+
+      <div>
+        <%= form.label :member_type, "Tipo",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.select :member_type,
+            options_for_select([["Guerrero", "warrior"], ["Héroe", "hero"]], member.member_type),
+            {},
+            class: "shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+
+      <div>
+        <%= form.label :experience, "Experiencia",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :experience,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 0, required: true %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Combat Stats -->
+  <div class="bg-white p-6 rounded-lg shadow">
+    <h3 class="text-lg font-semibold mb-4">Características de Combate</h3>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div>
+        <%= form.label :movimiento, "Movimiento",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :movimiento,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 0, max: 12, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :lucha, "Lucha (L)",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :lucha,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 1, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :proyectiles, "Proyectiles (P)",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :proyectiles,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 1, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :fuerza, "Fuerza (F)",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :fuerza,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 1, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :defensa, "Defensa (D)",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :defensa,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 1, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :ataques, "Ataques (A)",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :ataques,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 1, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :heridas, "Heridas (H)",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :heridas,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 1, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :coraje, "Coraje (C)",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :coraje,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 1, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :inteligencia, "Inteligencia (I)",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :inteligencia,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 1, max: 10, required: true %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Stats (Might, Will, Fate) -->
+  <div class="bg-amber-50 p-6 rounded-lg shadow border border-amber-200">
+    <h3 class="text-lg font-semibold mb-2 text-amber-900">Puntos Heroicos</h3>
+    <p class="text-sm text-amber-700 mb-4">Solo para héroes (deja en 0 para guerreros)</p>
+
+    <div class="grid grid-cols-3 gap-4">
+      <div>
+        <%= form.label :might, "Might",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :might,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 0, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :will, "Will",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :will,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 0, max: 10, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :fate, "Fate",
+            class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= form.number_field :fate,
+            class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
+            min: 0, max: 10, required: true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between pt-4">
+    <%= form.submit member.new_record? ? "Crear Miembro" : "Actualizar Miembro",
+        class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" %>
+    <%= link_to "Cancelar", warband_warband_members_path(@warband),
+        class: "text-gray-600 hover:text-gray-800" %>
+  </div>
+<% end %>

@@ -5,6 +5,7 @@ class Campaign < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
   has_many :warbands, dependent: :nullify
+  has_many :campaign_rounds, dependent: :destroy
 
   validates :name, presence: true, length: { minimum: 3 }
   validates :description, presence: true

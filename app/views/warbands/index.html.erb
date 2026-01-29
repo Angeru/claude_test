@@ -1,8 +1,12 @@
 <div class="max-w-6xl mx-auto px-4 py-8">
   <div class="flex justify-between items-center mb-6">
     <h1 class="text-3xl font-bold">Mis Warbands</h1>
-    <%= link_to "Nueva Warband", new_warband_path,
-        class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <div class="flex gap-4">
+      <%= link_to "Nueva Warband", new_warband_path,
+          class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+      <%= link_to "Volver al Dashboard", dashboard_path,
+          class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-500" %>
+    </div>
   </div>
 
   <% if @warbands.empty? %>
@@ -16,6 +20,15 @@
       <% @warbands.each do |warband| %>
         <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
           <h3 class="text-xl font-semibold mb-3"><%= warband.name %></h3>
+
+          <div class="flex gap-2 mb-3">
+            <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
+              💰 <%= warband.gold %>
+            </span>
+            <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">
+              ⭐ <%= warband.influence %>
+            </span>
+          </div>
 
           <div class="mb-4">
             <% if warband.in_campaign? %>

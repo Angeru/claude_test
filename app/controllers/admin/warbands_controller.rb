@@ -59,7 +59,7 @@ module Admin
     end
 
     def warband_params
-      params.require(:warband).permit(:name, :user_id, :campaign_id)
+      params.require(:warband).permit(:name, :user_id, :campaign_id, :gold, :influence)
     end
   end
 end

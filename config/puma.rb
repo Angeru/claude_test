@@ -2,6 +2,14 @@
 # are invoked here are part of Puma's configuration DSL. For more information
 # about methods provided by the DSL, see https://puma.io/puma/Puma/DSL.html.
 
+# Socket binding for NGINX in production
+if ENV['RAILS_ENV'] == 'production'
+  bind "unix:///var/www/claude_test/tmp/sockets/puma.sock"
+end
+
+# Also bind to localhost
+bind "tcp://127.0.0.1:3000"
+
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers: a minimum and maximum.
 # Any libraries that use thread pools should be configured to match

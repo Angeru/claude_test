@@ -1,6 +1,6 @@
 class CampaignsController < ApplicationController
   before_action :require_login
-  before_action :set_campaign, only: [:show, :subscribe, :unsubscribe]
+  before_action :set_campaign, only: [:show, :subscribe, :unsubscribe, :manage_warbands]
 
   def index
     @campaigns = Campaign.active.includes(:user, :subscribers).order(created_at: :desc)
@@ -15,6 +15,25 @@ class CampaignsController < ApplicationController
     @campaigns = current_user.campaigns.includes(:user).order(created_at: :desc)
   end
 
+  def new
+    @campaign = Campaign.new
+  end
+
+  def create
+    @campaign = Campaign.new(campaign_params)
+    @campaign.user = current_user
+    @campaign.status = "activa"
+
+    if @campaign.save
+      # Auto-subscribe creator to their own campaign
+      current_user.campaigns << @campaign unless current_user.campaigns.include?(@campaign)
+
+      redirect_to campaign_path(@campaign), notice: "Campaña creada correctamente"
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   def subscribe
     if current_user.campaigns.include?(@campaign)
       redirect_to campaign_path(@campaign), alert: "Ya estás suscrito a esta campaña"
@@ -25,6 +44,11 @@ class CampaignsController < ApplicationController
   end
 
   def unsubscribe
+    if campaign_owner?(@campaign)
+      redirect_to campaign_path(@campaign), alert: "No puedes desuscribirte de tu propia campaña"
+      return
+    end
+
     if current_user.campaigns.include?(@campaign)
       current_user.campaigns.delete(@campaign)
       redirect_to my_campaigns_campaigns_path, notice: "Te has desuscrito correctamente de la campaña"
@@ -33,9 +57,22 @@ class CampaignsController < ApplicationController
     end
   end
 
+  def manage_warbands
+    unless campaign_owner?(@campaign)
+      redirect_to campaigns_path, alert: "No tienes permiso para gestionar esta campaña"
+      return
+    end
+
+    @warbands = @campaign.warbands.includes(:user, :warband_members).order(:name)
+  end
+
   private
 
   def set_campaign
     @campaign = Campaign.find(params[:id])
+  end
+
+  def campaign_params
+    params.require(:campaign).permit(:name, :description, :start_date, :end_date)
   end
 end

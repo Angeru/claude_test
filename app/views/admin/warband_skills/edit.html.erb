@@ -1,0 +1,12 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8">
+    <%= link_to "← Volver a skills", admin_warband_warband_member_warband_skills_path(@warband_member.warband, @warband_member), class: "text-purple-600 hover:text-purple-800" %>
+  </div>
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Editar Skill</h1>
+    <p class="text-gray-600 mt-2">Editando <%= @skill.name %> de <%= @warband_member.name %></p>
+  </div>
+
+  <%= render "form", skill: @skill %>
+</div>
