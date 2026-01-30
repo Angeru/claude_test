@@ -1,5 +1,5 @@
 module Admin
-  class WarbandEquipmentsController < AdminController
+  class WarbandEquipmentsController < BaseController
     before_action :set_warband_member
     before_action :set_equipment, only: [:show, :edit, :update, :destroy]
 

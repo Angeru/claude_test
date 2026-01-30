@@ -1,5 +1,5 @@
 module Admin
-  class WarbandSkillsController < AdminController
+  class WarbandSkillsController < BaseController
     before_action :set_warband_member
     before_action :set_skill, only: [:show, :edit, :update, :destroy]
 
