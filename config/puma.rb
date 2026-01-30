@@ -14,6 +14,9 @@ threads min_threads_count, max_threads_count
 rails_env = ENV.fetch("RAILS_ENV") { "development" }
 
 if rails_env == "production"
+  # Bind to Unix socket for nginx proxy
+  bind "unix:///home/deploy/warband_campaign_manager/shared/tmp/sockets/puma.sock"
+
   # If you are running more than 1 thread per process, the workers count
   # should be equal to the number of processors (CPU cores) in production.
   #
@@ -26,13 +29,13 @@ if rails_env == "production"
   else
     preload_app!
   end
+else
+  # Development uses port
+  port ENV.fetch("PORT") { 3000 }
 end
 # Specifies the `worker_timeout` threshold that Puma will use to wait before
 # terminating a worker in development environments.
 worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
-
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-port ENV.fetch("PORT") { 3000 }
 
 # Specifies the `environment` that Puma will run in.
 environment rails_env

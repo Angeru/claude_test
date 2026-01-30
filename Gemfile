@@ -29,6 +29,8 @@ gem "tailwindcss-rails", "~> 2.6"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+gem 'ed25519'
+gem 'bcrypt_pbkdf'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -66,6 +68,13 @@ group :development do
 
   # Preview emails in browser
   gem "letter_opener"
+
+  # Capistrano deployment
+  gem 'capistrano', '~> 3.18', require: false
+  gem 'capistrano-rails', '~> 1.6', require: false
+  gem 'capistrano-bundler', '~> 2.1', require: false
+  gem 'capistrano-rbenv', '~> 2.2', require: false
+  gem 'capistrano3-puma', '~> 6.0.0.beta.1', require: false
 end
 
 group :test do
