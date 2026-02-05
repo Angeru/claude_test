@@ -14,15 +14,10 @@ threads min_threads_count, max_threads_count
 rails_env = ENV.fetch("RAILS_ENV") { "development" }
 
 if rails_env == "production"
-  # Bind to Unix socket for nginx proxy
-  bind "unix:///home/deploy/warband_campaign_manager/shared/tmp/sockets/puma.sock"
+  # Bind to TCP port for Kamal / Docker
+  port ENV.fetch("PORT") { 3000 }
 
-  # If you are running more than 1 thread per process, the workers count
-  # should be equal to the number of processors (CPU cores) in production.
-  #
-  # It defaults to 1 because it's impossible to reliably detect how many
-  # CPU cores are available. Make sure to set the `WEB_CONCURRENCY` environment
-  # variable to match the number of processors.
+  # Workers count should match the number of CPU cores in production.
   worker_count = Integer(ENV.fetch("WEB_CONCURRENCY") { 1 })
   if worker_count > 1
     workers worker_count
