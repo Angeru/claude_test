@@ -1,0 +1,62 @@
+# Kamal deployment configuration
+# Docs: https://kamal-deploy.org
+
+service: warband-campaign-manager
+
+# Docker image name (change to your Docker Hub user or registry)
+image: angeru/warband-campaign-manager
+
+# Deploy to your DigitalOcean droplet
+servers:
+  web:
+    hosts:
+      - 164.90.207.74
+    options:
+      # Mount a volume for SQLite persistence
+      volume:
+        - warband_storage:/rails/storage
+
+# Container registry credentials (Docker Hub by default)
+registry:
+  username: angeru
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+# Environment variables for the app
+env:
+  clear:
+    RAILS_ENV: production
+    RAILS_LOG_TO_STDOUT: "true"
+    RAILS_SERVE_STATIC_FILES: "true"
+  secret:
+    - RAILS_MASTER_KEY
+    - SECRET_KEY_BASE
+
+# Kamal uses kamal-proxy as reverse proxy (replaces Nginx)
+# SSL is handled automatically via Let's Encrypt
+proxy:
+  ssl: true
+  host: warband.example.com  # TODO: Cambia esto a tu dominio real
+  app_port: 3000
+
+# Health check to verify the app is running
+healthcheck:
+  path: /up
+  port: 3000
+  interval: 5
+  max_attempts: 30
+
+# SSH config
+ssh:
+  user: deploy
+
+# Boot strategy: rolling deploys for zero downtime
+boot:
+  limit: 1
+
+# Retain last 5 images
+retain_containers: 5
+
+# Builder configuration
+builder:
+  arch: amd64

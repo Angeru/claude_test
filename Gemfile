@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.1.2"
+# Ruby version defined in .ruby-version file
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.5", ">= 7.1.5.1"
@@ -69,12 +69,8 @@ group :development do
   # Preview emails in browser
   gem "letter_opener"
 
-  # Capistrano deployment
-  gem 'capistrano', '~> 3.18', require: false
-  gem 'capistrano-rails', '~> 1.6', require: false
-  gem 'capistrano-bundler', '~> 2.1', require: false
-  gem 'capistrano-rbenv', '~> 2.2', require: false
-  gem 'capistrano3-puma', '~> 6.0.0.beta.1', require: false
+  # Deployment
+  gem "kamal", require: false
 end
 
 group :test do
