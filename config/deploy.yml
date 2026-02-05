@@ -10,7 +10,7 @@ image: angeru/warband-campaign-manager
 servers:
   web:
     hosts:
-      - 164.90.207.74
+      - 159.65.63.114
     options:
       # Mount a volume for SQLite persistence
       volume:
@@ -36,15 +36,14 @@ env:
 # SSL is handled automatically via Let's Encrypt
 proxy:
   ssl: true
-  host: warband.example.com  # TODO: Cambia esto a tu dominio real
+  host: 159.65.63.114  # TODO: Cambia esto a tu dominio real
   app_port: 3000
 
-# Health check to verify the app is running
-healthcheck:
-  path: /up
-  port: 3000
-  interval: 5
-  max_attempts: 30
+  # Health check to verify the app is running
+  healthcheck:
+    path: /up
+    interval: 3
+    timeout: 30
 
 # SSH config
 ssh:
