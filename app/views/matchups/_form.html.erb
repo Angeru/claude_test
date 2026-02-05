@@ -1,4 +1,4 @@
-<%= form_with(model: [@campaign_round, @matchup], local: true, class: "space-y-6") do |f| %>
+<%= form_with(model: [@campaign_round.campaign, @campaign_round, @matchup], local: true, class: "space-y-6") do |f| %>
   <% if @matchup.errors.any? %>
     <div class="rounded-md bg-red-50 p-4">
       <div class="flex">

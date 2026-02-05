@@ -1,5 +1,5 @@
 # IP de tu droplet - CAMBIAR ESTO POR LA IP REAL DE TU SERVIDOR
-server "164.90.207.74",
+server "188.166.40.236",
   user: "deploy",
   roles: %w{app db web},
   ssh_options: {
