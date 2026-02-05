@@ -14,6 +14,9 @@ class WarbandsController < ApplicationController
       redirect_to warbands_path, alert: "No tienes permiso para ver esta warband"
       return
     end
+
+    @active_matchups = Matchup.includes(:campaign_round => :campaign, :warband_1 => :user, :warband_2 => :user, :battle_rosters => [])
+                              .where('warband_1_id = :wid OR warband_2_id = :wid', wid: @warband.id)
   end
 
   def new

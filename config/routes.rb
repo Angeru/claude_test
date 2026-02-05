@@ -17,7 +17,19 @@ Rails.application.routes.draw do
   # Campaigns (for regular users)
   resources :campaigns, only: [:index, :show, :new, :create] do
     resources :campaign_rounds, path: 'rounds' do
-      resources :matchups
+      resources :matchups do
+        resources :battle_rosters, path: 'battle', only: [:show, :create, :destroy] do
+          member do
+            patch :toggle
+          end
+          resources :battle_roster_units, path: 'units', only: [] do
+            member do
+              patch :wound
+              patch :heal
+            end
+          end
+        end
+      end
     end
     member do
       post :subscribe

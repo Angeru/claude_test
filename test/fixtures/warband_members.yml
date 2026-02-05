@@ -1,0 +1,35 @@
+one:
+  warband: one
+  name: Capitán Lobo
+  member_type: hero
+  movimiento: 6
+  lucha: 5
+  proyectiles: 4
+  fuerza: 4
+  defensa: 5
+  ataques: 2
+  heridas: 2
+  coraje: 5
+  inteligencia: 3
+  might: 3
+  will: 2
+  fate: 1
+  experience: 10
+
+two:
+  warband: one
+  name: Guerrero Gris
+  member_type: warrior
+  movimiento: 6
+  lucha: 3
+  proyectiles: 3
+  fuerza: 3
+  defensa: 3
+  ataques: 1
+  heridas: 1
+  coraje: 3
+  inteligencia: 1
+  might: 0
+  will: 0
+  fate: 0
+  experience: 0
