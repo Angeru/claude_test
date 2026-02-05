@@ -60,6 +60,51 @@
       </div>
     </div>
 
+    <% if @active_matchups.any? %>
+      <div class="mt-8 pt-6 border-t">
+        <h2 class="text-xl font-bold mb-4">Emparejamientos</h2>
+        <div class="space-y-3">
+          <% @active_matchups.each do |matchup| %>
+            <% round = matchup.campaign_round %>
+            <% campaign = round.campaign %>
+            <% opponent = matchup.warband_1_id == @warband.id ? matchup.warband_2 : matchup.warband_1 %>
+            <div class="bg-gray-50 rounded-lg p-4 flex items-center justify-between">
+              <div>
+                <p class="font-semibold text-gray-900">
+                  vs <%= opponent.name %>
+                  <span class="text-sm font-normal text-gray-500">(<%= opponent.user.name %>)</span>
+                </p>
+                <p class="text-sm text-gray-500">
+                  <%= campaign.name %> &mdash; <%= round.display_name %>
+                </p>
+              </div>
+              <div class="flex items-center gap-3">
+                <% existing_roster = matchup.battle_rosters.find { |br| br.warband_id == @warband.id } %>
+                <% if existing_roster %>
+                  <%= link_to campaign_campaign_round_matchup_battle_roster_path(campaign, round, matchup, existing_roster),
+                      class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700" do %>
+                    <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Ver Batalla (<%= existing_roster.alive_count %>/<%= existing_roster.total_count %>)
+                  <% end %>
+                <% elsif @warband.user == current_user %>
+                  <%= button_to campaign_campaign_round_matchup_battle_rosters_path(campaign, round, matchup),
+                      method: :post,
+                      class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700" do %>
+                    <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Modo Batalla
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
     <% if @warband.campaign.present? && campaign_owner?(@warband.campaign) && @warband.user != current_user %>
       <div class="mt-6 mb-4 p-3 bg-purple-50 border border-purple-200 rounded">
         <p class="text-purple-800 text-sm font-medium">
