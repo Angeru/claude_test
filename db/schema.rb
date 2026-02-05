@@ -10,7 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_29_140227) do
+ActiveRecord::Schema[7.1].define(version: 2026_02_05_213933) do
+  create_table "battle_roster_units", force: :cascade do |t|
+    t.integer "battle_roster_id", null: false
+    t.integer "warband_member_id", null: false
+    t.integer "current_wounds", default: 1, null: false
+    t.integer "max_wounds", default: 1, null: false
+    t.boolean "defeated", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["battle_roster_id", "warband_member_id"], name: "idx_battle_roster_units_on_roster_and_member", unique: true
+    t.index ["battle_roster_id"], name: "index_battle_roster_units_on_battle_roster_id"
+    t.index ["warband_member_id"], name: "index_battle_roster_units_on_warband_member_id"
+  end
+
+  create_table "battle_rosters", force: :cascade do |t|
+    t.integer "matchup_id", null: false
+    t.integer "warband_id", null: false
+    t.boolean "active", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["matchup_id", "warband_id"], name: "index_battle_rosters_on_matchup_id_and_warband_id", unique: true
+    t.index ["matchup_id"], name: "index_battle_rosters_on_matchup_id"
+    t.index ["warband_id"], name: "index_battle_rosters_on_warband_id"
+  end
+
   create_table "campaign_rounds", force: :cascade do |t|
     t.integer "campaign_id", null: false
     t.integer "round_number", null: false
@@ -168,6 +192,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_29_140227) do
     t.index ["user_id"], name: "index_warbands_on_user_id"
   end
 
+  add_foreign_key "battle_roster_units", "battle_rosters"
+  add_foreign_key "battle_roster_units", "warband_members"
+  add_foreign_key "battle_rosters", "matchups"
+  add_foreign_key "battle_rosters", "warbands"
   add_foreign_key "campaign_rounds", "campaigns"
   add_foreign_key "campaigns", "users"
   add_foreign_key "matchups", "campaign_rounds"

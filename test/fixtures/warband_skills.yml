@@ -1,39 +1,37 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
   warband_member: one
-  name: MyString
-  description: MyText
-  skill_type: MyString
-  cost: 1
-  movimiento_modifier: 1
-  lucha_modifier: 1
-  proyectiles_modifier: 1
+  name: Golpe Heroico
+  description: Un golpe devastador
+  skill_type: combat
+  cost: 5
+  movimiento_modifier: 0
+  lucha_modifier: 0
+  proyectiles_modifier: 0
   fuerza_modifier: 1
-  defensa_modifier: 1
-  ataques_modifier: 1
-  heridas_modifier: 1
-  coraje_modifier: 1
-  inteligencia_modifier: 1
-  might_modifier: 1
-  will_modifier: 1
-  fate_modifier: 1
+  defensa_modifier: 0
+  ataques_modifier: 0
+  heridas_modifier: 0
+  coraje_modifier: 0
+  inteligencia_modifier: 0
+  might_modifier: 0
+  will_modifier: 0
+  fate_modifier: 0
 
 two:
   warband_member: two
-  name: MyString
-  description: MyText
-  skill_type: MyString
-  cost: 1
-  movimiento_modifier: 1
-  lucha_modifier: 1
-  proyectiles_modifier: 1
-  fuerza_modifier: 1
+  name: Defensa Firme
+  description: Postura defensiva
+  skill_type: passive
+  cost: 3
+  movimiento_modifier: 0
+  lucha_modifier: 0
+  proyectiles_modifier: 0
+  fuerza_modifier: 0
   defensa_modifier: 1
-  ataques_modifier: 1
-  heridas_modifier: 1
-  coraje_modifier: 1
-  inteligencia_modifier: 1
-  might_modifier: 1
-  will_modifier: 1
-  fate_modifier: 1
+  ataques_modifier: 0
+  heridas_modifier: 0
+  coraje_modifier: 0
+  inteligencia_modifier: 0
+  might_modifier: 0
+  will_modifier: 0
+  fate_modifier: 0
