@@ -4,6 +4,7 @@ class WarbandMember < ApplicationRecord
   belongs_to :warband
   has_many :warband_equipments, dependent: :destroy
   has_many :warband_skills, dependent: :destroy
+  has_many :battle_roster_units, dependent: :destroy
 
   # Enum for member type
   enum member_type: {

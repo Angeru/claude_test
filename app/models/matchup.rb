@@ -5,6 +5,7 @@ class Matchup < ApplicationRecord
   belongs_to :warband_1, class_name: 'Warband', foreign_key: 'warband_1_id'
   belongs_to :warband_2, class_name: 'Warband', foreign_key: 'warband_2_id'
   belongs_to :winner, class_name: 'Warband', foreign_key: 'winner_id', optional: true
+  has_many :battle_rosters, dependent: :destroy
 
   validates :warband_1_id, :warband_2_id, presence: true
   validates :warband_2_id, exclusion: { in: ->(matchup) { [matchup.warband_1_id] }, message: "no puede ser la misma warband" }

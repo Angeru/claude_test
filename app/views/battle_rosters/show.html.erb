@@ -1,0 +1,142 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-6">
+    <%= link_to "← Volver a la ronda", campaign_campaign_round_path(@campaign, @round), class: "text-blue-600 hover:text-blue-800" %>
+  </div>
+
+  <!-- Header -->
+  <div class="bg-white shadow sm:rounded-lg mb-8">
+    <div class="px-4 py-5 sm:p-6">
+      <div class="flex justify-between items-start">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900">Modo Batalla</h1>
+          <p class="text-lg text-gray-600 mt-1"><%= @battle_roster.warband.name %></p>
+          <p class="text-sm text-gray-500 mt-1">
+            <%= @round.display_name %> &mdash; <%= @matchup.warband_1.name %> vs <%= @matchup.warband_2.name %>
+          </p>
+          <div class="mt-3 flex items-center gap-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <%= @battle_roster.active? ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
+              <%= @battle_roster.active? ? 'En batalla' : 'Pausada' %>
+            </span>
+            <span class="text-sm text-gray-600">
+              <span class="font-semibold text-green-700"><%= @battle_roster.alive_count %></span> en pie &mdash;
+              <span class="font-semibold text-red-700"><%= @battle_roster.defeated_count %></span> derrotados &mdash;
+              <span class="font-semibold"><%= @battle_roster.total_count %></span> total
+            </span>
+          </div>
+        </div>
+        <div class="flex space-x-3">
+          <%= button_to @battle_roster.active? ? "Pausar" : "Reactivar",
+              toggle_campaign_campaign_round_matchup_battle_roster_path(@campaign, @round, @matchup, @battle_roster),
+              method: :patch,
+              class: "inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50" %>
+          <%= button_to "Finalizar Batalla",
+              campaign_campaign_round_matchup_battle_roster_path(@campaign, @round, @matchup, @battle_roster),
+              method: :delete,
+              data: { turbo_confirm: "¿Estás seguro? Se eliminará el registro de batalla." },
+              class: "inline-flex items-center px-3 py-2 border border-red-300 shadow-sm text-sm leading-4 font-medium rounded-md text-red-700 bg-white hover:bg-red-50" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Units Grid -->
+  <% if @units.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @units.each do |unit| %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden <%= unit.defeated? ? 'opacity-50 ring-2 ring-red-300' : '' %>">
+          <!-- Unit Header -->
+          <div class="px-4 py-3 <%= unit.defeated? ? 'bg-red-50' : 'bg-gray-50' %> border-b">
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900"><%= unit.warband_member.name %></h3>
+                <span class="inline-block text-xs px-2 py-0.5 rounded <%= unit.warband_member.hero? ? 'bg-amber-100 text-amber-800' : 'bg-gray-200 text-gray-700' %>">
+                  <%= unit.warband_member.display_type %>
+                </span>
+              </div>
+              <% if unit.defeated? %>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-red-100 text-red-800">
+                  DERROTADO
+                </span>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Wounds Tracker -->
+          <div class="px-4 py-4">
+            <div class="text-center mb-4">
+              <p class="text-sm font-medium text-gray-500 mb-2">Heridas</p>
+              <div class="flex items-center justify-center gap-4">
+                <% if @battle_roster.active? %>
+                  <%= button_to wound_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
+                      @campaign, @round, @matchup, @battle_roster, unit),
+                      method: :patch,
+                      class: "inline-flex items-center justify-center w-10 h-10 rounded-full #{unit.defeated? ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-red-100 text-red-700 hover:bg-red-200'} text-xl font-bold transition-colors",
+                      disabled: unit.defeated? do %>
+                    -
+                  <% end %>
+                <% end %>
+
+                <div class="text-center">
+                  <span class="text-4xl font-bold <%= unit.defeated? ? 'text-red-600' : (unit.current_wounds <= 1 && unit.max_wounds > 1 ? 'text-orange-500' : 'text-gray-900') %>">
+                    <%= unit.current_wounds %>
+                  </span>
+                  <span class="text-xl text-gray-400"> / <%= unit.max_wounds %></span>
+                </div>
+
+                <% if @battle_roster.active? %>
+                  <%= button_to heal_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
+                      @campaign, @round, @matchup, @battle_roster, unit),
+                      method: :patch,
+                      class: "inline-flex items-center justify-center w-10 h-10 rounded-full #{unit.current_wounds >= unit.max_wounds ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-green-100 text-green-700 hover:bg-green-200'} text-xl font-bold transition-colors",
+                      disabled: unit.current_wounds >= unit.max_wounds do %>
+                    +
+                  <% end %>
+                <% end %>
+              </div>
+
+              <!-- Wound Pips -->
+              <div class="flex justify-center gap-1 mt-3">
+                <% unit.max_wounds.times do |i| %>
+                  <div class="w-4 h-4 rounded-full border-2 <%= i < unit.current_wounds ? 'bg-red-500 border-red-600' : 'bg-gray-200 border-gray-300' %>"></div>
+                <% end %>
+              </div>
+            </div>
+
+            <!-- Stats Summary -->
+            <div class="grid grid-cols-3 gap-1 text-xs mt-3 pt-3 border-t">
+              <div class="bg-gray-50 p-1.5 rounded text-center">
+                <span class="font-semibold text-gray-500 block">Mov</span>
+                <%= unit.warband_member.movimiento %>"
+              </div>
+              <div class="bg-gray-50 p-1.5 rounded text-center">
+                <span class="font-semibold text-gray-500 block">L</span>
+                <%= unit.warband_member.lucha %>+
+              </div>
+              <div class="bg-gray-50 p-1.5 rounded text-center">
+                <span class="font-semibold text-gray-500 block">F</span>
+                <%= unit.warband_member.fuerza %>
+              </div>
+              <div class="bg-gray-50 p-1.5 rounded text-center">
+                <span class="font-semibold text-gray-500 block">D</span>
+                <%= unit.warband_member.defensa %>
+              </div>
+              <div class="bg-gray-50 p-1.5 rounded text-center">
+                <span class="font-semibold text-gray-500 block">A</span>
+                <%= unit.warband_member.ataques %>
+              </div>
+              <div class="bg-gray-50 p-1.5 rounded text-center">
+                <span class="font-semibold text-gray-500 block">C</span>
+                <%= unit.warband_member.coraje %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12 bg-white rounded-lg shadow">
+      <h3 class="text-sm font-medium text-gray-900">Sin unidades</h3>
+      <p class="mt-1 text-sm text-gray-500">Esta warband no tiene miembros.</p>
+    </div>
+  <% end %>
+</div>

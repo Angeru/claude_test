@@ -10,7 +10,7 @@ class CampaignRoundsController < ApplicationController
   end
 
   def show
-    @matchups = @round.matchups.includes(:warband_1, :warband_2, :winner)
+    @matchups = @round.matchups.includes(:warband_1, :warband_2, :winner, :battle_rosters)
   end
 
   def new
