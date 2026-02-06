@@ -1,0 +1,277 @@
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
+
+<div class="me-home relative min-h-screen overflow-hidden">
+  <!-- Background layers -->
+  <div class="absolute inset-0 bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950"></div>
+  <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 fill=%22none%22/><path d=%22M0 50h100M50 0v100%22 stroke=%22%23a0845c%22 stroke-width=%220.5%22 opacity=%220.3%22/></svg>'); background-size: 100px 100px;"></div>
+
+  <!-- Top decorative border -->
+  <div class="relative z-10">
+    <div class="h-1 bg-gradient-to-r from-transparent via-amber-700 to-transparent"></div>
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="relative z-20 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full border-2 border-amber-700 flex items-center justify-center bg-stone-900/80">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-500" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="text-amber-500 text-sm tracking-[0.3em] uppercase" style="font-family: 'Cinzel', serif;">SBG Campaigns</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <% if logged_in? %>
+          <span class="text-amber-200/60 text-sm" style="font-family: 'Crimson Text', serif;"><%= current_user.name %></span>
+          <%= link_to "Panel", dashboard_path, class: "text-amber-400 hover:text-amber-300 text-sm tracking-wider uppercase transition-colors", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+          <%= button_to "Salir", logout_path, method: :delete, class: "text-stone-400 hover:text-amber-400 text-sm tracking-wider uppercase transition-colors cursor-pointer", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <% else %>
+          <%= link_to "Iniciar Sesion", login_path, class: "text-amber-400 hover:text-amber-300 text-sm tracking-wider uppercase transition-colors", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+          <%= link_to "Registrarse", signup_path, class: "px-4 py-2 border border-amber-700/60 text-amber-400 hover:bg-amber-900/30 hover:border-amber-600 rounded transition-all text-sm tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative z-10 px-6 pt-16 pb-24">
+    <div class="max-w-5xl mx-auto text-center">
+      <!-- Decorative element above title -->
+      <div class="flex items-center justify-center gap-4 mb-8">
+        <div class="h-px w-24 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+        <svg viewBox="0 0 24 24" class="w-6 h-6 text-amber-600/60" fill="currentColor">
+          <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+        </svg>
+        <div class="h-px w-24 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+      </div>
+
+      <h1 class="text-amber-100 mb-2 tracking-[0.15em] uppercase leading-tight" style="font-family: 'Cinzel Decorative', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700;">
+        La Tierra Media
+      </h1>
+      <h2 class="text-amber-500/80 mb-8 tracking-[0.2em] uppercase" style="font-family: 'Cinzel', serif; font-size: clamp(0.8rem, 2vw, 1.1rem); font-weight: 500;">
+        Strategy Battle Game &mdash; Gestor de Campanas
+      </h2>
+
+      <p class="max-w-2xl mx-auto text-stone-400 text-lg leading-relaxed mb-12" style="font-family: 'Crimson Text', serif; font-size: 1.2rem;">
+        Gestiona tus campanas, organiza tus warbands y lleva el registro de cada batalla
+        en la Tierra Media. Desde las Minas de Moria hasta los campos de Pelennor.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <% if logged_in? %>
+          <%= link_to campaigns_path, class: "group relative px-8 py-3 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.85rem;" do %>
+            Ver Campanas
+          <% end %>
+          <%= link_to warbands_path, class: "px-8 py-3 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.85rem;" do %>
+            Mis Warbands
+          <% end %>
+        <% else %>
+          <%= link_to signup_path, class: "group relative px-8 py-3 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.85rem;" do %>
+            Unirse a la Batalla
+          <% end %>
+          <%= link_to login_path, class: "px-8 py-3 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.15em; text-transform: uppercase; font-size: 0.85rem;" do %>
+            Iniciar Sesion
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Faction Cards Section -->
+  <section class="relative z-10 px-6 pb-20">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section Title -->
+      <div class="text-center mb-12">
+        <div class="flex items-center justify-center gap-4 mb-4">
+          <div class="h-px w-16 bg-gradient-to-r from-transparent to-amber-800/40"></div>
+          <span class="text-amber-600/60 text-xs tracking-[0.4em] uppercase" style="font-family: 'Cinzel', serif;">Facciones</span>
+          <div class="h-px w-16 bg-gradient-to-l from-transparent to-amber-800/40"></div>
+        </div>
+        <h3 class="text-amber-100/90 tracking-wider" style="font-family: 'Cinzel', serif; font-size: 1.5rem;">
+          Elige tu Bando
+        </h3>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Good Faction -->
+        <div class="group relative rounded-lg overflow-hidden border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 hover:border-amber-700/50 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-b from-emerald-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative p-8">
+            <div class="w-14 h-14 mx-auto mb-5 rounded-full border border-emerald-700/40 flex items-center justify-center bg-emerald-900/20">
+              <svg viewBox="0 0 24 24" class="w-7 h-7 text-emerald-500/80" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 3l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/>
+              </svg>
+            </div>
+            <h4 class="text-center text-amber-100 tracking-widest uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
+              Pueblos Libres
+            </h4>
+            <p class="text-center text-stone-400 text-sm leading-relaxed" style="font-family: 'Crimson Text', serif; font-size: 1rem;">
+              Gondor, Rohan, los Elfos de Rivendel y Lothlorien, los Enanos de Erebor y la Comarca. Unidos contra la oscuridad.
+            </p>
+            <div class="mt-5 pt-4 border-t border-stone-800/50">
+              <div class="flex flex-wrap justify-center gap-2">
+                <span class="px-2 py-1 text-xs text-emerald-400/70 border border-emerald-900/30 rounded bg-emerald-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Gondor</span>
+                <span class="px-2 py-1 text-xs text-emerald-400/70 border border-emerald-900/30 rounded bg-emerald-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Rohan</span>
+                <span class="px-2 py-1 text-xs text-emerald-400/70 border border-emerald-900/30 rounded bg-emerald-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Elfos</span>
+                <span class="px-2 py-1 text-xs text-emerald-400/70 border border-emerald-900/30 rounded bg-emerald-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Enanos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Evil Faction -->
+        <div class="group relative rounded-lg overflow-hidden border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 hover:border-amber-700/50 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-b from-red-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative p-8">
+            <div class="w-14 h-14 mx-auto mb-5 rounded-full border border-red-800/40 flex items-center justify-center bg-red-900/20">
+              <svg viewBox="0 0 24 24" class="w-7 h-7 text-red-500/80" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-7v4h4l-5 7z"/>
+              </svg>
+            </div>
+            <h4 class="text-center text-amber-100 tracking-widest uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
+              Fuerzas del Mal
+            </h4>
+            <p class="text-center text-stone-400 text-sm leading-relaxed" style="font-family: 'Crimson Text', serif; font-size: 1rem;">
+              Mordor, Isengard, los Haradrim, Khand y las hordas de Orcos. El poder del Senor Oscuro se extiende por la Tierra Media.
+            </p>
+            <div class="mt-5 pt-4 border-t border-stone-800/50">
+              <div class="flex flex-wrap justify-center gap-2">
+                <span class="px-2 py-1 text-xs text-red-400/70 border border-red-900/30 rounded bg-red-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Mordor</span>
+                <span class="px-2 py-1 text-xs text-red-400/70 border border-red-900/30 rounded bg-red-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Isengard</span>
+                <span class="px-2 py-1 text-xs text-red-400/70 border border-red-900/30 rounded bg-red-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Harad</span>
+                <span class="px-2 py-1 text-xs text-red-400/70 border border-red-900/30 rounded bg-red-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Angmar</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Legendary Legions -->
+        <div class="group relative rounded-lg overflow-hidden border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 hover:border-amber-700/50 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-b from-amber-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative p-8">
+            <div class="w-14 h-14 mx-auto mb-5 rounded-full border border-amber-700/40 flex items-center justify-center bg-amber-900/20">
+              <svg viewBox="0 0 24 24" class="w-7 h-7 text-amber-500/80" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 9h.01M15 9h.01M9 13h.01M15 13h.01"/>
+              </svg>
+            </div>
+            <h4 class="text-center text-amber-100 tracking-widest uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
+              Legiones Legendarias
+            </h4>
+            <p class="text-center text-stone-400 text-sm leading-relaxed" style="font-family: 'Crimson Text', serif; font-size: 1rem;">
+              Ejercitos tematicos con reglas especiales. La Ultima Alianza, los Riders of Theoden, la Legion de Angmar y muchos mas.
+            </p>
+            <div class="mt-5 pt-4 border-t border-stone-800/50">
+              <div class="flex flex-wrap justify-center gap-2">
+                <span class="px-2 py-1 text-xs text-amber-400/70 border border-amber-900/30 rounded bg-amber-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Alianza</span>
+                <span class="px-2 py-1 text-xs text-amber-400/70 border border-amber-900/30 rounded bg-amber-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Theoden</span>
+                <span class="px-2 py-1 text-xs text-amber-400/70 border border-amber-900/30 rounded bg-amber-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Erebor</span>
+                <span class="px-2 py-1 text-xs text-amber-400/70 border border-amber-900/30 rounded bg-amber-900/10" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Moria</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="relative z-10 px-6 pb-20">
+    <div class="max-w-5xl mx-auto">
+      <div class="border-t border-b border-amber-900/20 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <!-- Feature 1 -->
+          <div class="text-center">
+            <div class="w-12 h-12 mx-auto mb-4 rounded border border-amber-800/30 flex items-center justify-center bg-stone-900/50">
+              <svg viewBox="0 0 24 24" class="w-6 h-6 text-amber-600/70" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <h5 class="text-amber-200/80 mb-2 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">Campanas</h5>
+            <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
+              Crea y gestiona campanas narrativas con rondas y emparejamientos.
+            </p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="text-center">
+            <div class="w-12 h-12 mx-auto mb-4 rounded border border-amber-800/30 flex items-center justify-center bg-stone-900/50">
+              <svg viewBox="0 0 24 24" class="w-6 h-6 text-amber-600/70" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+              </svg>
+            </div>
+            <h5 class="text-amber-200/80 mb-2 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">Warbands</h5>
+            <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
+              Arma tus warbands con heroes, guerreros y equipamiento.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="text-center">
+            <div class="w-12 h-12 mx-auto mb-4 rounded border border-amber-800/30 flex items-center justify-center bg-stone-900/50">
+              <svg viewBox="0 0 24 24" class="w-6 h-6 text-amber-600/70" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <h5 class="text-amber-200/80 mb-2 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">Batallas</h5>
+            <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
+              Registra resultados, heridas y el destino de cada guerrero.
+            </p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="text-center">
+            <div class="w-12 h-12 mx-auto mb-4 rounded border border-amber-800/30 flex items-center justify-center bg-stone-900/50">
+              <svg viewBox="0 0 24 24" class="w-6 h-6 text-amber-600/70" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+            </div>
+            <h5 class="text-amber-200/80 mb-2 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">Progreso</h5>
+            <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
+              Sigue la evolucion de tus warbands a lo largo de la campana.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote Section -->
+  <section class="relative z-10 px-6 pb-20">
+    <div class="max-w-3xl mx-auto text-center">
+      <blockquote class="text-stone-400 italic leading-relaxed" style="font-family: 'Crimson Text', serif; font-size: 1.3rem;">
+        &ldquo;Aun el mas pequeno puede cambiar el curso del futuro.&rdquo;
+      </blockquote>
+      <cite class="block mt-4 text-amber-700/60 tracking-widest uppercase not-italic" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">
+        &mdash; Galadriel
+      </cite>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-amber-900/20">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="text-stone-600 text-sm" style="font-family: 'Crimson Text', serif;">
+          Middle-earth SBG Campaign Manager
+        </div>
+        <div class="flex items-center gap-6">
+          <% unless logged_in? %>
+            <%= link_to "Registro", signup_path, class: "text-stone-500 hover:text-amber-500 text-xs tracking-widest uppercase transition-colors", style: "font-family: 'Cinzel', serif;" %>
+            <%= link_to "Login", login_path, class: "text-stone-500 hover:text-amber-500 text-xs tracking-widest uppercase transition-colors", style: "font-family: 'Cinzel', serif;" %>
+          <% else %>
+            <%= link_to "Campanas", campaigns_path, class: "text-stone-500 hover:text-amber-500 text-xs tracking-widest uppercase transition-colors", style: "font-family: 'Cinzel', serif;" %>
+            <%= link_to "Warbands", warbands_path, class: "text-stone-500 hover:text-amber-500 text-xs tracking-widest uppercase transition-colors", style: "font-family: 'Cinzel', serif;" %>
+            <%= link_to "Panel", dashboard_path, class: "text-stone-500 hover:text-amber-500 text-xs tracking-widest uppercase transition-colors", style: "font-family: 'Cinzel', serif;" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-700 to-transparent"></div>
+    <div class="h-1 bg-gradient-to-r from-transparent via-amber-900/50 to-transparent"></div>
+  </footer>
+</div>
