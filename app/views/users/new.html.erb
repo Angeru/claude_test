@@ -1,46 +1,117 @@
-<div class="max-w-md mx-auto">
-  <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
-    <h1 class="text-2xl font-bold text-center mb-6 text-gray-800">Crear Cuenta</h1>
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
 
-    <%= form_with model: @user, class: "space-y-4" do |f| %>
-      <% if @user.errors.any? %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          <ul class="list-disc list-inside">
-            <% @user.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+<div class="relative min-h-screen overflow-hidden">
+  <!-- Background layers -->
+  <div class="absolute inset-0 bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950"></div>
+  <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 fill=%22none%22/><path d=%22M0 50h100M50 0v100%22 stroke=%22%23a0845c%22 stroke-width=%220.5%22 opacity=%220.3%22/></svg>'); background-size: 100px 100px;"></div>
 
-      <div>
-        <%= f.label :name, "Nombre", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "Tu nombre" %>
-      </div>
-
-      <div>
-        <%= f.label :email, "Email", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.email_field :email, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "email@ejemplo.com" %>
-      </div>
-
-      <div>
-        <%= f.label :password, "Contraseña", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.password_field :password, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "Mínimo 6 caracteres" %>
-      </div>
-
-      <div>
-        <%= f.label :password_confirmation, "Confirmar Contraseña", class: "block text-gray-700 text-sm font-bold mb-2" %>
-        <%= f.password_field :password_confirmation, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "Confirma tu contraseña" %>
-      </div>
-
-      <div>
-        <%= f.submit "Registrarse", class: "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" %>
-      </div>
-    <% end %>
-
-    <p class="text-center text-gray-600 text-sm mt-4">
-      ¿Ya tienes una cuenta?
-      <%= link_to "Iniciar sesión", login_path, class: "text-blue-500 hover:text-blue-700 font-semibold" %>
-    </p>
+  <!-- Top decorative border -->
+  <div class="relative z-10">
+    <div class="h-1 bg-gradient-to-r from-transparent via-amber-700 to-transparent"></div>
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
   </div>
+
+  <!-- Navigation -->
+  <nav class="relative z-20 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <%= link_to root_path, class: "flex items-center gap-3 no-underline" do %>
+          <div class="w-10 h-10 rounded-full border-2 border-amber-700 flex items-center justify-center bg-stone-900/80">
+            <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-500" fill="currentColor">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <span class="text-amber-500 text-sm tracking-[0.3em] uppercase" style="font-family: 'Cinzel', serif;">SBG Campaigns</span>
+        <% end %>
+      </div>
+      <div class="flex items-center gap-4">
+        <%= link_to "Iniciar Sesion", login_path, class: "text-amber-400 hover:text-amber-300 text-sm tracking-wider uppercase transition-colors", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Signup Form Section -->
+  <section class="relative z-10 px-6 pt-12 pb-24 flex items-center justify-center">
+    <div class="w-full max-w-md">
+      <!-- Decorative element above title -->
+      <div class="flex items-center justify-center gap-4 mb-8">
+        <div class="h-px w-24 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+        <svg viewBox="0 0 24 24" class="w-6 h-6 text-amber-600/60" fill="currentColor">
+          <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+        </svg>
+        <div class="h-px w-24 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+      </div>
+
+      <h1 class="text-center text-amber-100 mb-2 tracking-[0.15em] uppercase" style="font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; font-weight: 700;">
+        Crear Cuenta
+      </h1>
+      <p class="text-center text-stone-400 mb-10" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;">
+        Unete a la batalla por la Tierra Media
+      </p>
+
+      <!-- Form Card -->
+      <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-8">
+        <%= form_with model: @user, class: "space-y-5" do |f| %>
+          <% if @user.errors.any? %>
+            <div class="mb-4 p-4 rounded border border-red-800/50 bg-red-900/20 text-red-400">
+              <ul class="list-disc list-inside text-sm" style="font-family: 'Crimson Text', serif;">
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div>
+            <%= f.label :name, "Nombre", class: "block text-amber-200/80 text-xs tracking-wider uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+            <%= f.text_field :name, class: "w-full px-4 py-3 rounded border border-amber-900/40 bg-stone-900/60 text-amber-100 placeholder-stone-500 focus:outline-none focus:border-amber-600/60 focus:ring-1 focus:ring-amber-600/30 transition-colors", style: "font-family: 'Crimson Text', serif;", placeholder: "Tu nombre" %>
+          </div>
+
+          <div>
+            <%= f.label :email, "Email", class: "block text-amber-200/80 text-xs tracking-wider uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+            <%= f.email_field :email, class: "w-full px-4 py-3 rounded border border-amber-900/40 bg-stone-900/60 text-amber-100 placeholder-stone-500 focus:outline-none focus:border-amber-600/60 focus:ring-1 focus:ring-amber-600/30 transition-colors", style: "font-family: 'Crimson Text', serif;", placeholder: "email@ejemplo.com" %>
+          </div>
+
+          <div>
+            <%= f.label :password, "Contrasena", class: "block text-amber-200/80 text-xs tracking-wider uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+            <%= f.password_field :password, class: "w-full px-4 py-3 rounded border border-amber-900/40 bg-stone-900/60 text-amber-100 placeholder-stone-500 focus:outline-none focus:border-amber-600/60 focus:ring-1 focus:ring-amber-600/30 transition-colors", style: "font-family: 'Crimson Text', serif;", placeholder: "Minimo 6 caracteres" %>
+          </div>
+
+          <div>
+            <%= f.label :password_confirmation, "Confirmar Contrasena", class: "block text-amber-200/80 text-xs tracking-wider uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+            <%= f.password_field :password_confirmation, class: "w-full px-4 py-3 rounded border border-amber-900/40 bg-stone-900/60 text-amber-100 placeholder-stone-500 focus:outline-none focus:border-amber-600/60 focus:ring-1 focus:ring-amber-600/30 transition-colors", style: "font-family: 'Crimson Text', serif;", placeholder: "Confirma tu contrasena" %>
+          </div>
+
+          <div class="pt-2">
+            <%= f.submit "Unirse a la Batalla", class: "w-full py-3 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer tracking-[0.15em] uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.85rem;" %>
+          </div>
+        <% end %>
+
+        <div class="mt-6 pt-5 border-t border-stone-800/50 text-center">
+          <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
+            ¿Ya tienes una cuenta?
+            <%= link_to "Iniciar sesion", login_path, class: "text-amber-400 hover:text-amber-300 font-semibold transition-colors" %>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-amber-900/20 mt-auto">
+    <div class="max-w-6xl mx-auto px-6 py-8">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="text-stone-600 text-sm" style="font-family: 'Crimson Text', serif;">
+          Middle-earth SBG Campaign Manager
+        </div>
+        <div class="flex items-center gap-6">
+          <%= link_to "Inicio", root_path, class: "text-stone-500 hover:text-amber-500 text-xs tracking-widest uppercase transition-colors", style: "font-family: 'Cinzel', serif;" %>
+          <%= link_to "Login", login_path, class: "text-stone-500 hover:text-amber-500 text-xs tracking-widest uppercase transition-colors", style: "font-family: 'Cinzel', serif;" %>
+        </div>
+      </div>
+    </div>
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-700 to-transparent"></div>
+    <div class="h-1 bg-gradient-to-r from-transparent via-amber-900/50 to-transparent"></div>
+  </footer>
 </div>
