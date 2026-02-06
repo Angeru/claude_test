@@ -1,8 +1,11 @@
 class SessionsController < ApplicationController
+  layout "auth", only: [:new, :create]
+
   # Redirigir usuarios ya autenticados
   before_action :redirect_if_logged_in, only: [:new]
 
   def new
+    @user = User.new
   end
 
   def create

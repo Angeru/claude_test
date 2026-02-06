@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def new
-    @user = User.new
+    redirect_to login_path
   end
 
   def create
@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       redirect_to dashboard_path, notice: "Cuenta creada correctamente"
     else
-      render :new, status: :unprocessable_entity
+      render "sessions/new", status: :unprocessable_entity, layout: "auth"
     end
   end
 
