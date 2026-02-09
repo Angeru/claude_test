@@ -9,6 +9,7 @@ class CampaignsController < ApplicationController
 
   def show
     @is_subscribed = current_user.campaigns.include?(@campaign)
+    @available_warbands = current_user.warbands.available unless @is_subscribed
   end
 
   def my_campaigns
@@ -37,9 +38,22 @@ class CampaignsController < ApplicationController
   def subscribe
     if current_user.campaigns.include?(@campaign)
       redirect_to campaign_path(@campaign), alert: "Ya estás suscrito a esta campaña"
+      return
+    end
+
+    warband = current_user.warbands.available.find_by(id: params[:warband_id])
+
+    if warband.nil?
+      redirect_to campaign_path(@campaign), alert: "Debes seleccionar una warband disponible para suscribirte"
+      return
+    end
+
+    subscription = Subscription.new(user: current_user, campaign: @campaign, warband: warband)
+
+    if subscription.save
+      redirect_to campaign_path(@campaign), notice: "Te has suscrito correctamente a la campaña con la warband #{warband.name}"
     else
-      current_user.campaigns << @campaign
-      redirect_to campaign_path(@campaign), notice: "Te has suscrito correctamente a la campaña"
+      redirect_to campaign_path(@campaign), alert: subscription.errors.full_messages.join(", ")
     end
   end
 
@@ -49,8 +63,10 @@ class CampaignsController < ApplicationController
       return
     end
 
-    if current_user.campaigns.include?(@campaign)
-      current_user.campaigns.delete(@campaign)
+    subscription = current_user.subscriptions.find_by(campaign: @campaign)
+
+    if subscription
+      subscription.destroy
       redirect_to my_campaigns_campaigns_path, notice: "Te has desuscrito correctamente de la campaña"
     else
       redirect_to my_campaigns_campaigns_path, alert: "No estás suscrito a esta campaña"
