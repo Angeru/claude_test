@@ -1,64 +1,85 @@
-<div class="max-w-6xl mx-auto">
-  <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-800">
-        Gestionar Warbands - <%= @campaign.name %>
-      </h1>
-      <div class="flex gap-2">
-        <%= link_to "Ver Campaña", campaign_path(@campaign),
-            class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-        <%= link_to "Volver", my_campaigns_campaigns_path,
-            class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
-      </div>
-    </div>
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
 
-    <% if @warbands.any? %>
-      <div class="space-y-6">
-        <% @warbands.each do |warband| %>
-          <div class="border rounded-lg p-6 hover:shadow-lg transition-shadow">
+<%= render layout: "shared/dark_layout" do %>
+  <!-- Section Title -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
+    <div>
+      <div class="flex items-center gap-4 mb-3">
+        <div class="h-px w-12 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+        <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-600/60" fill="currentColor">
+          <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+        </svg>
+        <div class="h-px w-12 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+      </div>
+      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+        Gestionar Warbands
+      </h1>
+      <p class="text-stone-400 mt-2" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+        <%= @campaign.name %>
+      </p>
+    </div>
+    <div class="flex gap-3">
+      <%= link_to campaign_path(@campaign), class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        Ver Campana
+      <% end %>
+      <%= link_to my_campaigns_campaigns_path, class: "px-5 py-2.5 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        Volver
+      <% end %>
+    </div>
+  </div>
+
+  <% if @warbands.any? %>
+    <div class="space-y-6">
+      <% @warbands.each do |warband| %>
+        <div class="group rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 hover:border-amber-700/50 transition-all duration-500 overflow-hidden">
+          <div class="p-6">
             <div class="flex justify-between items-start mb-4">
               <div>
-                <h3 class="text-xl font-semibold text-gray-800">
+                <h3 class="text-amber-100 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 1.05rem;">
                   <%= warband.name %>
                 </h3>
-                <p class="text-sm text-gray-600 mt-1">
+                <p class="text-stone-400 text-sm mt-1" style="font-family: 'Crimson Text', serif;">
                   Propietario: <%= warband.user.name %>
                   <% if warband.user == current_user %>
-                    <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                    <span class="ml-2 px-2 py-1 text-xs text-amber-400/80 border border-amber-900/40 rounded bg-amber-900/20" style="font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em;">
                       Tu warband
                     </span>
                   <% end %>
                 </p>
               </div>
-              <div class="flex gap-2">
-                <%= link_to "Ver Detalles", warband_path(warband),
-                    class: "text-blue-600 hover:text-blue-800" %>
+              <div class="flex gap-3">
+                <%= link_to "Ver", warband_path(warband),
+                    class: "text-amber-400 hover:text-amber-300 transition-colors tracking-wider uppercase",
+                    style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
                 <%= link_to "Editar", edit_warband_path(warband),
-                    class: "text-green-600 hover:text-green-800" %>
+                    class: "text-emerald-400 hover:text-emerald-300 transition-colors tracking-wider uppercase",
+                    style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
                 <%= button_to "Remover", remove_from_campaign_warband_path(warband),
                     method: :patch,
-                    data: { turbo_confirm: "¿Remover esta warband de la campaña?" },
-                    class: "text-red-600 hover:text-red-800" %>
+                    data: { turbo_confirm: "¿Remover esta warband de la campana?" },
+                    class: "text-red-500/70 hover:text-red-400 transition-colors tracking-wider uppercase bg-transparent border-0 p-0 cursor-pointer",
+                    style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
               </div>
             </div>
 
-            <div class="border-t pt-4">
-              <div class="flex justify-between items-center mb-2">
-                <h4 class="font-semibold text-gray-700">
+            <div class="border-t border-stone-800/50 pt-4">
+              <div class="flex justify-between items-center mb-3">
+                <h4 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.75rem;">
                   Miembros (<%= warband.warband_members.count %>)
                 </h4>
-                <%= link_to "Añadir Miembro",
-                    new_warband_warband_member_path(warband),
-                    class: "text-sm bg-green-500 hover:bg-green-700 text-white py-1 px-3 rounded" %>
+                <%= link_to "Anadir Miembro", new_warband_warband_member_path(warband),
+                    class: "px-3 py-1.5 bg-gradient-to-b from-emerald-700 to-emerald-900 text-emerald-100 rounded border border-emerald-600/50 hover:from-emerald-600 hover:to-emerald-800 transition-all text-xs",
+                    style: "font-family: 'Cinzel', serif; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.6rem;" %>
               </div>
 
               <% if warband.warband_members.any? %>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
                   <% warband.warband_members.each do |member| %>
-                    <div class="bg-gray-50 p-3 rounded flex justify-between items-start">
+                    <div class="p-3 rounded border border-stone-800/50 bg-stone-900/50 flex justify-between items-start">
                       <div>
-                        <p class="font-medium"><%= member.name %></p>
-                        <p class="text-xs text-gray-600">
+                        <p class="text-amber-100 text-sm" style="font-family: 'Cinzel', serif; font-size: 0.8rem;"><%= member.name %></p>
+                        <p class="text-xs text-stone-500 mt-1" style="font-family: 'Crimson Text', serif;">
                           <%= member.display_type %> -
                           F:<%= member.fuerza %>
                           D:<%= member.defensa %>
@@ -66,44 +87,45 @@
                         </p>
                       </div>
                       <div class="flex gap-2">
-                        <%= link_to "Editar",
-                            edit_warband_warband_member_path(warband, member),
-                            class: "text-xs text-blue-600 hover:text-blue-800" %>
-                        <%= button_to "×",
-                            warband_warband_member_path(warband, member),
+                        <%= link_to "Editar", edit_warband_warband_member_path(warband, member),
+                            class: "text-amber-400 hover:text-amber-300 transition-colors",
+                            style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
+                        <%= button_to "x", warband_warband_member_path(warband, member),
                             method: :delete,
                             data: { turbo_confirm: "¿Eliminar este miembro?" },
-                            class: "text-xs text-red-600 hover:text-red-800" %>
+                            class: "text-red-500/70 hover:text-red-400 transition-colors bg-transparent border-0 p-0 cursor-pointer",
+                            style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
                       </div>
                     </div>
                   <% end %>
                 </div>
               <% else %>
-                <p class="text-sm text-gray-500 italic mt-2">
-                  Esta warband no tiene miembros aún.
+                <p class="text-stone-500 italic mt-2" style="font-family: 'Crimson Text', serif; font-size: 0.95rem;">
+                  Esta warband no tiene miembros aun.
                 </p>
               <% end %>
             </div>
           </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
+    </div>
 
-      <div class="mt-4 text-gray-600 text-sm">
-        Total: <%= @warbands.count %> <%= @warbands.count == 1 ? 'warband' : 'warbands' %> en esta campaña
-      </div>
-    <% else %>
-      <div class="text-center py-12">
-        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+    <div class="mt-6 text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
+      Total: <%= @warbands.count %> <%= @warbands.count == 1 ? 'warband' : 'warbands' %> en esta campana
+    </div>
+  <% else %>
+    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-12 text-center">
+      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-700/40 flex items-center justify-center bg-amber-900/20">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-500/60" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
         </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">
-          No hay warbands en esta campaña
-        </h3>
-        <p class="mt-1 text-sm text-gray-500">
-          Los jugadores aún no han asignado sus warbands a esta campaña.
-        </p>
       </div>
-    <% end %>
-  </div>
-</div>
+      <h3 class="text-amber-100/80 tracking-wider uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
+        No hay warbands en esta campana
+      </h3>
+      <p class="text-stone-400" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+        Los jugadores aun no han asignado sus warbands a esta campana.
+      </p>
+    </div>
+  <% end %>
+<% end %>

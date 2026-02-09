@@ -1,8 +1,8 @@
-<%= form_with model: campaign, class: "space-y-4" do |form| %>
+<%= form_with model: campaign, class: "space-y-5" do |form| %>
   <% if campaign.errors.any? %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-      <h3 class="font-bold"><%= pluralize(campaign.errors.count, "error") %> impidieron guardar:</h3>
-      <ul class="list-disc list-inside mt-2">
+    <div class="p-4 rounded border border-red-800/40 bg-red-900/20">
+      <h3 class="text-red-300 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;"><%= pluralize(campaign.errors.count, "error") %> impidieron guardar:</h3>
+      <ul class="list-disc list-inside mt-2 text-red-300/80" style="font-family: 'Crimson Text', serif;">
         <% campaign.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -11,37 +11,41 @@
   <% end %>
 
   <div>
-    <%= form.label :name, "Nombre de la Campaña", class: "block text-gray-700 text-sm font-bold mb-2" %>
-    <%= form.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "Ej: Campaña de Verano 2026", required: true %>
-    <p class="text-xs text-gray-500 mt-1">Mínimo 3 caracteres</p>
+    <%= form.label :name, "Nombre de la Campana", class: "block text-amber-200/80 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+    <%= form.text_field :name, class: "w-full bg-stone-900 border border-amber-900/40 rounded py-2 px-3 text-stone-200 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-700 focus:border-amber-700", style: "font-family: 'Crimson Text', serif;", placeholder: "Ej: Campana de Verano 2026", required: true %>
+    <p class="text-xs text-stone-500 mt-1" style="font-family: 'Crimson Text', serif;">Minimo 3 caracteres</p>
   </div>
 
   <div>
-    <%= form.label :description, "Descripción", class: "block text-gray-700 text-sm font-bold mb-2" %>
-    <%= form.text_area :description, rows: 6, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500", placeholder: "Describe tu campaña, sus objetivos, reglas especiales, etc.", required: true %>
+    <%= form.label :description, "Descripcion", class: "block text-amber-200/80 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+    <%= form.text_area :description, rows: 6, class: "w-full bg-stone-900 border border-amber-900/40 rounded py-2 px-3 text-stone-200 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-700 focus:border-amber-700", style: "font-family: 'Crimson Text', serif;", placeholder: "Describe tu campana, sus objetivos, reglas especiales, etc.", required: true %>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
-      <%= form.label :start_date, "Fecha de Inicio (Opcional)", class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= form.datetime_local_field :start_date, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      <%= form.label :start_date, "Fecha de Inicio (Opcional)", class: "block text-amber-200/80 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+      <%= form.datetime_local_field :start_date, class: "w-full bg-stone-900 border border-amber-900/40 rounded py-2 px-3 text-stone-200 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-700 focus:border-amber-700", style: "font-family: 'Crimson Text', serif;" %>
     </div>
 
     <div>
-      <%= form.label :end_date, "Fecha de Fin (Opcional)", class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= form.datetime_local_field :end_date, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      <%= form.label :end_date, "Fecha de Fin (Opcional)", class: "block text-amber-200/80 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+      <%= form.datetime_local_field :end_date, class: "w-full bg-stone-900 border border-amber-900/40 rounded py-2 px-3 text-stone-200 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-700 focus:border-amber-700", style: "font-family: 'Crimson Text', serif;" %>
     </div>
   </div>
 
-  <div class="bg-blue-50 border border-blue-200 rounded p-4">
-    <p class="text-sm text-blue-800">
-      <strong>Nota:</strong> Tu campaña se creará en estado "Activa" y serás automáticamente suscrito a ella.
-      Serás el administrador de esta campaña.
+  <div class="p-4 rounded border border-amber-800/30 bg-amber-900/10">
+    <p class="text-sm text-amber-300/70" style="font-family: 'Crimson Text', serif;">
+      <strong class="text-amber-200/80">Nota:</strong> Tu campana se creara en estado "Activa" y seras automaticamente suscrito a ella.
+      Seras el administrador de esta campana.
     </p>
   </div>
 
   <div class="flex items-center justify-between pt-4">
-    <%= form.submit "Crear Campaña", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" %>
-    <%= link_to "Cancelar", campaigns_path, class: "text-gray-600 hover:text-gray-800" %>
+    <%= form.submit "Crear Campana",
+        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
+        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+    <%= link_to "Cancelar", campaigns_path,
+        class: "text-stone-400 hover:text-amber-400 transition-colors tracking-wider uppercase",
+        style: "font-family: 'Cinzel', serif; font-size: 0.75rem;" %>
   </div>
 <% end %>
