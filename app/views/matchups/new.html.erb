@@ -1,12 +1,23 @@
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <div class="mb-8">
-    <%= link_to "← Volver a la ronda", campaign_campaign_round_path(@campaign_round.campaign, @campaign_round), class: "text-blue-600 hover:text-blue-800" %>
-  </div>
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
 
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">Nuevo Emparejamiento</h1>
-    <p class="text-gray-600 mt-2">Crear emparejamiento para <%= @campaign_round.display_name %></p>
+<%= render layout: "shared/dark_layout", locals: { max_width: "max-w-5xl" } do %>
+  <!-- Section Title -->
+  <div class="mb-10">
+    <div class="flex items-center gap-4 mb-3">
+      <div class="h-px w-12 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+      <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-600/60" fill="currentColor">
+        <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+      </svg>
+      <div class="h-px w-12 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+    </div>
+    <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+      Nuevo Emparejamiento
+    </h1>
+    <p class="text-stone-400 mt-3" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+      Crear emparejamiento para <%= @campaign_round.display_name %>
+    </p>
   </div>
 
   <%= render "form" %>
-</div>
+<% end %>
