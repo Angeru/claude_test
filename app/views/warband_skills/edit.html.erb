@@ -1,12 +1,23 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <div class="mb-8">
-    <%= link_to "← Volver a skills", warband_warband_member_warband_skills_path(@warband_member.warband, @warband_member), class: "text-purple-600 hover:text-purple-800" %>
-  </div>
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
 
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">Editar Skill</h1>
-    <p class="text-gray-600 mt-2">Editando <%= @skill.name %> de <%= @warband_member.name %></p>
+<%= render layout: "shared/dark_layout" do %>
+  <%= link_to warband_warband_member_warband_skills_path(@warband_member.warband, @warband_member), class: "inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors mb-6", style: "font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;" do %>
+    <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Skills
+  <% end %>
+
+  <div class="flex items-center gap-4 mb-3">
+    <div class="h-px w-8 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+    <svg viewBox="0 0 24 24" class="w-4 h-4 text-amber-600/60" fill="currentColor">
+      <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+    </svg>
+    <div class="h-px w-8 bg-gradient-to-l from-transparent to-amber-700/60"></div>
   </div>
+  <h1 class="text-amber-100 tracking-[0.1em] uppercase mb-2" style="font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;">
+    Editar Skill
+  </h1>
+  <p class="text-stone-400 mb-8" style="font-family: 'Crimson Text', serif;">Editando <%= @skill.name %> de <%= @warband_member.name %></p>
 
   <%= render "form", skill: @skill %>
-</div>
+<% end %>

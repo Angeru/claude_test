@@ -1,8 +1,8 @@
-<%= form_with model: warband, class: "space-y-4" do |form| %>
+<%= form_with model: warband, class: "space-y-5" do |form| %>
   <% if warband.errors.any? %>
-    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-      <h3 class="font-bold"><%= pluralize(warband.errors.count, "error") %> impidieron guardar:</h3>
-      <ul class="list-disc list-inside mt-2">
+    <div class="rounded-lg border border-red-800/40 bg-red-900/20 p-4">
+      <h3 class="text-red-300 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;"><%= pluralize(warband.errors.count, "error") %> impidieron guardar:</h3>
+      <ul class="list-disc list-inside text-red-400/80 text-sm space-y-1" style="font-family: 'Crimson Text', serif;">
         <% warband.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -10,51 +10,63 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, "Nombre de la Warband",
-        class: "block text-gray-700 text-sm font-bold mb-2" %>
-    <%= form.text_field :name,
-        class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
-        required: true,
-        placeholder: "Ej: Los Lobos de Fenris" %>
-  </div>
-
-  <div class="grid grid-cols-2 gap-4">
+  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-6 space-y-5">
     <div>
-      <%= form.label :gold, "Oro",
-          class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= form.number_field :gold,
-          class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
-          min: 0, required: true %>
+      <%= form.label :name, "Nombre de la Warband",
+          class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+          style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+      <%= form.text_field :name,
+          class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+          style: "font-family: 'Crimson Text', serif;",
+          required: true,
+          placeholder: "Ej: Los Lobos de Fenris" %>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <%= form.label :gold, "Oro",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.number_field :gold,
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;",
+            min: 0, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :influence, "Influencia",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.number_field :influence,
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;",
+            min: 0, required: true %>
+      </div>
     </div>
 
     <div>
-      <%= form.label :influence, "Influencia",
-          class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= form.number_field :influence,
-          class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500",
-          min: 0, required: true %>
+      <%= form.label :campaign_id, "Asignar a Campana (opcional)",
+          class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+          style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+      <%= form.collection_select :campaign_id,
+          current_user.campaigns.active,
+          :id,
+          :name,
+          { include_blank: "Sin asignar (disponible)" },
+          class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+          style: "font-family: 'Crimson Text', serif;" %>
+      <p class="text-stone-500 text-xs mt-2" style="font-family: 'Crimson Text', serif;">
+        Solo puedes asignar a campanas en las que estes suscrito
+      </p>
     </div>
   </div>
 
-  <div>
-    <%= form.label :campaign_id, "Asignar a Campaña (opcional)",
-        class: "block text-gray-700 text-sm font-bold mb-2" %>
-    <%= form.collection_select :campaign_id,
-        current_user.campaigns.active,
-        :id,
-        :name,
-        { include_blank: "Sin asignar (disponible)" },
-        class: "shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" %>
-    <p class="text-xs text-gray-500 mt-1">
-      Solo puedes asignar a campañas en las que estés suscrito
-    </p>
-  </div>
-
-  <div class="flex items-center justify-between pt-4">
+  <div class="flex items-center justify-between pt-2">
     <%= form.submit warband.new_record? ? "Crear Warband" : "Actualizar Warband",
-        class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" %>
+        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
+        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
     <%= link_to "Cancelar", warbands_path,
-        class: "text-gray-600 hover:text-gray-800" %>
+        class: "text-stone-400 hover:text-amber-400 transition-colors tracking-wider uppercase",
+        style: "font-family: 'Cinzel', serif; font-size: 0.75rem;" %>
   </div>
 <% end %>
