@@ -1,0 +1,39 @@
+<div class="relative min-h-screen overflow-hidden">
+  <!-- Background layers -->
+  <div class="absolute inset-0 bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950"></div>
+  <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 fill=%22none%22/><path d=%22M0 50h100M50 0v100%22 stroke=%22%23a0845c%22 stroke-width=%220.5%22 opacity=%220.3%22/></svg>'); background-size: 100px 100px;"></div>
+
+  <!-- Top decorative border -->
+  <div class="relative z-10">
+    <div class="h-1 bg-gradient-to-r from-transparent via-amber-700 to-transparent"></div>
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
+  </div>
+
+  <!-- Navigation -->
+  <%= render "shared/dark_nav" %>
+
+  <!-- Flash messages -->
+  <% if notice %>
+    <div class="fixed top-4 right-4 z-50 mb-4 p-4 bg-emerald-900/80 border border-emerald-600/50 text-emerald-200 rounded shadow-lg" style="font-family: 'Crimson Text', serif;">
+      <%= notice %>
+    </div>
+  <% end %>
+  <% if alert %>
+    <div class="fixed top-4 right-4 z-50 mb-4 p-4 bg-red-900/80 border border-red-600/50 text-red-200 rounded shadow-lg" style="font-family: 'Crimson Text', serif;">
+      <%= alert %>
+    </div>
+  <% end %>
+
+  <!-- Content -->
+  <div class="relative z-10 px-6 py-8">
+    <div class="<%= local_assigns[:max_width] || 'max-w-6xl' %> mx-auto">
+      <%= yield %>
+    </div>
+  </div>
+
+  <!-- Bottom decorative border -->
+  <div class="relative z-10 mt-auto">
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-700 to-transparent"></div>
+    <div class="h-1 bg-gradient-to-r from-transparent via-amber-900/50 to-transparent"></div>
+  </div>
+</div>

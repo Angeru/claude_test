@@ -1,63 +1,96 @@
-<div class="max-w-6xl mx-auto px-4 py-8">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold">Mis Warbands</h1>
-    <div class="flex gap-4">
-      <%= link_to "Nueva Warband", new_warband_path,
-          class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-      <%= link_to "Volver al Dashboard", dashboard_path,
-          class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-500" %>
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
+
+<%= render layout: "shared/dark_layout" do %>
+  <!-- Section Title -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
+    <div>
+      <div class="flex items-center gap-4 mb-3">
+        <div class="h-px w-12 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+        <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-600/60" fill="currentColor">
+          <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+        </svg>
+        <div class="h-px w-12 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+      </div>
+      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+        Mis Warbands
+      </h1>
+    </div>
+    <div class="flex gap-3">
+      <%= link_to new_warband_path, class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        Nueva Warband
+      <% end %>
+      <%= link_to dashboard_path, class: "px-5 py-2.5 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        Dashboard
+      <% end %>
     </div>
   </div>
 
   <% if @warbands.empty? %>
-    <div class="bg-gray-100 border border-gray-300 rounded p-8 text-center">
-      <p class="text-gray-600 mb-4">No tienes warbands creadas todavía</p>
+    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-12 text-center">
+      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-700/40 flex items-center justify-center bg-amber-900/20">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-500/60" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+        </svg>
+      </div>
+      <p class="text-stone-400 mb-5" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;">
+        No tienes warbands creadas todavia
+      </p>
       <%= link_to "Crear mi primera Warband", new_warband_path,
-          class: "text-blue-500 hover:text-blue-700 font-semibold" %>
+          class: "text-amber-400 hover:text-amber-300 transition-colors tracking-wider uppercase",
+          style: "font-family: 'Cinzel', serif; font-size: 0.8rem;" %>
     </div>
   <% else %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <% @warbands.each do |warband| %>
-        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-          <h3 class="text-xl font-semibold mb-3"><%= warband.name %></h3>
+        <div class="group relative rounded-lg overflow-hidden border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 hover:border-amber-700/50 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-b from-amber-900/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative p-6">
+            <h3 class="text-amber-100 tracking-wider uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 1.05rem;">
+              <%= warband.name %>
+            </h3>
 
-          <div class="flex gap-2 mb-3">
-            <span class="inline-block bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded">
-              💰 <%= warband.gold %>
-            </span>
-            <span class="inline-block bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded">
-              ⭐ <%= warband.influence %>
-            </span>
-          </div>
-
-          <div class="mb-4">
-            <% if warband.in_campaign? %>
-              <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
-                En Campaña
+            <div class="flex gap-2 mb-4">
+              <span class="px-2 py-1 text-xs text-amber-400/80 border border-amber-900/40 rounded bg-amber-900/20" style="font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.05em;">
+                Oro: <%= warband.gold %>
               </span>
-              <p class="text-sm text-gray-600 mt-2">
-                Campaña: <%= link_to warband.campaign.name, campaign_path(warband.campaign),
-                           class: "text-blue-500 hover:underline" %>
-              </p>
-            <% else %>
-              <span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
-                Disponible
+              <span class="px-2 py-1 text-xs text-purple-400/80 border border-purple-900/40 rounded bg-purple-900/20" style="font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.05em;">
+                Influencia: <%= warband.influence %>
               </span>
-            <% end %>
-          </div>
+            </div>
 
-          <div class="flex gap-2 mt-4">
-            <%= link_to "Ver", warband_path(warband),
-                class: "text-blue-500 hover:text-blue-700 text-sm" %>
-            <%= link_to "Editar", edit_warband_path(warband),
-                class: "text-gray-600 hover:text-gray-800 text-sm" %>
-            <%= button_to "Eliminar", warband_path(warband),
-                method: :delete,
-                data: { turbo_confirm: "¿Estás seguro?" },
-                class: "text-red-500 hover:text-red-700 text-sm" %>
+            <div class="mb-4">
+              <% if warband.in_campaign? %>
+                <span class="px-2 py-1 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">
+                  En Campana
+                </span>
+                <p class="text-sm text-stone-400 mt-2" style="font-family: 'Crimson Text', serif;">
+                  Campana: <%= link_to warband.campaign.name, campaign_path(warband.campaign),
+                             class: "text-amber-400 hover:text-amber-300 transition-colors" %>
+                </p>
+              <% else %>
+                <span class="px-2 py-1 text-xs text-stone-400/80 border border-stone-700/40 rounded bg-stone-800/30" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">
+                  Disponible
+                </span>
+              <% end %>
+            </div>
+
+            <div class="flex gap-3 mt-5 pt-4 border-t border-stone-800/50">
+              <%= link_to "Ver", warband_path(warband),
+                  class: "text-amber-400 hover:text-amber-300 text-sm transition-colors tracking-wider uppercase",
+                  style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+              <%= link_to "Editar", edit_warband_path(warband),
+                  class: "text-stone-400 hover:text-amber-400 text-sm transition-colors tracking-wider uppercase",
+                  style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+              <%= button_to "Eliminar", warband_path(warband),
+                  method: :delete,
+                  data: { turbo_confirm: "¿Estas seguro?" },
+                  class: "text-red-500/70 hover:text-red-400 text-sm transition-colors tracking-wider uppercase",
+                  style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+            </div>
           </div>
         </div>
       <% end %>
     </div>
   <% end %>
-</div>
+<% end %>

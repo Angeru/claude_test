@@ -1,80 +1,105 @@
-<div class="max-w-4xl mx-auto px-4 py-8">
-  <%= link_to "← Volver a Mis Warbands", warbands_path,
-      class: "text-blue-500 hover:text-blue-700 mb-4 inline-block" %>
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
 
-  <div class="bg-white rounded-lg shadow-md p-8">
-    <h1 class="text-3xl font-bold mb-6"><%= @warband.name %></h1>
+<%= render layout: "shared/dark_layout" do %>
+  <!-- Back link -->
+  <%= link_to warbands_path, class: "inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors mb-6", style: "font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;" do %>
+    <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Mis Warbands
+  <% end %>
 
-    <div class="space-y-4">
+  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-8">
+    <!-- Title -->
+    <div class="flex items-center gap-4 mb-2">
+      <div class="h-px w-8 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+      <svg viewBox="0 0 24 24" class="w-4 h-4 text-amber-600/60" fill="currentColor">
+        <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+      </svg>
+      <div class="h-px w-8 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+    </div>
+    <h1 class="text-amber-100 tracking-[0.1em] uppercase mb-8" style="font-family: 'Cinzel Decorative', serif; font-size: 1.8rem; font-weight: 700;">
+      <%= @warband.name %>
+    </h1>
+
+    <div class="space-y-5">
       <div>
-        <span class="font-semibold">Propietario:</span>
-        <%= @warband.user.name %>
+        <span class="text-amber-600/80 text-xs tracking-widest uppercase" style="font-family: 'Cinzel', serif;">Propietario</span>
+        <p class="text-stone-300 mt-1" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;"><%= @warband.user.name %></p>
       </div>
 
-      <div class="flex gap-6">
-        <div>
-          <span class="font-semibold">Oro:</span>
-          <span class="inline-block bg-yellow-100 text-yellow-800 text-sm px-3 py-1 rounded ml-2">
-            💰 <%= @warband.gold %>
-          </span>
+      <div class="flex gap-4">
+        <div class="px-4 py-3 rounded border border-amber-900/40 bg-amber-900/10">
+          <span class="text-amber-600/80 text-xs tracking-widest uppercase block mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Oro</span>
+          <span class="text-amber-200 text-lg font-semibold" style="font-family: 'Cinzel', serif;"><%= @warband.gold %></span>
         </div>
-        <div>
-          <span class="font-semibold">Influencia:</span>
-          <span class="inline-block bg-purple-100 text-purple-800 text-sm px-3 py-1 rounded ml-2">
-            ⭐ <%= @warband.influence %>
-          </span>
+        <div class="px-4 py-3 rounded border border-purple-900/40 bg-purple-900/10">
+          <span class="text-purple-400/80 text-xs tracking-widest uppercase block mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Influencia</span>
+          <span class="text-purple-200 text-lg font-semibold" style="font-family: 'Cinzel', serif;"><%= @warband.influence %></span>
         </div>
       </div>
 
       <div>
-        <span class="font-semibold">Estado:</span>
-        <% if @warband.in_campaign? %>
-          <span class="inline-block bg-green-100 text-green-800 text-sm px-3 py-1 rounded ml-2">
-            En Campaña
-          </span>
-        <% else %>
-          <span class="inline-block bg-gray-100 text-gray-800 text-sm px-3 py-1 rounded ml-2">
-            Disponible
-          </span>
-        <% end %>
+        <span class="text-amber-600/80 text-xs tracking-widest uppercase" style="font-family: 'Cinzel', serif;">Estado</span>
+        <div class="mt-2">
+          <% if @warband.in_campaign? %>
+            <span class="px-3 py-1.5 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-900/20 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">
+              En Campana
+            </span>
+          <% else %>
+            <span class="px-3 py-1.5 text-xs text-stone-400/80 border border-stone-700/40 rounded bg-stone-800/30 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">
+              Disponible
+            </span>
+          <% end %>
+        </div>
       </div>
 
       <% if @warband.campaign.present? %>
         <div>
-          <span class="font-semibold">Campaña Actual:</span>
-          <%= link_to @warband.campaign.name, campaign_path(@warband.campaign),
-              class: "text-blue-500 hover:underline ml-2" %>
+          <span class="text-amber-600/80 text-xs tracking-widest uppercase" style="font-family: 'Cinzel', serif;">Campana Actual</span>
+          <p class="mt-1">
+            <%= link_to @warband.campaign.name, campaign_path(@warband.campaign),
+                class: "text-amber-400 hover:text-amber-300 transition-colors",
+                style: "font-family: 'Crimson Text', serif; font-size: 1.1rem;" %>
+          </p>
         </div>
       <% end %>
 
       <div>
-        <span class="font-semibold">Miembros:</span>
-        <%= link_to "#{@warband.member_count} miembros (#{@warband.hero_count} héroes, #{@warband.warrior_count} guerreros)",
-            warband_warband_members_path(@warband),
-            class: "text-blue-500 hover:underline ml-2" %>
+        <span class="text-amber-600/80 text-xs tracking-widest uppercase" style="font-family: 'Cinzel', serif;">Miembros</span>
+        <p class="mt-1">
+          <%= link_to "#{@warband.member_count} miembros (#{@warband.hero_count} heroes, #{@warband.warrior_count} guerreros)",
+              warband_warband_members_path(@warband),
+              class: "text-amber-400 hover:text-amber-300 transition-colors",
+              style: "font-family: 'Crimson Text', serif; font-size: 1.1rem;" %>
+        </p>
       </div>
 
       <div>
-        <span class="font-semibold">Creada:</span>
-        <%= l(@warband.created_at, format: :long) %>
+        <span class="text-amber-600/80 text-xs tracking-widest uppercase" style="font-family: 'Cinzel', serif;">Creada</span>
+        <p class="text-stone-400 mt-1" style="font-family: 'Crimson Text', serif;"><%= l(@warband.created_at, format: :long) %></p>
       </div>
     </div>
 
+    <!-- Matchups -->
     <% if @active_matchups.any? %>
-      <div class="mt-8 pt-6 border-t">
-        <h2 class="text-xl font-bold mb-4">Emparejamientos</h2>
+      <div class="mt-8 pt-6 border-t border-stone-800/50">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="h-px w-8 bg-amber-800/40"></div>
+          <h2 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 1rem;">Emparejamientos</h2>
+          <div class="h-px flex-1 bg-amber-800/40"></div>
+        </div>
         <div class="space-y-3">
           <% @active_matchups.each do |matchup| %>
             <% round = matchup.campaign_round %>
             <% campaign = round.campaign %>
             <% opponent = matchup.warband_1_id == @warband.id ? matchup.warband_2 : matchup.warband_1 %>
-            <div class="bg-gray-50 rounded-lg p-4 flex items-center justify-between">
+            <div class="rounded-lg border border-stone-800/50 bg-stone-900/50 p-4 flex items-center justify-between hover:border-amber-900/40 transition-colors">
               <div>
-                <p class="font-semibold text-gray-900">
+                <p class="text-amber-100" style="font-family: 'Cinzel', serif; font-size: 0.9rem;">
                   vs <%= opponent.name %>
-                  <span class="text-sm font-normal text-gray-500">(<%= opponent.user.name %>)</span>
+                  <span class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">(<%= opponent.user.name %>)</span>
                 </p>
-                <p class="text-sm text-gray-500">
+                <p class="text-stone-500 text-sm mt-1" style="font-family: 'Crimson Text', serif;">
                   <%= campaign.name %> &mdash; <%= round.display_name %>
                 </p>
               </div>
@@ -82,7 +107,8 @@
                 <% existing_roster = matchup.battle_rosters.find { |br| br.warband_id == @warband.id } %>
                 <% if existing_roster %>
                   <%= link_to campaign_campaign_round_matchup_battle_roster_path(campaign, round, matchup, existing_roster),
-                      class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700" do %>
+                      class: "inline-flex items-center px-4 py-2 bg-gradient-to-b from-red-800 to-red-900 text-red-100 rounded border border-red-700/50 hover:from-red-700 hover:to-red-800 transition-all text-sm shadow-lg",
+                      style: "font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.05em;" do %>
                     <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -91,7 +117,8 @@
                 <% elsif @warband.user == current_user %>
                   <%= button_to campaign_campaign_round_matchup_battle_rosters_path(campaign, round, matchup),
                       method: :post,
-                      class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700" do %>
+                      class: "inline-flex items-center px-4 py-2 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all text-sm shadow-lg",
+                      style: "font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.05em;" do %>
                     <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
@@ -105,32 +132,37 @@
       </div>
     <% end %>
 
+    <!-- Campaign owner notice -->
     <% if @warband.campaign.present? && campaign_owner?(@warband.campaign) && @warband.user != current_user %>
-      <div class="mt-6 mb-4 p-3 bg-purple-50 border border-purple-200 rounded">
-        <p class="text-purple-800 text-sm font-medium">
-          Estás gestionando esta warband como propietario de la campaña <%= @warband.campaign.name %>
+      <div class="mt-6 p-4 rounded border border-purple-800/40 bg-purple-900/20">
+        <p class="text-purple-300 text-sm" style="font-family: 'Crimson Text', serif;">
+          Estas gestionando esta warband como propietario de la campana <%= @warband.campaign.name %>
         </p>
       </div>
     <% end %>
 
+    <!-- Actions -->
     <% if can_manage_warband?(@warband) %>
-      <div class="flex gap-4 mt-8 pt-6 border-t">
+      <div class="flex flex-wrap gap-3 mt-8 pt-6 border-t border-stone-800/50">
         <%= link_to "Editar", edit_warband_path(@warband),
-            class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30",
+            style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
 
         <% if @warband.in_campaign? %>
-          <%= button_to "Remover de Campaña", remove_from_campaign_warband_path(@warband),
+          <%= button_to "Remover de Campana", remove_from_campaign_warband_path(@warband),
               method: :patch,
-              class: "bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded" %>
+              class: "px-5 py-2.5 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all cursor-pointer",
+              style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
         <% end %>
 
         <% if @warband.user == current_user %>
           <%= button_to "Eliminar", warband_path(@warband),
               method: :delete,
-              data: { turbo_confirm: "¿Estás seguro de eliminar esta warband?" },
-              class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" %>
+              data: { turbo_confirm: "¿Estas seguro de eliminar esta warband?" },
+              class: "px-5 py-2.5 border border-red-800/50 text-red-400 rounded hover:bg-red-900/20 hover:border-red-700/60 transition-all cursor-pointer",
+              style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
         <% end %>
       </div>
     <% end %>
   </div>
-</div>
+<% end %>
