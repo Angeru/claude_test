@@ -10,8 +10,6 @@
         <% end %>
         <% if @is_subscribed %>
           <%= button_to "Desuscribirse", unsubscribe_campaign_path(@campaign), method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 cursor-pointer", data: { turbo_confirm: "¿Estás seguro de desuscribirte de esta campaña?" } %>
-        <% else %>
-          <%= button_to "Suscribirse", subscribe_campaign_path(@campaign), method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer" %>
         <% end %>
         <%= link_to "Volver", campaigns_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-500" %>
       </div>
@@ -85,6 +83,34 @@
       </div>
     </div>
   </div>
+
+  <% unless @is_subscribed %>
+    <div id="subscribe" class="mt-8 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-bold mb-4 text-gray-800">Suscribirse a esta Campaña</h2>
+      <% if @available_warbands&.any? %>
+        <p class="text-gray-600 mb-4">Selecciona la warband que quieres usar en esta campaña:</p>
+        <%= form_with url: subscribe_campaign_path(@campaign), method: :post, class: "space-y-4" do |f| %>
+          <div>
+            <label for="warband_id" class="block text-sm font-medium text-gray-700 mb-1">Warband</label>
+            <select name="warband_id" id="warband_id" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+              <option value="">-- Selecciona una warband --</option>
+              <% @available_warbands.each do |warband| %>
+                <option value="<%= warband.id %>"><%= warband.name %> (<%= warband.member_count %> miembros)</option>
+              <% end %>
+            </select>
+          </div>
+          <div>
+            <%= f.submit "Suscribirse con esta Warband", class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer" %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="p-4 bg-yellow-50 border border-yellow-200 rounded">
+          <p class="text-yellow-800 text-sm">No tienes warbands disponibles. Debes crear una warband antes de suscribirte a una campaña.</p>
+          <%= link_to "Crear Warband", new_warband_path, class: "inline-block mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 
   <% if @campaign.warbands.any? %>
     <div class="mt-8 bg-white rounded-lg shadow-md p-6">

@@ -1,6 +1,7 @@
 class Warband < ApplicationRecord
   belongs_to :user
   belongs_to :campaign, optional: true
+  has_many :subscriptions, dependent: :nullify
   has_many :warband_members, dependent: :destroy
   has_many :battle_rosters, dependent: :destroy
   has_many :heroes, -> { where(member_type: "hero") }, class_name: "WarbandMember"

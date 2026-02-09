@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_02_05_213933) do
+ActiveRecord::Schema[7.1].define(version: 2026_02_09_153901) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -90,9 +90,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_05_213933) do
     t.datetime "subscribed_at", default: -> { "CURRENT_TIMESTAMP" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "warband_id"
     t.index ["campaign_id"], name: "index_subscriptions_on_campaign_id"
     t.index ["user_id", "campaign_id"], name: "index_subscriptions_on_user_id_and_campaign_id", unique: true
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
+    t.index ["warband_id"], name: "index_subscriptions_on_warband_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -204,6 +206,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_05_213933) do
   add_foreign_key "matchups", "warbands", column: "winner_id"
   add_foreign_key "subscriptions", "campaigns"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "subscriptions", "warbands"
   add_foreign_key "warband_equipments", "warband_members"
   add_foreign_key "warband_members", "warbands"
   add_foreign_key "warband_skills", "warband_members"
