@@ -10,7 +10,7 @@ image: angeru/warband-campaign-manager
 servers:
   web:
     hosts:
-      - 159.65.63.114
+      - 142.93.228.193
     options:
       # Mount a volume for SQLite persistence
       volume:
@@ -31,12 +31,25 @@ env:
   secret:
     - RAILS_MASTER_KEY
     - SECRET_KEY_BASE
+    - REDIS_URL
+
+# Redis para Action Cable
+accessories:
+  redis:
+    image: redis:7-alpine
+    host: 142.93.228.193
+    port: 6379
+    directories:
+      - data:/data
+    options:
+      memory: 256m
+    cmd: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
 
 # Kamal uses kamal-proxy as reverse proxy (replaces Nginx)
-# SSL is handled automatically via Let's Encrypt
+# SSL deshabilitado (sin dominio no hay SSL)
 proxy:
-  ssl: true
-  host: 159.65.63.114  # TODO: Cambia esto a tu dominio real
+  ssl: false
+  host: 142.93.228.193
   app_port: 3000
 
   # Health check to verify the app is running
