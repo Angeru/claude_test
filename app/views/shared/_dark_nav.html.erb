@@ -1,0 +1,23 @@
+<nav class="relative z-20 px-6 py-4">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center gap-3">
+      <%= link_to root_path, class: "flex items-center gap-3 hover:opacity-80 transition-opacity" do %>
+        <div class="w-10 h-10 rounded-full border-2 border-amber-700 flex items-center justify-center bg-stone-900/80">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-500" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="text-amber-500 text-sm tracking-[0.3em] uppercase" style="font-family: 'Cinzel', serif;">SBG Campaigns</span>
+      <% end %>
+    </div>
+    <div class="flex items-center gap-4">
+      <% if logged_in? %>
+        <span class="text-amber-200/60 text-sm" style="font-family: 'Crimson Text', serif;"><%= current_user.name %></span>
+        <%= link_to "Panel", dashboard_path, class: "text-amber-400 hover:text-amber-300 text-sm tracking-wider uppercase transition-colors", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <%= link_to "Campanas", campaigns_path, class: "text-amber-400 hover:text-amber-300 text-sm tracking-wider uppercase transition-colors", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <%= link_to "Warbands", warbands_path, class: "text-amber-400 hover:text-amber-300 text-sm tracking-wider uppercase transition-colors", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <%= button_to "Salir", logout_path, method: :delete, class: "text-stone-400 hover:text-amber-400 text-sm tracking-wider uppercase transition-colors cursor-pointer", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

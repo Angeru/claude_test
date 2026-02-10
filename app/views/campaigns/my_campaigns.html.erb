@@ -1,43 +1,71 @@
-<div class="max-w-6xl mx-auto">
-  <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-800">Mis Campañas</h1>
-      <div class="flex gap-4">
-        <%= link_to "Crear Campaña", new_campaign_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" %>
-        <%= link_to "Ver Todas las Campañas", campaigns_path, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-green-500" %>
-        <%= link_to "Volver al Dashboard", dashboard_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-500" %>
-      </div>
-    </div>
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
 
-    <% if @campaigns.any? %>
+<%= render layout: "shared/dark_layout" do %>
+  <!-- Section Title -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
+    <div>
+      <div class="flex items-center gap-4 mb-3">
+        <div class="h-px w-12 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+        <svg viewBox="0 0 24 24" class="w-5 h-5 text-amber-600/60" fill="currentColor">
+          <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+        </svg>
+        <div class="h-px w-12 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+      </div>
+      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+        Mis Campanas
+      </h1>
+    </div>
+    <div class="flex gap-3">
+      <%= link_to new_campaign_path, class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        Crear Campana
+      <% end %>
+      <%= link_to campaigns_path, class: "px-5 py-2.5 border border-emerald-800/50 text-emerald-400 rounded hover:bg-emerald-900/20 hover:border-emerald-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        Ver Todas
+      <% end %>
+      <%= link_to dashboard_path, class: "px-5 py-2.5 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        Dashboard
+      <% end %>
+    </div>
+  </div>
+
+  <% if @campaigns.any? %>
+    <!-- Campaign Table -->
+    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 overflow-hidden">
       <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descripción</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Administrador</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Período</th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+        <table class="min-w-full">
+          <thead>
+            <tr class="border-b border-amber-900/30">
+              <th class="px-6 py-4 text-left text-amber-200/70 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">Nombre</th>
+              <th class="px-6 py-4 text-left text-amber-200/70 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">Descripcion</th>
+              <th class="px-6 py-4 text-left text-amber-200/70 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">Administrador</th>
+              <th class="px-6 py-4 text-left text-amber-200/70 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">Estado</th>
+              <th class="px-6 py-4 text-left text-amber-200/70 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">Periodo</th>
+              <th class="px-6 py-4 text-left text-amber-200/70 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">Acciones</th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody>
             <% @campaigns.each do |campaign| %>
-              <tr class="hover:bg-gray-50">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"><%= campaign.name %></td>
-                <td class="px-6 py-4 text-sm text-gray-500"><%= truncate(campaign.description, length: 80) %></td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><%= campaign.user.name %></td>
+              <tr class="border-b border-stone-800/50 hover:bg-stone-800/30 transition-colors">
+                <td class="px-6 py-4 whitespace-nowrap text-amber-100" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">
+                  <%= campaign.name %>
+                </td>
+                <td class="px-6 py-4 text-stone-400 text-sm" style="font-family: 'Crimson Text', serif;">
+                  <%= truncate(campaign.description, length: 80) %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-stone-400 text-sm" style="font-family: 'Crimson Text', serif;">
+                  <%= campaign.user.name %>
+                </td>
                 <td class="px-6 py-4 whitespace-nowrap">
                   <% if campaign.active? %>
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Activa</span>
+                    <span class="px-2 py-1 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Activa</span>
                   <% elsif campaign.paused? %>
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pausada</span>
+                    <span class="px-2 py-1 text-xs text-yellow-400/80 border border-yellow-900/40 rounded bg-yellow-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Pausada</span>
                   <% else %>
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Finalizada</span>
+                    <span class="px-2 py-1 text-xs text-stone-400/80 border border-stone-700/40 rounded bg-stone-800/30" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Finalizada</span>
                   <% end %>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td class="px-6 py-4 whitespace-nowrap text-stone-400 text-sm" style="font-family: 'Crimson Text', serif;">
                   <% if campaign.start_date && campaign.end_date %>
                     <%= l(campaign.start_date, format: :short) %> - <%= l(campaign.end_date, format: :short) %>
                   <% elsif campaign.start_date %>
@@ -45,37 +73,57 @@
                   <% elsif campaign.end_date %>
                     Hasta <%= l(campaign.end_date, format: :short) %>
                   <% else %>
-                    Sin período definido
+                    Sin periodo definido
                   <% end %>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                  <%= link_to "Ver", campaign_path(campaign), class: "text-blue-600 hover:text-blue-900 mr-3" %>
-                  <% if campaign_owner?(campaign) %>
-                    <%= link_to "Gestionar", manage_warbands_campaign_path(campaign), class: "text-purple-600 hover:text-purple-900 mr-3" %>
-                  <% end %>
-                  <%= button_to "Desuscribirse", unsubscribe_campaign_path(campaign), method: :delete, class: "text-red-600 hover:text-red-900 bg-transparent border-0 p-0 cursor-pointer", data: { turbo_confirm: "¿Estás seguro de desuscribirte de #{campaign.name}?" } %>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center gap-3">
+                    <%= link_to "Ver", campaign_path(campaign),
+                        class: "text-amber-400 hover:text-amber-300 transition-colors tracking-wider uppercase",
+                        style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+                    <% if campaign_owner?(campaign) %>
+                      <%= link_to "Gestionar", manage_warbands_campaign_path(campaign),
+                          class: "text-purple-400 hover:text-purple-300 transition-colors tracking-wider uppercase",
+                          style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+                    <% end %>
+                    <%= button_to "Desuscribirse", unsubscribe_campaign_path(campaign),
+                        method: :delete,
+                        class: "text-red-500/70 hover:text-red-400 transition-colors tracking-wider uppercase bg-transparent border-0 p-0 cursor-pointer",
+                        style: "font-family: 'Cinzel', serif; font-size: 0.65rem;",
+                        data: { turbo_confirm: "¿Estas seguro de desuscribirte de #{campaign.name}?" } %>
+                  </div>
                 </td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
+    </div>
 
-      <div class="mt-4 text-gray-600 text-sm">
-        Total: <%= @campaigns.count %> campañas
-      </div>
-    <% else %>
-      <div class="text-center py-12">
-        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    <div class="mt-6 text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
+      Total: <%= @campaigns.count %> campanas
+    </div>
+  <% else %>
+    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-12 text-center">
+      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-700/40 flex items-center justify-center bg-amber-900/20">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-500/60" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
         </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">No estás suscrito a ninguna campaña</h3>
-        <p class="mt-1 text-sm text-gray-500">Comienza explorando las campañas disponibles o crea la tuya propia.</p>
-        <div class="mt-6 flex gap-4 justify-center">
-          <%= link_to "Crear Campaña", new_campaign_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
-          <%= link_to "Ver Campañas Disponibles", campaigns_path, class: "inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
-        </div>
       </div>
-    <% end %>
-  </div>
-</div>
+      <h3 class="text-amber-100/80 tracking-wider uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
+        No estas suscrito a ninguna campana
+      </h3>
+      <p class="text-stone-400 mb-6" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+        Comienza explorando las campanas disponibles o crea la tuya propia.
+      </p>
+      <div class="flex gap-4 justify-center">
+        <%= link_to "Crear Campana", new_campaign_path,
+            class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30",
+            style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+        <%= link_to "Ver Campanas Disponibles", campaigns_path,
+            class: "px-5 py-2.5 border border-emerald-800/50 text-emerald-400 rounded hover:bg-emerald-900/20 hover:border-emerald-700/60 transition-all",
+            style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
