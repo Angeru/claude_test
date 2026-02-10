@@ -55,8 +55,8 @@ proxy:
   # Health check to verify the app is running
   healthcheck:
     path: /up
-    interval: 3
-    timeout: 30
+    interval: 5
+    timeout: 60
 
 # SSH config
 ssh:
