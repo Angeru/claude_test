@@ -36,7 +36,7 @@ env:
 # SSL is handled automatically via Let's Encrypt
 proxy:
   ssl: true
-  host: 159.65.63.114  # TODO: Cambia esto a tu dominio real
+  host: mesbg.angelnieto.com
   app_port: 3000
 
   # Health check to verify the app is running
