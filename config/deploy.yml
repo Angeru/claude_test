@@ -48,8 +48,8 @@ accessories:
 # Kamal uses kamal-proxy as reverse proxy (replaces Nginx)
 # SSL deshabilitado (sin dominio no hay SSL)
 proxy:
-  ssl: false
-  host: 142.93.228.193
+  ssl: true
+  host: mesbg.angelnieto.com
   app_port: 3000
 
   # Health check to verify the app is running
