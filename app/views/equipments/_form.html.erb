@@ -1,0 +1,83 @@
+<%= form_with(model: @equipment, local: true, class: "space-y-6") do |f| %>
+  <% if @equipment.errors.any? %>
+    <div class="rounded-lg border border-red-800/40 bg-red-900/20 p-4">
+      <h3 class="text-red-300 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">
+        <%= pluralize(@equipment.errors.count, "error") %> impidieron guardar este equipo:
+      </h3>
+      <ul class="list-disc list-inside text-red-400/80 text-sm space-y-1" style="font-family: 'Crimson Text', serif;">
+        <% @equipment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-6">
+    <div class="md:grid md:grid-cols-2 md:gap-8">
+      <div class="space-y-5">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="h-px w-6 bg-amber-800/40"></div>
+          <h3 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Informacion Basica</h3>
+          <div class="h-px flex-1 bg-amber-800/40"></div>
+        </div>
+
+        <div>
+          <%= f.label :name, "Nombre", class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+          <%= f.text_field :name, class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors", style: "font-family: 'Crimson Text', serif;", placeholder: "Ej: Espada Elfica" %>
+        </div>
+
+        <div>
+          <%= f.label :equipment_type, "Tipo", class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+          <%= f.select :equipment_type,
+              options_for_select(Equipment::EQUIPMENT_TYPES.map { |t| [t.capitalize, t] }, @equipment.equipment_type),
+              { include_blank: "Selecciona un tipo" },
+              class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors", style: "font-family: 'Crimson Text', serif;" %>
+        </div>
+
+        <div>
+          <%= f.label :cost, "Coste (puntos)", class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+          <%= f.number_field :cost, class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors", style: "font-family: 'Crimson Text', serif;", min: 0 %>
+        </div>
+
+        <div>
+          <%= f.label :description, "Descripcion", class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+          <%= f.text_area :description, rows: 4, class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors", style: "font-family: 'Crimson Text', serif;", placeholder: "Descripcion opcional del equipo..." %>
+        </div>
+      </div>
+
+      <div class="space-y-5 mt-6 md:mt-0">
+        <div class="flex items-center gap-3 mb-5">
+          <div class="h-px w-6 bg-amber-800/40"></div>
+          <h3 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Modificadores</h3>
+          <div class="h-px flex-1 bg-amber-800/40"></div>
+        </div>
+        <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">Valores positivos aumentan el atributo, negativos lo reducen. Dejar en 0 si no aplica.</p>
+
+        <div class="grid grid-cols-2 gap-3">
+          <% [
+            [:movimiento_modifier, "Movimiento"], [:lucha_modifier, "Lucha"],
+            [:proyectiles_modifier, "Proyectiles"], [:fuerza_modifier, "Fuerza"],
+            [:defensa_modifier, "Defensa"], [:ataques_modifier, "Ataques"],
+            [:heridas_modifier, "Heridas"], [:coraje_modifier, "Coraje"],
+            [:inteligencia_modifier, "Inteligencia"], [:might_modifier, "Might"],
+            [:will_modifier, "Will"], [:fate_modifier, "Fate"]
+          ].each do |field, label| %>
+            <div>
+              <%= f.label field, label, class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
+              <%= f.number_field field, class: "w-full py-2 px-3 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors text-sm", style: "font-family: 'Crimson Text', serif;", min: -10, max: 10 %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-end space-x-3">
+    <%= link_to "Cancelar", equipments_path,
+        class: "px-5 py-2.5 border border-stone-700/50 text-stone-400 rounded hover:bg-stone-800/30 hover:text-amber-400 transition-all",
+        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+    <%= f.submit "Guardar Equipo",
+        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
+        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+  </div>
+<% end %>

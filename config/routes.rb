@@ -41,6 +41,10 @@ Rails.application.routes.draw do
     end
   end
 
+  # Catalog
+  resources :skills
+  resources :equipments
+
   # Warbands
   resources :warbands do
     resources :warband_members, path: 'members' do

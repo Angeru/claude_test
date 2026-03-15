@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_02_09_153901) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_05_134237) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -61,6 +61,29 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_09_153901) do
     t.index ["user_id"], name: "index_campaigns_on_user_id"
   end
 
+  create_table "equipments", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.string "equipment_type", null: false
+    t.integer "cost", default: 0, null: false
+    t.integer "movimiento_modifier", default: 0, null: false
+    t.integer "lucha_modifier", default: 0, null: false
+    t.integer "proyectiles_modifier", default: 0, null: false
+    t.integer "fuerza_modifier", default: 0, null: false
+    t.integer "defensa_modifier", default: 0, null: false
+    t.integer "ataques_modifier", default: 0, null: false
+    t.integer "heridas_modifier", default: 0, null: false
+    t.integer "coraje_modifier", default: 0, null: false
+    t.integer "inteligencia_modifier", default: 0, null: false
+    t.integer "might_modifier", default: 0, null: false
+    t.integer "will_modifier", default: 0, null: false
+    t.integer "fate_modifier", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["equipment_type"], name: "index_equipments_on_equipment_type"
+    t.index ["name"], name: "index_equipments_on_name"
+  end
+
   create_table "matchups", force: :cascade do |t|
     t.integer "campaign_round_id", null: false
     t.integer "warband_1_id", null: false
@@ -82,6 +105,29 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_09_153901) do
     t.index ["result"], name: "index_matchups_on_result"
     t.index ["warband_1_id"], name: "index_matchups_on_warband_1_id"
     t.index ["warband_2_id"], name: "index_matchups_on_warband_2_id"
+  end
+
+  create_table "skills", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.string "skill_type", null: false
+    t.integer "cost", default: 0, null: false
+    t.integer "movimiento_modifier", default: 0, null: false
+    t.integer "lucha_modifier", default: 0, null: false
+    t.integer "proyectiles_modifier", default: 0, null: false
+    t.integer "fuerza_modifier", default: 0, null: false
+    t.integer "defensa_modifier", default: 0, null: false
+    t.integer "ataques_modifier", default: 0, null: false
+    t.integer "heridas_modifier", default: 0, null: false
+    t.integer "coraje_modifier", default: 0, null: false
+    t.integer "inteligencia_modifier", default: 0, null: false
+    t.integer "might_modifier", default: 0, null: false
+    t.integer "will_modifier", default: 0, null: false
+    t.integer "fate_modifier", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_skills_on_name"
+    t.index ["skill_type"], name: "index_skills_on_skill_type"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -108,6 +154,20 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_09_153901) do
     t.string "role", default: "user", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["role"], name: "index_users_on_role"
+  end
+
+  create_table "warband_activity_logs", force: :cascade do |t|
+    t.integer "warband_id", null: false
+    t.integer "warband_member_id"
+    t.integer "user_id", null: false
+    t.string "action", null: false
+    t.string "entity_type", null: false
+    t.string "entity_name", null: false
+    t.text "changes_summary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_warband_activity_logs_on_created_at"
+    t.index ["warband_id"], name: "index_warband_activity_logs_on_warband_id"
   end
 
   create_table "warband_equipments", force: :cascade do |t|

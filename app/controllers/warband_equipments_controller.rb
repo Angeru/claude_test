@@ -13,6 +13,28 @@ class WarbandEquipmentsController < ApplicationController
 
   def new
     @equipment = @warband_member.warband_equipments.build
+    if params[:from_equipment_id].present?
+      catalog_equipment = Equipment.find_by(id: params[:from_equipment_id])
+      if catalog_equipment
+        @equipment.assign_attributes(
+          name: catalog_equipment.name, description: catalog_equipment.description,
+          equipment_type: catalog_equipment.equipment_type, cost: catalog_equipment.cost,
+          movimiento_modifier: catalog_equipment.movimiento_modifier,
+          lucha_modifier: catalog_equipment.lucha_modifier,
+          proyectiles_modifier: catalog_equipment.proyectiles_modifier,
+          fuerza_modifier: catalog_equipment.fuerza_modifier,
+          defensa_modifier: catalog_equipment.defensa_modifier,
+          ataques_modifier: catalog_equipment.ataques_modifier,
+          heridas_modifier: catalog_equipment.heridas_modifier,
+          coraje_modifier: catalog_equipment.coraje_modifier,
+          inteligencia_modifier: catalog_equipment.inteligencia_modifier,
+          might_modifier: catalog_equipment.might_modifier,
+          will_modifier: catalog_equipment.will_modifier,
+          fate_modifier: catalog_equipment.fate_modifier
+        )
+      end
+    end
+    @catalog_equipments = Equipment.by_name
   end
 
   def create

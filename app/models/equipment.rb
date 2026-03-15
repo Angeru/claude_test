@@ -1,13 +1,7 @@
-class WarbandEquipment < ApplicationRecord
+class Equipment < ApplicationRecord
+  self.table_name = "equipments"
+
   EQUIPMENT_TYPES = %w[weapon armor shield accessory mount consumable].freeze
-
-  belongs_to :warband_member
-
-  after_create  :log_creation
-  after_update  :log_update_changes
-  after_destroy :log_destruction
-
-  EXCLUDED_FIELDS = %w[id created_at updated_at warband_id warband_member_id].freeze
 
   # Validations
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
@@ -63,20 +57,6 @@ class WarbandEquipment < ApplicationRecord
   end
 
   private
-
-  def log_creation
-    WarbandActivityLog.log(:create, self, user: Current.user, warband: warband_member&.warband, member: warband_member)
-  end
-
-  def log_update_changes
-    relevant = saved_changes.except(*EXCLUDED_FIELDS)
-    return if relevant.empty?
-    WarbandActivityLog.log(:update, self, user: Current.user, warband: warband_member&.warband, member: warband_member, changes: relevant)
-  end
-
-  def log_destruction
-    WarbandActivityLog.log(:destroy, self, user: Current.user, warband: warband_member&.warband, member: warband_member)
-  end
 
   def format_modifier(value)
     value.positive? ? "+#{value}" : value.to_s

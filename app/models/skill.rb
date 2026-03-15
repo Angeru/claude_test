@@ -1,17 +1,9 @@
-class WarbandEquipment < ApplicationRecord
-  EQUIPMENT_TYPES = %w[weapon armor shield accessory mount consumable].freeze
-
-  belongs_to :warband_member
-
-  after_create  :log_creation
-  after_update  :log_update_changes
-  after_destroy :log_destruction
-
-  EXCLUDED_FIELDS = %w[id created_at updated_at warband_id warband_member_id].freeze
+class Skill < ApplicationRecord
+  SKILL_TYPES = %w[combat magic passive special heroic].freeze
 
   # Validations
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
-  validates :equipment_type, presence: true, inclusion: { in: EQUIPMENT_TYPES }
+  validates :skill_type, presence: true, inclusion: { in: SKILL_TYPES }
   validates :cost, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   # Stat modifiers validations (can be positive or negative)
@@ -30,13 +22,14 @@ class WarbandEquipment < ApplicationRecord
 
   # Scopes
   scope :by_name, -> { order(:name) }
-  scope :by_type, ->(type) { where(equipment_type: type) }
-  scope :weapons, -> { where(equipment_type: 'weapon') }
-  scope :armors, -> { where(equipment_type: 'armor') }
+  scope :by_type, ->(type) { where(skill_type: type) }
+  scope :combat, -> { where(skill_type: 'combat') }
+  scope :magic, -> { where(skill_type: 'magic') }
+  scope :passive, -> { where(skill_type: 'passive') }
 
   # Helper methods
   def display_type
-    equipment_type.capitalize
+    skill_type.capitalize
   end
 
   def has_modifiers?
@@ -63,20 +56,6 @@ class WarbandEquipment < ApplicationRecord
   end
 
   private
-
-  def log_creation
-    WarbandActivityLog.log(:create, self, user: Current.user, warband: warband_member&.warband, member: warband_member)
-  end
-
-  def log_update_changes
-    relevant = saved_changes.except(*EXCLUDED_FIELDS)
-    return if relevant.empty?
-    WarbandActivityLog.log(:update, self, user: Current.user, warband: warband_member&.warband, member: warband_member, changes: relevant)
-  end
-
-  def log_destruction
-    WarbandActivityLog.log(:destroy, self, user: Current.user, warband: warband_member&.warband, member: warband_member)
-  end
 
   def format_modifier(value)
     value.positive? ? "+#{value}" : value.to_s

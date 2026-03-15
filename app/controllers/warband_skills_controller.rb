@@ -13,6 +13,28 @@ class WarbandSkillsController < ApplicationController
 
   def new
     @skill = @warband_member.warband_skills.build
+    if params[:from_skill_id].present?
+      catalog_skill = Skill.find_by(id: params[:from_skill_id])
+      if catalog_skill
+        @skill.assign_attributes(
+          name: catalog_skill.name, description: catalog_skill.description,
+          skill_type: catalog_skill.skill_type, cost: catalog_skill.cost,
+          movimiento_modifier: catalog_skill.movimiento_modifier,
+          lucha_modifier: catalog_skill.lucha_modifier,
+          proyectiles_modifier: catalog_skill.proyectiles_modifier,
+          fuerza_modifier: catalog_skill.fuerza_modifier,
+          defensa_modifier: catalog_skill.defensa_modifier,
+          ataques_modifier: catalog_skill.ataques_modifier,
+          heridas_modifier: catalog_skill.heridas_modifier,
+          coraje_modifier: catalog_skill.coraje_modifier,
+          inteligencia_modifier: catalog_skill.inteligencia_modifier,
+          might_modifier: catalog_skill.might_modifier,
+          will_modifier: catalog_skill.will_modifier,
+          fate_modifier: catalog_skill.fate_modifier
+        )
+      end
+    end
+    @catalog_skills = Skill.by_name
   end
 
   def create

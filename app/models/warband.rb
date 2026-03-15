@@ -4,6 +4,7 @@ class Warband < ApplicationRecord
   has_many :subscriptions, dependent: :nullify
   has_many :warband_members, dependent: :destroy
   has_many :battle_rosters, dependent: :destroy
+  has_many :warband_activity_logs, dependent: :destroy
   has_many :heroes, -> { where(member_type: "hero") }, class_name: "WarbandMember"
   has_many :warriors, -> { where(member_type: "warrior") }, class_name: "WarbandMember"
 
@@ -13,6 +14,12 @@ class Warband < ApplicationRecord
   validates :influence, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validate :campaign_must_be_subscribed
   validate :user_can_only_have_one_warband_per_campaign
+
+  after_create  :log_creation
+  after_update  :log_update_changes
+  after_destroy :log_destruction
+
+  EXCLUDED_FIELDS = %w[id created_at updated_at warband_id warband_member_id].freeze
 
   scope :available, -> { where(campaign_id: nil) }
   scope :in_campaign, -> { where.not(campaign_id: nil) }
@@ -47,6 +54,20 @@ class Warband < ApplicationRecord
   end
 
   private
+
+  def log_creation
+    WarbandActivityLog.log(:create, self, user: Current.user, warband: self)
+  end
+
+  def log_update_changes
+    relevant = saved_changes.except(*EXCLUDED_FIELDS)
+    return if relevant.empty?
+    WarbandActivityLog.log(:update, self, user: Current.user, warband: self, changes: relevant)
+  end
+
+  def log_destruction
+    WarbandActivityLog.log(:destroy, self, user: Current.user, warband: self)
+  end
 
   def campaign_must_be_subscribed
     return if campaign_id.nil?

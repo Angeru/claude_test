@@ -6,6 +6,12 @@ class WarbandMember < ApplicationRecord
   has_many :warband_skills, dependent: :destroy
   has_many :battle_roster_units, dependent: :destroy
 
+  after_create  :log_creation
+  after_update  :log_update_changes
+  after_destroy :log_destruction
+
+  EXCLUDED_FIELDS = %w[id created_at updated_at warband_id warband_member_id].freeze
+
   # Enum for member type
   enum member_type: {
     warrior: "warrior",
@@ -39,6 +45,20 @@ class WarbandMember < ApplicationRecord
   scope :by_name, -> { order(:name) }
 
   # Helper methods
+  def log_creation
+    WarbandActivityLog.log(:create, self, user: Current.user, warband: warband, member: self)
+  end
+
+  def log_update_changes
+    relevant = saved_changes.except(*EXCLUDED_FIELDS)
+    return if relevant.empty?
+    WarbandActivityLog.log(:update, self, user: Current.user, warband: warband, member: self, changes: relevant)
+  end
+
+  def log_destruction
+    WarbandActivityLog.log(:destroy, self, user: Current.user, warband: warband, member: self)
+  end
+
   def hero?
     member_type == "hero"
   end

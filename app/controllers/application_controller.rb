@@ -4,12 +4,17 @@ class ApplicationController < ActionController::Base
 
   # Check session timeout before processing any action
   before_action :check_session_timeout
+  before_action :set_current_user
 
   helper_method :current_user, :logged_in?, :campaign_owner?, :can_manage_warband?,
                 :campaign_subscriber?, :can_manage_campaign?, :can_view_campaign?,
                 :user_has_subscriptions?
 
   private
+
+  def set_current_user
+    Current.user = current_user
+  end
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]

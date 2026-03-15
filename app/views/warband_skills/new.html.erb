@@ -19,5 +19,31 @@
   </h1>
   <p class="text-stone-400 mb-8" style="font-family: 'Crimson Text', serif;">Anadiendo skill a <%= @warband_member.name %></p>
 
+  <% if @catalog_skills.any? %>
+    <div class="rounded-lg border border-purple-900/30 bg-purple-950/20 p-5 mb-6">
+      <div class="flex items-center gap-3 mb-4">
+        <svg class="w-4 h-4 text-purple-400/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+        <h3 class="text-purple-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.75rem;">Cargar desde el Catalogo</h3>
+      </div>
+      <%= form_with url: new_warband_warband_member_warband_skill_path(@warband_member.warband, @warband_member), method: :get, local: true, class: "flex gap-3 items-end" do |f| %>
+        <div class="flex-1">
+          <%= f.label :from_skill_id, "Selecciona una skill del catalogo", class: "block text-purple-200/60 text-xs tracking-widest uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
+          <%= f.select :from_skill_id,
+              options_for_select(@catalog_skills.map { |s| ["#{s.name} (#{s.display_type} · #{s.cost}pts)", s.id] }, params[:from_skill_id]),
+              { include_blank: "— Elige del catalogo —" },
+              class: "w-full py-2.5 px-4 bg-stone-900/80 border border-purple-900/40 rounded text-amber-100 focus:outline-none focus:border-purple-700/60 focus:ring-1 focus:ring-purple-700/30 transition-colors", style: "font-family: 'Crimson Text', serif;" %>
+        </div>
+        <%= f.submit "Cargar",
+            class: "px-4 py-2.5 bg-purple-900/40 border border-purple-700/40 text-purple-300 rounded hover:bg-purple-800/40 hover:text-purple-200 transition-all cursor-pointer whitespace-nowrap",
+            style: "font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;" %>
+      <% end %>
+      <% if params[:from_skill_id].present? %>
+        <p class="mt-3 text-purple-300/60 text-xs" style="font-family: 'Crimson Text', serif;">Formulario pre-rellenado desde el catalogo. Puedes modificar los valores antes de guardar.</p>
+      <% end %>
+    </div>
+  <% end %>
+
   <%= render "form", skill: @skill %>
 <% end %>

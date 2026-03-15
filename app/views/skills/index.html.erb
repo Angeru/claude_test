@@ -1,0 +1,81 @@
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
+
+<%= render layout: "shared/dark_layout" do %>
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+    <div>
+      <div class="flex items-center gap-4 mb-3">
+        <div class="h-px w-8 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+        <svg viewBox="0 0 24 24" class="w-4 h-4 text-amber-600/60" fill="currentColor">
+          <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+        </svg>
+        <div class="h-px w-8 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+      </div>
+      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;">
+        Catalogo de Skills
+      </h1>
+      <p class="text-stone-400 mt-2" style="font-family: 'Crimson Text', serif;">
+        <%= pluralize(@skills.count, "skill") %> disponible<%= @skills.count == 1 ? "" : "s" %> en el catalogo
+      </p>
+    </div>
+    <%= link_to new_skill_path, class: "px-5 py-2.5 bg-gradient-to-b from-purple-700 to-purple-900 text-purple-100 rounded border border-purple-600/50 hover:from-purple-600 hover:to-purple-800 transition-all shadow-lg shadow-purple-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+      Anadir al Catalogo
+    <% end %>
+  </div>
+
+  <% if @skills.any? %>
+    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 overflow-hidden">
+      <div class="divide-y divide-stone-800/50">
+        <% @skills.each do |skill| %>
+          <div class="p-5 hover:bg-stone-800/20 transition-colors">
+            <div class="flex items-center justify-between">
+              <div class="flex-1">
+                <div class="flex items-center justify-between">
+                  <p class="text-amber-100 tracking-wider" style="font-family: 'Cinzel', serif; font-size: 1rem;"><%= skill.name %></p>
+                  <span class="px-2 py-1 text-xs text-purple-300/80 border border-purple-900/30 rounded bg-purple-900/20 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.6rem;"><%= skill.display_type %></span>
+                </div>
+                <% if skill.description.present? %>
+                  <p class="mt-2 text-stone-400 text-sm" style="font-family: 'Crimson Text', serif;"><%= skill.description %></p>
+                <% end %>
+                <div class="mt-2">
+                  <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
+                    <span class="text-amber-600/70" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">Coste:</span> <%= skill.cost %> pts
+                  </p>
+                </div>
+                <% if skill.has_modifiers? %>
+                  <div class="mt-2">
+                    <p class="text-stone-400 text-sm" style="font-family: 'Crimson Text', serif;">
+                      <span class="text-amber-600/70" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">Modificadores:</span> <%= skill.modifier_summary %>
+                    </p>
+                  </div>
+                <% end %>
+              </div>
+              <div class="ml-4 flex-shrink-0 flex space-x-2">
+                <%= link_to "Editar", edit_skill_path(skill),
+                    class: "px-3 py-1.5 border border-amber-800/40 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/50 transition-all",
+                    style: "font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase;" %>
+                <%= button_to "Eliminar", skill_path(skill),
+                    method: :delete, data: { turbo_confirm: "¿Estas seguro de eliminar esta skill del catalogo?" },
+                    class: "px-3 py-1.5 border border-red-800/40 text-red-400 rounded hover:bg-red-900/20 hover:border-red-700/50 transition-all",
+                    style: "font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase;" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-12 text-center">
+      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-purple-700/40 flex items-center justify-center bg-purple-900/20">
+        <svg class="w-8 h-8 text-purple-500/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+      </div>
+      <h3 class="text-amber-200/80 tracking-wider uppercase mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Catalogo vacio</h3>
+      <p class="text-stone-500 text-sm mb-5" style="font-family: 'Crimson Text', serif;">No hay skills en el catalogo todavia. Anade la primera.</p>
+      <%= link_to "Anadir Skill", new_skill_path,
+          class: "px-5 py-2.5 bg-gradient-to-b from-purple-700 to-purple-900 text-purple-100 rounded border border-purple-600/50 hover:from-purple-600 hover:to-purple-800 transition-all shadow-lg shadow-purple-900/30 inline-block",
+          style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+    </div>
+  <% end %>
+<% end %>

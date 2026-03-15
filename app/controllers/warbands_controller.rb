@@ -17,6 +17,8 @@ class WarbandsController < ApplicationController
 
     @active_matchups = Matchup.includes(:campaign_round => :campaign, :warband_1 => :user, :warband_2 => :user, :battle_rosters => [])
                               .where('warband_1_id = :wid OR warband_2_id = :wid', wid: @warband.id)
+
+    @activity_logs = @warband.warband_activity_logs.includes(:user, :warband_member).recent.limit(30)
   end
 
   def new

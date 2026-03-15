@@ -18,7 +18,8 @@
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(bin/rails s:*)",
-      "Bash(pkill:*)"
+      "Bash(pkill:*)",
+      "Bash(git:*)"
     ]
   }
 }
