@@ -34,19 +34,20 @@
     <h2 class="text-amber-600/70 tracking-wider uppercase mb-4" style="font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.1em;">Estadisticas</h2>
     <div class="grid grid-cols-3 gap-3">
       <% [
-        ["Movimiento", @member.movimiento, '"'],
-        ["Lucha", @member.lucha, '+'],
-        ["Proyectiles", @member.proyectiles, '+'],
-        ["Fuerza", @member.fuerza, ''],
-        ["Defensa", @member.defensa, ''],
-        ["Ataques", @member.ataques, ''],
-        ["Heridas", @member.heridas, ''],
-        ["Coraje", @member.coraje, ''],
-        ["Inteligencia", @member.inteligencia, '']
-      ].each do |label, value, suffix| %>
+        ["Movimiento", @member.movimiento, '"', "movimiento"],
+        ["Lucha", @member.lucha, '+', "lucha"],
+        ["Proyectiles", @member.proyectiles, '+', "proyectiles"],
+        ["Fuerza", @member.fuerza, '', "fuerza"],
+        ["Defensa", @member.defensa, '', "defensa"],
+        ["Ataques", @member.ataques, '', "ataques"],
+        ["Heridas", @member.heridas, '', "heridas"],
+        ["Coraje", @member.coraje, '', "coraje"],
+        ["Inteligencia", @member.inteligencia, '', "inteligencia"]
+      ].each do |label, value, suffix, stat_key| %>
+        <% modifier = @member.total_modifier(stat_key) %>
         <div class="bg-stone-800/50 border border-stone-700/30 p-3 rounded">
           <span class="font-semibold block text-amber-600/70 mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;"><%= label %></span>
-          <span class="text-stone-300 text-lg" style="font-family: 'Crimson Text', serif;"><%= value %><%= suffix %></span>
+          <span class="text-stone-300 text-lg" style="font-family: 'Crimson Text', serif;"><%= value %><%= suffix %><% if modifier != 0 %><span class="text-amber-400/70 text-sm ml-1">(<%= modifier > 0 ? "+#{modifier}" : modifier.to_s %>)</span><% end %></span>
         </div>
       <% end %>
     </div>
@@ -57,17 +58,20 @@
     <div class="mb-8">
       <h2 class="text-amber-600/70 tracking-wider uppercase mb-4" style="font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.1em;">Estadisticas de Heroe</h2>
       <div class="grid grid-cols-3 gap-3">
+        <% might_mod = @member.total_modifier("might") %>
         <div class="bg-purple-900/20 border border-purple-800/30 p-3 rounded">
           <span class="font-semibold block text-purple-400/70 mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;">Might</span>
-          <span class="text-purple-200 text-lg" style="font-family: 'Crimson Text', serif;"><%= @member.might %></span>
+          <span class="text-purple-200 text-lg" style="font-family: 'Crimson Text', serif;"><%= @member.might %><% if might_mod != 0 %><span class="text-amber-400/70 text-sm ml-1">(<%= might_mod > 0 ? "+#{might_mod}" : might_mod.to_s %>)</span><% end %></span>
         </div>
+        <% will_mod = @member.total_modifier("will") %>
         <div class="bg-blue-900/20 border border-blue-800/30 p-3 rounded">
           <span class="font-semibold block text-blue-400/70 mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;">Will</span>
-          <span class="text-blue-200 text-lg" style="font-family: 'Crimson Text', serif;"><%= @member.will %></span>
+          <span class="text-blue-200 text-lg" style="font-family: 'Crimson Text', serif;"><%= @member.will %><% if will_mod != 0 %><span class="text-amber-400/70 text-sm ml-1">(<%= will_mod > 0 ? "+#{will_mod}" : will_mod.to_s %>)</span><% end %></span>
         </div>
+        <% fate_mod = @member.total_modifier("fate") %>
         <div class="bg-emerald-900/20 border border-emerald-800/30 p-3 rounded">
           <span class="font-semibold block text-emerald-400/70 mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;">Fate</span>
-          <span class="text-emerald-200 text-lg" style="font-family: 'Crimson Text', serif;"><%= @member.fate %></span>
+          <span class="text-emerald-200 text-lg" style="font-family: 'Crimson Text', serif;"><%= @member.fate %><% if fate_mod != 0 %><span class="text-amber-400/70 text-sm ml-1">(<%= fate_mod > 0 ? "+#{fate_mod}" : fate_mod.to_s %>)</span><% end %></span>
         </div>
       </div>
     </div>

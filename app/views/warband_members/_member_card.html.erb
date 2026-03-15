@@ -18,19 +18,20 @@
     <!-- Stats Grid -->
     <div class="grid grid-cols-3 gap-2 text-sm mb-4">
       <% [
-        ["Mov", member.movimiento, '"'],
-        ["L", member.lucha, '+'],
-        ["P", member.proyectiles, '+'],
-        ["F", member.fuerza, ''],
-        ["D", member.defensa, ''],
-        ["A", member.ataques, ''],
-        ["H", member.heridas, ''],
-        ["C", member.coraje, ''],
-        ["I", member.inteligencia, '']
-      ].each do |label, value, suffix| %>
+        ["Mov", member.movimiento, '"', "movimiento"],
+        ["L", member.lucha, '+', "lucha"],
+        ["P", member.proyectiles, '+', "proyectiles"],
+        ["F", member.fuerza, '', "fuerza"],
+        ["D", member.defensa, '', "defensa"],
+        ["A", member.ataques, '', "ataques"],
+        ["H", member.heridas, '', "heridas"],
+        ["C", member.coraje, '', "coraje"],
+        ["I", member.inteligencia, '', "inteligencia"]
+      ].each do |label, value, suffix, stat_key| %>
+        <% modifier = member.total_modifier(stat_key) %>
         <div class="bg-stone-800/50 border border-stone-700/30 p-2 rounded">
           <span class="font-semibold block text-amber-600/70 text-xs" style="font-family: 'Cinzel', serif; font-size: 0.6rem;"><%= label %></span>
-          <span class="text-stone-300" style="font-family: 'Crimson Text', serif;"><%= value %><%= suffix %></span>
+          <span class="text-stone-300" style="font-family: 'Crimson Text', serif;"><%= value %><%= suffix %><% if modifier != 0 %><span class="text-amber-400/70 text-xs ml-1">(<%= modifier > 0 ? "+#{modifier}" : modifier.to_s %>)</span><% end %></span>
         </div>
       <% end %>
     </div>
@@ -38,17 +39,20 @@
     <!-- Hero Stats -->
     <% if member.might > 0 || member.will > 0 || member.fate > 0 %>
       <div class="grid grid-cols-3 gap-2 text-sm mb-4 border-t border-stone-800/50 pt-3">
+        <% might_mod = member.total_modifier("might") %>
         <div class="bg-purple-900/20 border border-purple-800/30 p-2 rounded">
           <span class="font-semibold block text-purple-400/70 text-xs" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Might</span>
-          <span class="text-purple-200" style="font-family: 'Crimson Text', serif;"><%= member.might %></span>
+          <span class="text-purple-200" style="font-family: 'Crimson Text', serif;"><%= member.might %><% if might_mod != 0 %><span class="text-amber-400/70 text-xs ml-1">(<%= might_mod > 0 ? "+#{might_mod}" : might_mod.to_s %>)</span><% end %></span>
         </div>
+        <% will_mod = member.total_modifier("will") %>
         <div class="bg-blue-900/20 border border-blue-800/30 p-2 rounded">
           <span class="font-semibold block text-blue-400/70 text-xs" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Will</span>
-          <span class="text-blue-200" style="font-family: 'Crimson Text', serif;"><%= member.will %></span>
+          <span class="text-blue-200" style="font-family: 'Crimson Text', serif;"><%= member.will %><% if will_mod != 0 %><span class="text-amber-400/70 text-xs ml-1">(<%= will_mod > 0 ? "+#{will_mod}" : will_mod.to_s %>)</span><% end %></span>
         </div>
+        <% fate_mod = member.total_modifier("fate") %>
         <div class="bg-emerald-900/20 border border-emerald-800/30 p-2 rounded">
           <span class="font-semibold block text-emerald-400/70 text-xs" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Fate</span>
-          <span class="text-emerald-200" style="font-family: 'Crimson Text', serif;"><%= member.fate %></span>
+          <span class="text-emerald-200" style="font-family: 'Crimson Text', serif;"><%= member.fate %><% if fate_mod != 0 %><span class="text-amber-400/70 text-xs ml-1">(<%= fate_mod > 0 ? "+#{fate_mod}" : fate_mod.to_s %>)</span><% end %></span>
         </div>
       </div>
     <% end %>

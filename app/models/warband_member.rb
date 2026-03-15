@@ -59,6 +59,11 @@ class WarbandMember < ApplicationRecord
     WarbandActivityLog.log(:destroy, self, user: Current.user, warband: warband, member: self)
   end
 
+  def total_modifier(stat)
+    field = "#{stat}_modifier"
+    warband_equipments.sum(field) + warband_skills.sum(field)
+  end
+
   def hero?
     member_type == "hero"
   end
