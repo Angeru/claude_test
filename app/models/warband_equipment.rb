@@ -13,6 +13,7 @@ class WarbandEquipment < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
   validates :equipment_type, presence: true, inclusion: { in: EQUIPMENT_TYPES }
   validates :cost, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :ranking, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   # Stat modifiers validations (can be positive or negative)
   validates :movimiento_modifier, numericality: { only_integer: true, greater_than_or_equal_to: -10, less_than_or_equal_to: 10 }

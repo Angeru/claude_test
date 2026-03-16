@@ -37,6 +37,7 @@ class WarbandMember < ApplicationRecord
   validates :will, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
   validates :fate, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
   validates :experience, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :ranking, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   # Scopes
   scope :warriors, -> { where(member_type: "warrior") }
@@ -62,6 +63,10 @@ class WarbandMember < ApplicationRecord
   def total_modifier(stat)
     field = "#{stat}_modifier"
     warband_equipments.sum(field) + warband_skills.sum(field)
+  end
+
+  def total_ranking
+    ranking + warband_equipments.sum(:ranking)
   end
 
   def hero?

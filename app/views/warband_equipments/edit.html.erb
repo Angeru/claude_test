@@ -14,9 +14,22 @@
     </svg>
     <div class="h-px w-8 bg-gradient-to-l from-transparent to-amber-700/60"></div>
   </div>
-  <h1 class="text-amber-100 tracking-[0.1em] uppercase mb-2" style="font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;">
-    Editar Equipo
-  </h1>
+  <div class="flex items-start justify-between mb-2">
+    <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;">
+      Editar Equipo
+    </h1>
+    <%= button_to save_as_profile_warband_warband_member_warband_equipment_path(@warband_member.warband, @warband_member, @equipment),
+        method: :post,
+        class: "inline-flex items-center gap-2 px-3 py-1.5 bg-stone-800/60 border border-amber-900/40 text-amber-400/80 rounded hover:bg-amber-950/40 hover:text-amber-300 hover:border-amber-700/50 transition-all",
+        style: "font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;",
+        data: { turbo_confirm: "¿Guardar \"#{@equipment.name}\" como perfil en el catálogo?" } do %>
+      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-8H7v8M7 3v5h8"/>
+      </svg>
+      Guardar como Perfil
+    <% end %>
+  </div>
   <p class="text-stone-400 mb-8" style="font-family: 'Crimson Text', serif;">Editando <%= @equipment.name %> de <%= @warband_member.name %></p>
 
   <%= render "form", equipment: @equipment %>

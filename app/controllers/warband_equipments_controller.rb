@@ -2,7 +2,7 @@ class WarbandEquipmentsController < ApplicationController
   before_action :require_login
   before_action :set_warband_member
   before_action :authorize_warband_access!
-  before_action :set_equipment, only: [:show, :edit, :update, :destroy]
+  before_action :set_equipment, only: [:show, :edit, :update, :destroy, :save_as_profile]
 
   def index
     @equipments = @warband_member.warband_equipments.by_name
@@ -19,6 +19,7 @@ class WarbandEquipmentsController < ApplicationController
         @equipment.assign_attributes(
           name: catalog_equipment.name, description: catalog_equipment.description,
           equipment_type: catalog_equipment.equipment_type, cost: catalog_equipment.cost,
+          ranking: catalog_equipment.ranking,
           movimiento_modifier: catalog_equipment.movimiento_modifier,
           lucha_modifier: catalog_equipment.lucha_modifier,
           proyectiles_modifier: catalog_equipment.proyectiles_modifier,
@@ -66,6 +67,36 @@ class WarbandEquipmentsController < ApplicationController
                 notice: "Equipo eliminado exitosamente"
   end
 
+  def save_as_profile
+    profile = Equipment.new(
+      name: @equipment.name,
+      description: @equipment.description,
+      equipment_type: @equipment.equipment_type,
+      cost: @equipment.cost,
+      ranking: @equipment.ranking,
+      movimiento_modifier: @equipment.movimiento_modifier,
+      lucha_modifier: @equipment.lucha_modifier,
+      proyectiles_modifier: @equipment.proyectiles_modifier,
+      fuerza_modifier: @equipment.fuerza_modifier,
+      defensa_modifier: @equipment.defensa_modifier,
+      ataques_modifier: @equipment.ataques_modifier,
+      heridas_modifier: @equipment.heridas_modifier,
+      coraje_modifier: @equipment.coraje_modifier,
+      inteligencia_modifier: @equipment.inteligencia_modifier,
+      might_modifier: @equipment.might_modifier,
+      will_modifier: @equipment.will_modifier,
+      fate_modifier: @equipment.fate_modifier
+    )
+
+    if profile.save
+      redirect_to edit_warband_warband_member_warband_equipment_path(@warband_member.warband, @warband_member, @equipment),
+                  notice: "\"#{profile.name}\" guardado como perfil en el catálogo"
+    else
+      redirect_to edit_warband_warband_member_warband_equipment_path(@warband_member.warband, @warband_member, @equipment),
+                  alert: "Error al guardar el perfil: #{profile.errors.full_messages.join(', ')}"
+    end
+  end
+
   private
 
   def set_warband_member
@@ -85,7 +116,7 @@ class WarbandEquipmentsController < ApplicationController
 
   def equipment_params
     params.require(:warband_equipment).permit(
-      :name, :description, :equipment_type, :cost,
+      :name, :description, :equipment_type, :cost, :ranking,
       :movimiento_modifier, :lucha_modifier, :proyectiles_modifier,
       :fuerza_modifier, :defensa_modifier, :ataques_modifier,
       :heridas_modifier, :coraje_modifier, :inteligencia_modifier,

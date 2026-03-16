@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_05_134237) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_16_153935) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -80,6 +80,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_134237) do
     t.integer "fate_modifier", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ranking", default: 0, null: false
     t.index ["equipment_type"], name: "index_equipments_on_equipment_type"
     t.index ["name"], name: "index_equipments_on_name"
   end
@@ -190,6 +191,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_134237) do
     t.integer "fate_modifier", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ranking", default: 0, null: false
     t.index ["equipment_type"], name: "index_warband_equipments_on_equipment_type"
     t.index ["warband_member_id"], name: "index_warband_equipments_on_warband_member_id"
   end
@@ -213,6 +215,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_05_134237) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "experience", default: 0, null: false
+    t.integer "ranking", default: 0, null: false
     t.index ["member_type"], name: "index_warband_members_on_member_type"
     t.index ["warband_id"], name: "index_warband_members_on_warband_id"
   end

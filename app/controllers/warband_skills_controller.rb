@@ -2,7 +2,7 @@ class WarbandSkillsController < ApplicationController
   before_action :require_login
   before_action :set_warband_member
   before_action :authorize_warband_access!
-  before_action :set_skill, only: [:show, :edit, :update, :destroy]
+  before_action :set_skill, only: [:show, :edit, :update, :destroy, :save_as_profile]
 
   def index
     @skills = @warband_member.warband_skills.by_name
@@ -64,6 +64,35 @@ class WarbandSkillsController < ApplicationController
     @skill.destroy
     redirect_to warband_warband_member_warband_skills_path(@warband_member.warband, @warband_member),
                 notice: "Skill eliminada exitosamente"
+  end
+
+  def save_as_profile
+    profile = Skill.new(
+      name: @skill.name,
+      description: @skill.description,
+      skill_type: @skill.skill_type,
+      cost: @skill.cost,
+      movimiento_modifier: @skill.movimiento_modifier,
+      lucha_modifier: @skill.lucha_modifier,
+      proyectiles_modifier: @skill.proyectiles_modifier,
+      fuerza_modifier: @skill.fuerza_modifier,
+      defensa_modifier: @skill.defensa_modifier,
+      ataques_modifier: @skill.ataques_modifier,
+      heridas_modifier: @skill.heridas_modifier,
+      coraje_modifier: @skill.coraje_modifier,
+      inteligencia_modifier: @skill.inteligencia_modifier,
+      might_modifier: @skill.might_modifier,
+      will_modifier: @skill.will_modifier,
+      fate_modifier: @skill.fate_modifier
+    )
+
+    if profile.save
+      redirect_to edit_warband_warband_member_warband_skill_path(@warband_member.warband, @warband_member, @skill),
+                  notice: "\"#{profile.name}\" guardado como perfil en el catálogo"
+    else
+      redirect_to edit_warband_warband_member_warband_skill_path(@warband_member.warband, @warband_member, @skill),
+                  alert: "Error al guardar el perfil: #{profile.errors.full_messages.join(', ')}"
+    end
   end
 
   private

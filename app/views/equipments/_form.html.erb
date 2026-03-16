@@ -40,6 +40,11 @@
         </div>
 
         <div>
+          <%= f.label :ranking, "Ranking", class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+          <%= f.number_field :ranking, class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors", style: "font-family: 'Crimson Text', serif;", min: 0 %>
+        </div>
+
+        <div>
           <%= f.label :description, "Descripcion", class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2", style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
           <%= f.text_area :description, rows: 4, class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors", style: "font-family: 'Crimson Text', serif;", placeholder: "Descripcion opcional del equipo..." %>
         </div>

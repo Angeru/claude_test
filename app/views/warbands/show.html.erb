@@ -27,7 +27,7 @@
         <p class="text-stone-300 mt-1" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;"><%= @warband.user.name %></p>
       </div>
 
-      <div class="flex gap-4">
+      <div class="flex gap-4 flex-wrap">
         <div class="px-4 py-3 rounded border border-amber-900/40 bg-amber-900/10">
           <span class="text-amber-600/80 text-xs tracking-widest uppercase block mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Oro</span>
           <span class="text-amber-200 text-lg font-semibold" style="font-family: 'Cinzel', serif;"><%= @warband.gold %></span>
@@ -35,6 +35,10 @@
         <div class="px-4 py-3 rounded border border-purple-900/40 bg-purple-900/10">
           <span class="text-purple-400/80 text-xs tracking-widest uppercase block mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Influencia</span>
           <span class="text-purple-200 text-lg font-semibold" style="font-family: 'Cinzel', serif;"><%= @warband.influence %></span>
+        </div>
+        <div class="px-4 py-3 rounded border border-emerald-900/40 bg-emerald-900/10">
+          <span class="text-emerald-500/80 text-xs tracking-widest uppercase block mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Ranking</span>
+          <span class="text-emerald-200 text-lg font-semibold" style="font-family: 'Cinzel', serif;"><%= @warband.total_ranking %></span>
         </div>
       </div>
 

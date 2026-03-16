@@ -47,7 +47,7 @@ class EquipmentsController < ApplicationController
 
   def equipment_params
     params.require(:equipment).permit(
-      :name, :description, :equipment_type, :cost,
+      :name, :description, :equipment_type, :cost, :ranking,
       :movimiento_modifier, :lucha_modifier, :proyectiles_modifier,
       :fuerza_modifier, :defensa_modifier, :ataques_modifier,
       :heridas_modifier, :coraje_modifier, :inteligencia_modifier,

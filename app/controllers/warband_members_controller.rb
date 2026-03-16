@@ -65,7 +65,7 @@ class WarbandMembersController < ApplicationController
 
   def member_params
     params.require(:warband_member).permit(
-      :name, :member_type,
+      :name, :member_type, :ranking,
       :movimiento, :lucha, :proyectiles, :fuerza, :defensa,
       :ataques, :heridas, :coraje, :inteligencia,
       :might, :will, :fate, :experience

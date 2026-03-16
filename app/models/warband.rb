@@ -53,6 +53,10 @@ class Warband < ApplicationRecord
     warriors.count
   end
 
+  def total_ranking
+    warband_members.sum(:ranking) + WarbandEquipment.where(warband_member_id: warband_members.select(:id)).sum(:ranking)
+  end
+
   private
 
   def log_creation

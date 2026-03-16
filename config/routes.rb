@@ -48,8 +48,16 @@ Rails.application.routes.draw do
   # Warbands
   resources :warbands do
     resources :warband_members, path: 'members' do
-      resources :warband_equipments, path: 'equipment'
-      resources :warband_skills, path: 'skills'
+      resources :warband_equipments, path: 'equipment' do
+        member do
+          post :save_as_profile
+        end
+      end
+      resources :warband_skills, path: 'skills' do
+        member do
+          post :save_as_profile
+        end
+      end
     end
     member do
       patch :remove_from_campaign
