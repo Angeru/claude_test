@@ -12,6 +12,7 @@ class WarbandMember < ApplicationRecord
   after_destroy :log_destruction
 
   EXCLUDED_FIELDS = %w[id created_at updated_at warband_id warband_member_id].freeze
+  STAT_FIELDS = %w[movimiento lucha proyectiles fuerza defensa ataques heridas coraje inteligencia might will fate].freeze
 
   # Enum for member type
   enum member_type: {
@@ -26,6 +27,7 @@ class WarbandMember < ApplicationRecord
   validates :rank, inclusion: { in: RANKS + [ nil ] }
   validate :rank_only_for_heroes
   validate :validate_rank_limits
+  validate :stats_immutable_in_campaign, on: :update
 
   # Numeric validations for all attributes
   validates :movimiento, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 12 }
@@ -94,6 +96,13 @@ class WarbandMember < ApplicationRecord
   end
 
   private
+
+  def stats_immutable_in_campaign
+    return unless warband&.in_campaign?
+    changed_stats = STAT_FIELDS.select { |f| send(:"#{f}_changed?") }
+    return if changed_stats.empty?
+    errors.add(:base, "Las estadísticas base no pueden modificarse mientras la warband pertenece a una campaña")
+  end
 
   def rank_only_for_heroes
     return if rank.blank?

@@ -72,12 +72,17 @@ class WarbandMembersController < ApplicationController
   end
 
   def member_params
-    p = params.require(:warband_member).permit(
-      :name, :member_type, :rank, :ranking,
-      :movimiento, :lucha, :proyectiles, :fuerza, :defensa,
-      :ataques, :heridas, :coraje, :inteligencia,
-      :might, :will, :fate, :experience
-    )
+    permitted = [ :name, :member_type, :rank, :ranking,
+                  :movimiento, :lucha, :proyectiles, :fuerza, :defensa,
+                  :ataques, :heridas, :coraje, :inteligencia,
+                  :might, :will, :fate, :experience ]
+
+    # When the warband is in a campaign, stats cannot be directly modified
+    if @warband.in_campaign?
+      permitted -= WarbandMember::STAT_FIELDS.map(&:to_sym)
+    end
+
+    p = params.require(:warband_member).permit(*permitted)
     p[:rank] = nil if p[:rank].blank?
     p
   end
