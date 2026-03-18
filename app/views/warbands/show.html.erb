@@ -27,6 +27,13 @@
         <p class="text-stone-300 mt-1" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;"><%= @warband.user.name %></p>
       </div>
 
+      <% if @warband.warband_class.present? %>
+        <div>
+          <span class="text-amber-600/80 text-xs tracking-widest uppercase" style="font-family: 'Cinzel', serif;">Clase de Warband</span>
+          <p class="text-stone-300 mt-1" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;"><%= @warband.warband_class %></p>
+        </div>
+      <% end %>
+
       <div class="flex gap-4 flex-wrap">
         <div class="px-4 py-3 rounded border border-amber-900/40 bg-amber-900/10">
           <span class="text-amber-600/80 text-xs tracking-widest uppercase block mb-1" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Oro</span>

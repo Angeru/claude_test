@@ -74,6 +74,6 @@ class WarbandsController < ApplicationController
   end
 
   def warband_params
-    params.require(:warband).permit(:name, :campaign_id, :gold, :influence)
+    params.require(:warband).permit(:name, :campaign_id, :gold, :influence, :warband_class)
   end
 end

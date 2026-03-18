@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_18_100000) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_18_120000) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -253,6 +253,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_100000) do
     t.datetime "updated_at", null: false
     t.integer "gold", default: 0, null: false
     t.integer "influence", default: 0, null: false
+    t.string "warband_class"
     t.index ["campaign_id"], name: "index_warbands_on_campaign_id"
     t.index ["user_id", "campaign_id"], name: "index_warbands_on_user_and_campaign", unique: true, where: "campaign_id IS NOT NULL"
     t.index ["user_id"], name: "index_warbands_on_user_id"
