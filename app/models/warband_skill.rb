@@ -3,6 +3,8 @@ class WarbandSkill < ApplicationRecord
 
   belongs_to :warband_member
 
+  before_save :calculate_ranking
+
   after_create  :log_creation
   after_update  :log_update_changes
   after_destroy :log_destruction
@@ -81,5 +83,18 @@ class WarbandSkill < ApplicationRecord
 
   def format_modifier(value)
     value.positive? ? "+#{value}" : value.to_s
+  end
+
+  def calculate_ranking
+    high_value_stats  = [ ataques_modifier, heridas_modifier ]
+    ignored_stats     = [ coraje_modifier, inteligencia_modifier ]
+    other_stats       = [ movimiento_modifier, lucha_modifier, proyectiles_modifier,
+                          fuerza_modifier, defensa_modifier,
+                          might_modifier, will_modifier, fate_modifier ]
+
+    points  = high_value_stats.sum { |mod| [ mod, 0 ].max * 10 }
+    points += other_stats.sum     { |mod| [ mod, 0 ].max * 5 }
+
+    self.ranking = points
   end
 end

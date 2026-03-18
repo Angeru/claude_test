@@ -73,7 +73,7 @@ class WarbandMember < ApplicationRecord
   end
 
   def total_ranking
-    ranking + warband_equipments.sum(:ranking) + (might + will + fate) * 5
+    ranking + warband_equipments.sum(:ranking) + warband_skills.sum(:ranking) + (might + will + fate) * 5
   end
 
   def hero?
