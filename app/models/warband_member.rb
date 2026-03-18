@@ -1,5 +1,6 @@
 class WarbandMember < ApplicationRecord
   MEMBER_TYPES = %w[warrior hero].freeze
+  RANKS = %w[capitan sargento].freeze
 
   belongs_to :warband
   has_many :warband_equipments, dependent: :destroy
@@ -22,6 +23,9 @@ class WarbandMember < ApplicationRecord
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
   validates :member_type, inclusion: { in: MEMBER_TYPES }
   validates :warband_id, presence: true
+  validates :rank, inclusion: { in: RANKS + [ nil ] }
+  validate :rank_only_for_heroes
+  validate :validate_rank_limits
 
   # Numeric validations for all attributes
   validates :movimiento, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 12 }
@@ -44,6 +48,7 @@ class WarbandMember < ApplicationRecord
   scope :heroes, -> { where(member_type: "hero") }
   scope :recent, -> { order(created_at: :desc) }
   scope :by_name, -> { order(:name) }
+  scope :by_rank_then_name, -> { order(Arel.sql("CASE rank WHEN 'capitan' THEN 0 WHEN 'sargento' THEN 1 ELSE 2 END, name")) }
 
   # Helper methods
   def log_creation
@@ -79,5 +84,30 @@ class WarbandMember < ApplicationRecord
 
   def display_type
     member_type.capitalize
+  end
+
+  def display_rank
+    case rank
+    when "capitan" then "Capitán"
+    when "sargento" then "Sargento"
+    end
+  end
+
+  private
+
+  def rank_only_for_heroes
+    return if rank.blank?
+    errors.add(:rank, "solo los héroes pueden tener rango") unless hero?
+  end
+
+  def validate_rank_limits
+    return if rank.blank?
+    siblings = warband.warband_members.where.not(id: id)
+    if rank == "capitan" && siblings.where(rank: "capitan").exists?
+      errors.add(:rank, "ya existe un Capitán en esta warband")
+    end
+    if rank == "sargento" && siblings.where(rank: "sargento").count >= 2
+      errors.add(:rank, "ya hay 2 Sargentos en esta warband")
+    end
   end
 end

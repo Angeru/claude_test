@@ -52,6 +52,18 @@
       </div>
 
       <div>
+        <%= form.label :rank, "Rango",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.select :rank,
+            options_for_select([["Sin Rango", ""], ["Capitán", "capitan"], ["Sargento", "sargento"]], member.rank.to_s),
+            {},
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;" %>
+        <p class="text-stone-500 text-xs mt-1" style="font-family: 'Crimson Text', serif;">Solo para héroes. Máx. 1 Capitán y 2 Sargentos por warband.</p>
+      </div>
+
+      <div>
         <%= form.label :ranking, "Ranking",
             class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
