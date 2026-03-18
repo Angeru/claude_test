@@ -16,6 +16,7 @@ one:
   might_modifier: 0
   will_modifier: 0
   fate_modifier: 0
+  ranking: 5
 
 two:
   warband_member: two
@@ -35,3 +36,4 @@ two:
   might_modifier: 0
   will_modifier: 0
   fate_modifier: 0
+  ranking: 5

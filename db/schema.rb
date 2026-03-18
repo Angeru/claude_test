@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_18_120000) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_18_130000) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -241,6 +241,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_120000) do
     t.integer "fate_modifier", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "ranking", default: 0, null: false
     t.index ["skill_type"], name: "index_warband_skills_on_skill_type"
     t.index ["warband_member_id"], name: "index_warband_skills_on_warband_member_id"
   end
