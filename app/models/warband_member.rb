@@ -64,6 +64,10 @@ class WarbandMember < ApplicationRecord
     warband_equipments.sum(field) + warband_skills.sum(field)
   end
 
+  def rating
+    (might + will + fate) * 5
+  end
+
   def hero?
     member_type == "hero"
   end
