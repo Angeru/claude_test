@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_18_130000) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_18_140000) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -83,6 +83,31 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_130000) do
     t.integer "ranking", default: 0, null: false
     t.index ["equipment_type"], name: "index_equipments_on_equipment_type"
     t.index ["name"], name: "index_equipments_on_name"
+  end
+
+  create_table "member_profiles", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "name", null: false
+    t.string "member_type", default: "warrior", null: false
+    t.string "rank"
+    t.integer "movimiento", default: 6, null: false
+    t.integer "lucha", default: 3, null: false
+    t.integer "proyectiles", default: 3, null: false
+    t.integer "fuerza", default: 3, null: false
+    t.integer "defensa", default: 3, null: false
+    t.integer "ataques", default: 1, null: false
+    t.integer "heridas", default: 1, null: false
+    t.integer "coraje", default: 3, null: false
+    t.integer "inteligencia", default: 1, null: false
+    t.integer "might", default: 0, null: false
+    t.integer "will", default: 0, null: false
+    t.integer "fate", default: 0, null: false
+    t.integer "experience", default: 0, null: false
+    t.integer "ranking", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_type"], name: "index_member_profiles_on_member_type"
+    t.index ["user_id"], name: "index_member_profiles_on_user_id"
   end
 
   create_table "matchups", force: :cascade do |t|
@@ -266,6 +291,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_130000) do
   add_foreign_key "battle_rosters", "warbands"
   add_foreign_key "campaign_rounds", "campaigns"
   add_foreign_key "campaigns", "users"
+  add_foreign_key "member_profiles", "users"
   add_foreign_key "matchups", "campaign_rounds"
   add_foreign_key "matchups", "warbands", column: "warband_1_id"
   add_foreign_key "matchups", "warbands", column: "warband_2_id"
