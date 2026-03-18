@@ -73,19 +73,6 @@ class WarbandsController < ApplicationController
     end
   end
 
-  def can_view_warband?(warband)
-    # El dueño siempre puede ver
-    return true if warband.user == current_user
-
-    # Usuarios en la misma campaña pueden ver
-    if warband.campaign_id.present?
-      shared_campaigns = current_user.campaigns.where(id: warband.campaign_id)
-      return true if shared_campaigns.exists?
-    end
-
-    false
-  end
-
   def warband_params
     params.require(:warband).permit(:name, :campaign_id, :gold, :influence)
   end
