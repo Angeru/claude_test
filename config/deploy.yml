@@ -70,5 +70,7 @@ boot:
 retain_containers: 5
 
 # Builder configuration
+# Use remote builder so Docker doesn't need to be installed locally
 builder:
   arch: amd64
+  remote: ssh://deploy@142.93.228.193
