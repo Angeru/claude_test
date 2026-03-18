@@ -7,7 +7,7 @@ class WarbandMembersController < ApplicationController
 
   def index
     @members = @warband.warband_members.by_name
-    @heroes = @members.heroes
+    @heroes = @warband.warband_members.heroes.by_rank_then_name
     @warriors = @members.warriors
   end
 
@@ -72,11 +72,13 @@ class WarbandMembersController < ApplicationController
   end
 
   def member_params
-    params.require(:warband_member).permit(
-      :name, :member_type, :ranking,
+    p = params.require(:warband_member).permit(
+      :name, :member_type, :rank, :ranking,
       :movimiento, :lucha, :proyectiles, :fuerza, :defensa,
       :ataques, :heridas, :coraje, :inteligencia,
       :might, :will, :fate, :experience
     )
+    p[:rank] = nil if p[:rank].blank?
+    p
   end
 end

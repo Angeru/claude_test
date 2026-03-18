@@ -4,10 +4,19 @@
     <div class="flex justify-between items-start mb-4">
       <div>
         <h3 class="text-amber-100 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 1rem;"><%= member.name %></h3>
-        <div class="flex gap-2 mt-2">
+        <div class="flex gap-2 mt-2 flex-wrap">
           <span class="px-2 py-1 text-xs tracking-wider uppercase rounded <%= member.hero? ? 'text-amber-400/80 border border-amber-900/40 bg-amber-900/20' : 'text-stone-400/80 border border-stone-700/40 bg-stone-800/30' %>" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">
             <%= member.display_type %>
           </span>
+          <% if member.rank == "capitan" %>
+            <span class="px-2 py-1 text-xs tracking-wider uppercase rounded text-yellow-300/90 border border-yellow-600/50 bg-yellow-900/30" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">
+              ★ Capitán
+            </span>
+          <% elsif member.rank == "sargento" %>
+            <span class="px-2 py-1 text-xs tracking-wider uppercase rounded text-orange-300/80 border border-orange-700/40 bg-orange-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">
+              ⬡ Sargento
+            </span>
+          <% end %>
           <span class="px-2 py-1 text-xs text-purple-400/80 border border-purple-900/40 rounded bg-purple-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.05em;">
             XP: <%= member.experience %>
           </span>
