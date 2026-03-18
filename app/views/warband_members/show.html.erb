@@ -85,7 +85,8 @@
   <div class="mb-8">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-amber-600/70 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.1em;">Equipo (<%= @member.warband_equipments.count %>)</h2>
-      <%= link_to "Gestionar Equipo", warband_warband_member_warband_equipments_path(@warband, @member),
+      <%= link_to can_manage_warband?(@warband) ? "Gestionar Equipo" : "Ver Equipo",
+          warband_warband_member_warband_equipments_path(@warband, @member),
           class: "px-4 py-2 bg-gradient-to-b from-emerald-700 to-emerald-900 text-emerald-100 rounded border border-emerald-600/50 hover:from-emerald-600 hover:to-emerald-800 transition-all",
           style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem;" %>
     </div>
@@ -107,9 +108,11 @@
           </svg>
         </div>
         <p class="text-stone-500 text-sm mb-4" style="font-family: 'Crimson Text', serif;">Este miembro no tiene equipo asignado.</p>
-        <%= link_to "Anadir Equipo", warband_warband_member_warband_equipments_path(@warband, @member),
-            class: "text-emerald-400/80 hover:text-emerald-300 text-sm transition-colors tracking-wider uppercase",
-            style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <% if can_manage_warband?(@warband) %>
+          <%= link_to "Anadir Equipo", warband_warband_member_warband_equipments_path(@warband, @member),
+              class: "text-emerald-400/80 hover:text-emerald-300 text-sm transition-colors tracking-wider uppercase",
+              style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <% end %>
       </div>
     <% end %>
   </div>
@@ -118,7 +121,8 @@
   <div class="mb-8">
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-amber-600/70 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 0.1em;">Skills (<%= @member.warband_skills.count %>)</h2>
-      <%= link_to "Gestionar Skills", warband_warband_member_warband_skills_path(@warband, @member),
+      <%= link_to can_manage_warband?(@warband) ? "Gestionar Skills" : "Ver Skills",
+          warband_warband_member_warband_skills_path(@warband, @member),
           class: "px-4 py-2 bg-gradient-to-b from-purple-700 to-purple-900 text-purple-100 rounded border border-purple-600/50 hover:from-purple-600 hover:to-purple-800 transition-all",
           style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.65rem;" %>
     </div>
@@ -140,22 +144,26 @@
           </svg>
         </div>
         <p class="text-stone-500 text-sm mb-4" style="font-family: 'Crimson Text', serif;">Este miembro no tiene skills asignadas.</p>
-        <%= link_to "Anadir Skill", warband_warband_member_warband_skills_path(@warband, @member),
-            class: "text-purple-400/80 hover:text-purple-300 text-sm transition-colors tracking-wider uppercase",
-            style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <% if can_manage_warband?(@warband) %>
+          <%= link_to "Anadir Skill", warband_warband_member_warband_skills_path(@warband, @member),
+              class: "text-purple-400/80 hover:text-purple-300 text-sm transition-colors tracking-wider uppercase",
+              style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+        <% end %>
       </div>
     <% end %>
   </div>
 
   <!-- Actions Section -->
-  <div class="flex flex-wrap gap-3 pt-6 border-t border-stone-800/50">
-    <%= link_to "Editar Miembro", edit_warband_warband_member_path(@warband, @member),
-        class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all",
-        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
-    <%= button_to "Eliminar Miembro", warband_warband_member_path(@warband, @member),
-        method: :delete,
-        data: { turbo_confirm: "¿Estas seguro de eliminar a #{@member.name}?" },
-        class: "px-5 py-2.5 border border-red-800/40 text-red-400 rounded hover:bg-red-900/20 hover:border-red-700/50 transition-all",
-        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
-  </div>
+  <% if can_manage_warband?(@warband) %>
+    <div class="flex flex-wrap gap-3 pt-6 border-t border-stone-800/50">
+      <%= link_to "Editar Miembro", edit_warband_warband_member_path(@warband, @member),
+          class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all",
+          style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+      <%= button_to "Eliminar Miembro", warband_warband_member_path(@warband, @member),
+          method: :delete,
+          data: { turbo_confirm: "¿Estas seguro de eliminar a #{@member.name}?" },
+          class: "px-5 py-2.5 border border-red-800/40 text-red-400 rounded hover:bg-red-900/20 hover:border-red-700/50 transition-all",
+          style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+    </div>
+  <% end %>
 <% end %>

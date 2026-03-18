@@ -1,7 +1,8 @@
 class WarbandMembersController < ApplicationController
   before_action :require_login
   before_action :set_warband
-  before_action :authorize_warband_access!
+  before_action :authorize_warband_view!, only: [:index, :show]
+  before_action :authorize_warband_access!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -54,6 +55,13 @@ class WarbandMembersController < ApplicationController
 
   def set_member
     @member = @warband.warband_members.find(params[:id])
+  end
+
+  def authorize_warband_view!
+    unless can_view_warband?(@warband)
+      redirect_to warbands_path,
+                  alert: "No tienes permiso para ver esta warband"
+    end
   end
 
   def authorize_warband_access!

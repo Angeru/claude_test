@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :logged_in?, :campaign_owner?, :can_manage_warband?,
                 :campaign_subscriber?, :can_manage_campaign?, :can_view_campaign?,
-                :user_has_subscriptions?
+                :user_has_subscriptions?, :can_view_warband?
 
   private
 
@@ -82,5 +82,15 @@ class ApplicationController < ActionController::Base
   # Check if user has any campaign subscriptions
   def user_has_subscriptions?
     logged_in? && current_user.campaigns.exists?
+  end
+
+  def can_view_warband?(warband)
+    return true if warband.user == current_user
+
+    if warband.campaign_id.present?
+      current_user.campaigns.where(id: warband.campaign_id).exists?
+    else
+      false
+    end
   end
 end

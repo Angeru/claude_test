@@ -103,14 +103,16 @@
       <%= link_to "Skills", warband_warband_member_warband_skills_path(@warband, member),
           class: "text-purple-400/80 hover:text-purple-300 text-sm transition-colors tracking-wider uppercase",
           style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
-      <%= link_to "Editar", edit_warband_warband_member_path(@warband, member),
-          class: "text-amber-400/80 hover:text-amber-300 text-sm transition-colors tracking-wider uppercase",
-          style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
-      <%= button_to "Eliminar", warband_warband_member_path(@warband, member),
-          method: :delete,
-          data: { turbo_confirm: "¿Estas seguro de eliminar a #{member.name}?" },
-          class: "text-red-500/70 hover:text-red-400 text-sm transition-colors tracking-wider uppercase",
-          style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
+      <% if can_manage_warband?(@warband) %>
+        <%= link_to "Editar", edit_warband_warband_member_path(@warband, member),
+            class: "text-amber-400/80 hover:text-amber-300 text-sm transition-colors tracking-wider uppercase",
+            style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
+        <%= button_to "Eliminar", warband_warband_member_path(@warband, member),
+            method: :delete,
+            data: { turbo_confirm: "¿Estas seguro de eliminar a #{member.name}?" },
+            class: "text-red-500/70 hover:text-red-400 text-sm transition-colors tracking-wider uppercase",
+            style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
+      <% end %>
     </div>
   </div>
 </div>

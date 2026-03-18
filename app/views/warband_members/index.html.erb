@@ -26,8 +26,10 @@
         Guerreros: <%= @warriors.count %>
       </p>
     </div>
-    <%= link_to new_warband_warband_member_path(@warband), class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
-      Anadir Miembro
+    <% if can_manage_warband?(@warband) %>
+      <%= link_to new_warband_warband_member_path(@warband), class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        Anadir Miembro
+      <% end %>
     <% end %>
   </div>
 
@@ -39,9 +41,11 @@
         </svg>
       </div>
       <p class="text-stone-400 mb-5" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;">Esta warband no tiene miembros todavia</p>
-      <%= link_to "Anadir primer miembro", new_warband_warband_member_path(@warband),
-          class: "text-amber-400 hover:text-amber-300 transition-colors tracking-wider uppercase",
-          style: "font-family: 'Cinzel', serif; font-size: 0.8rem;" %>
+      <% if can_manage_warband?(@warband) %>
+        <%= link_to "Anadir primer miembro", new_warband_warband_member_path(@warband),
+            class: "text-amber-400 hover:text-amber-300 transition-colors tracking-wider uppercase",
+            style: "font-family: 'Cinzel', serif; font-size: 0.8rem;" %>
+      <% end %>
     </div>
   <% else %>
     <!-- Heroes Section -->
