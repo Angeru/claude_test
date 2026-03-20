@@ -85,6 +85,29 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_140000) do
     t.index ["name"], name: "index_equipments_on_name"
   end
 
+  create_table "matchups", force: :cascade do |t|
+    t.integer "campaign_round_id", null: false
+    t.integer "warband_1_id", null: false
+    t.integer "warband_2_id", null: false
+    t.integer "warband_1_score", default: 0
+    t.integer "warband_2_score", default: 0
+    t.integer "warband_1_casualties", default: 0
+    t.integer "warband_2_casualties", default: 0
+    t.boolean "warband_1_primary_objective", default: false
+    t.boolean "warband_2_primary_objective", default: false
+    t.boolean "warband_1_secondary_objective", default: false
+    t.boolean "warband_2_secondary_objective", default: false
+    t.integer "winner_id"
+    t.string "result"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_round_id"], name: "index_matchups_on_campaign_round_id"
+    t.index ["result"], name: "index_matchups_on_result"
+    t.index ["warband_1_id"], name: "index_matchups_on_warband_1_id"
+    t.index ["warband_2_id"], name: "index_matchups_on_warband_2_id"
+  end
+
   create_table "member_profiles", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name", null: false
@@ -108,29 +131,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_140000) do
     t.datetime "updated_at", null: false
     t.index ["member_type"], name: "index_member_profiles_on_member_type"
     t.index ["user_id"], name: "index_member_profiles_on_user_id"
-  end
-
-  create_table "matchups", force: :cascade do |t|
-    t.integer "campaign_round_id", null: false
-    t.integer "warband_1_id", null: false
-    t.integer "warband_2_id", null: false
-    t.integer "warband_1_score", default: 0
-    t.integer "warband_2_score", default: 0
-    t.integer "warband_1_casualties", default: 0
-    t.integer "warband_2_casualties", default: 0
-    t.boolean "warband_1_primary_objective", default: false
-    t.boolean "warband_2_primary_objective", default: false
-    t.boolean "warband_1_secondary_objective", default: false
-    t.boolean "warband_2_secondary_objective", default: false
-    t.integer "winner_id"
-    t.string "result"
-    t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["campaign_round_id"], name: "index_matchups_on_campaign_round_id"
-    t.index ["result"], name: "index_matchups_on_result"
-    t.index ["warband_1_id"], name: "index_matchups_on_warband_1_id"
-    t.index ["warband_2_id"], name: "index_matchups_on_warband_2_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -291,11 +291,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_140000) do
   add_foreign_key "battle_rosters", "warbands"
   add_foreign_key "campaign_rounds", "campaigns"
   add_foreign_key "campaigns", "users"
-  add_foreign_key "member_profiles", "users"
   add_foreign_key "matchups", "campaign_rounds"
   add_foreign_key "matchups", "warbands", column: "warband_1_id"
   add_foreign_key "matchups", "warbands", column: "warband_2_id"
   add_foreign_key "matchups", "warbands", column: "winner_id"
+  add_foreign_key "member_profiles", "users"
   add_foreign_key "subscriptions", "campaigns"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "subscriptions", "warbands"
