@@ -125,4 +125,19 @@ class WarbandTest < ActiveSupport::TestCase
     assert available_count > 0
     assert in_campaign_count > 0
   end
+
+  test "total_ranking includes 5 points per might/will/fate point of members" do
+    warband = warbands(:two)
+    member = warband.warband_members.create!(
+      name: "Héroe Test",
+      member_type: "hero",
+      movimiento: 6, lucha: 4, proyectiles: 3, fuerza: 4,
+      defensa: 4, ataques: 1, heridas: 1, coraje: 4, inteligencia: 3,
+      might: 3, will: 2, fate: 1,
+      ranking: 100
+    )
+
+    # 100 (base ranking) + (3 + 2 + 1) * 5 = 100 + 30 = 130
+    assert_equal 130, warband.total_ranking
+  end
 end
