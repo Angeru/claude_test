@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :campaigns, through: :subscriptions
   has_many :warbands, dependent: :destroy
+  has_many :member_profiles, dependent: :destroy
 
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },

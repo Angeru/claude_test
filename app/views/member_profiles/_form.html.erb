@@ -1,0 +1,143 @@
+<%= form_with model: profile, class: "space-y-6" do |form| %>
+  <% if profile.errors.any? %>
+    <div class="rounded-lg border border-red-800/40 bg-red-900/20 p-4">
+      <h3 class="text-red-300 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;"><%= pluralize(profile.errors.count, "error") %> impidieron guardar:</h3>
+      <ul class="list-disc list-inside text-red-400/80 text-sm space-y-1" style="font-family: 'Crimson Text', serif;">
+        <% profile.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Profile Name -->
+  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-6">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="h-px w-6 bg-amber-800/40"></div>
+      <h3 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Identificacion del Perfil</h3>
+      <div class="h-px flex-1 bg-amber-800/40"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <%= form.label :name, "Nombre del Perfil",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.text_field :name,
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;",
+            required: true,
+            placeholder: "Ej: Guerrero Gondoriano" %>
+      </div>
+
+      <div>
+        <%= form.label :member_type, "Tipo",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.select :member_type,
+            options_for_select([["Guerrero", "warrior"], ["Heroe", "hero"]], profile.member_type),
+            {},
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;" %>
+      </div>
+
+      <div>
+        <%= form.label :rank, "Rango",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.select :rank,
+            options_for_select([["Sin Rango", ""], ["Capitán", "capitan"], ["Sargento", "sargento"]], profile.rank.to_s),
+            {},
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;" %>
+        <p class="text-stone-500 text-xs mt-1" style="font-family: 'Crimson Text', serif;">Solo para héroes.</p>
+      </div>
+
+      <div>
+        <%= form.label :experience, "Experiencia",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.number_field :experience,
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;",
+            min: 0, required: true %>
+      </div>
+
+      <div>
+        <%= form.label :ranking, "Ranking",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.number_field :ranking,
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;",
+            min: 0, required: true %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Combat Stats -->
+  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-6">
+    <div class="flex items-center gap-3 mb-5">
+      <div class="h-px w-6 bg-amber-800/40"></div>
+      <h3 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Caracteristicas de Combate</h3>
+      <div class="h-px flex-1 bg-amber-800/40"></div>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <% [
+        [:movimiento, "Movimiento", 0, 12],
+        [:lucha, "Lucha (L)", 1, 10],
+        [:proyectiles, "Proyectiles (P)", 1, 10],
+        [:fuerza, "Fuerza (F)", 1, 10],
+        [:defensa, "Defensa (D)", 1, 10],
+        [:ataques, "Ataques (A)", 1, 10],
+        [:heridas, "Heridas (H)", 1, 10],
+        [:coraje, "Coraje (C)", 1, 10],
+        [:inteligencia, "Inteligencia (I)", 1, 10]
+      ].each do |field, label, min_val, max_val| %>
+        <div>
+          <%= form.label field, label,
+              class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+              style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+          <%= form.number_field field,
+              class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+              style: "font-family: 'Crimson Text', serif;",
+              min: min_val, max: max_val, required: true %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Hero Stats -->
+  <div class="rounded-lg border border-amber-800/30 bg-gradient-to-b from-amber-950/30 to-stone-950/80 p-6">
+    <div class="flex items-center gap-3 mb-2">
+      <div class="h-px w-6 bg-amber-700/40"></div>
+      <h3 class="text-amber-300/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Puntos Heroicos</h3>
+      <div class="h-px flex-1 bg-amber-700/40"></div>
+    </div>
+    <p class="text-stone-500 text-sm mb-5" style="font-family: 'Crimson Text', serif;">Solo para heroes (deja en 0 para guerreros)</p>
+
+    <div class="grid grid-cols-3 gap-4">
+      <% [[:might, "Might"], [:will, "Will"], [:fate, "Fate"]].each do |field, label| %>
+        <div>
+          <%= form.label field, label,
+              class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+              style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+          <%= form.number_field field,
+              class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+              style: "font-family: 'Crimson Text', serif;",
+              min: 0, max: 10, required: true %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between pt-2">
+    <%= form.submit profile.new_record? ? "Crear Perfil" : "Actualizar Perfil",
+        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
+        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
+    <%= link_to "Cancelar", member_profiles_path,
+        class: "text-stone-400 hover:text-amber-400 transition-colors tracking-wider uppercase",
+        style: "font-family: 'Cinzel', serif; font-size: 0.75rem;" %>
+  </div>
+<% end %>

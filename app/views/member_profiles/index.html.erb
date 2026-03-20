@@ -1,0 +1,103 @@
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
+
+<%= render layout: "shared/dark_layout" do %>
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <div class="flex items-center gap-4 mb-3">
+        <div class="h-px w-8 bg-gradient-to-r from-transparent to-amber-700/60"></div>
+        <svg viewBox="0 0 24 24" class="w-4 h-4 text-amber-600/60" fill="currentColor">
+          <polygon points="12,2 15,9 22,9 16,14 18,21 12,17 6,21 8,14 2,9 9,9"/>
+        </svg>
+        <div class="h-px w-8 bg-gradient-to-l from-transparent to-amber-700/60"></div>
+      </div>
+      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;">
+        Mis Perfiles de Miembro
+      </h1>
+      <p class="text-stone-400 mt-1" style="font-family: 'Crimson Text', serif;">Plantillas reutilizables para crear miembros de warband</p>
+    </div>
+    <%= link_to new_member_profile_path,
+        class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30",
+        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+      + Nuevo Perfil
+    <% end %>
+  </div>
+
+  <% if @profiles.empty? %>
+    <div class="rounded-lg border border-stone-800/50 bg-stone-900/30 p-12 text-center">
+      <svg viewBox="0 0 24 24" class="w-12 h-12 text-stone-700 mx-auto mb-4" fill="none" stroke="currentColor" stroke-width="1">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+        <circle cx="9" cy="7" r="4"/>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+      </svg>
+      <p class="text-stone-500 text-lg mb-2" style="font-family: 'Cinzel', serif;">No tienes perfiles guardados</p>
+      <p class="text-stone-600 text-sm mb-6" style="font-family: 'Crimson Text', serif;">Crea un perfil para reutilizar estadísticas al añadir miembros a tus warbands</p>
+      <%= link_to "Crear primer perfil", new_member_profile_path,
+          class: "inline-block px-5 py-2 text-amber-400 border border-amber-700/40 rounded hover:border-amber-600/60 hover:text-amber-300 transition-colors",
+          style: "font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;" %>
+    </div>
+  <% else %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <% @profiles.each do |profile| %>
+        <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-5 hover:border-amber-800/50 transition-colors">
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <h3 class="text-amber-100 font-semibold" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
+                <%= profile.name %>
+              </h3>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="text-xs px-2 py-0.5 rounded border <%= profile.hero? ? 'border-amber-700/50 text-amber-400/80 bg-amber-950/30' : 'border-stone-700/50 text-stone-400 bg-stone-900/30' %>"
+                      style="font-family: 'Cinzel', serif;">
+                  <%= profile.display_type %>
+                </span>
+                <% if profile.rank.present? %>
+                  <span class="text-xs text-amber-500/70" style="font-family: 'Crimson Text', serif;">
+                    <%= profile.display_rank %>
+                  </span>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-1 mb-4">
+            <% [
+              ["M", profile.movimiento],
+              ["L", profile.lucha],
+              ["P", profile.proyectiles],
+              ["F", profile.fuerza],
+              ["D", profile.defensa],
+              ["A", profile.ataques],
+              ["H", profile.heridas],
+              ["C", profile.coraje]
+            ].each do |abbr, val| %>
+              <div class="text-center">
+                <div class="text-stone-500 text-xs" style="font-family: 'Cinzel', serif; font-size: 0.55rem;"><%= abbr %></div>
+                <div class="text-amber-200/80 text-sm font-semibold" style="font-family: 'Crimson Text', serif;"><%= val %></div>
+              </div>
+            <% end %>
+          </div>
+
+          <% if profile.hero? && (profile.might > 0 || profile.will > 0 || profile.fate > 0) %>
+            <div class="flex gap-3 mb-4 text-xs">
+              <span class="text-amber-400/60" style="font-family: 'Crimson Text', serif;">Might: <%= profile.might %></span>
+              <span class="text-amber-400/60" style="font-family: 'Crimson Text', serif;">Will: <%= profile.will %></span>
+              <span class="text-amber-400/60" style="font-family: 'Crimson Text', serif;">Fate: <%= profile.fate %></span>
+            </div>
+          <% end %>
+
+          <div class="flex items-center gap-2 pt-3 border-t border-stone-800/50">
+            <%= link_to "Editar", edit_member_profile_path(profile),
+                class: "text-xs text-amber-400 hover:text-amber-300 transition-colors tracking-wider uppercase",
+                style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+            <span class="text-stone-700">·</span>
+            <%= button_to "Eliminar", member_profile_path(profile),
+                method: :delete,
+                form: { data: { turbo_confirm: "¿Eliminar el perfil \"#{profile.name}\"?" } },
+                class: "text-xs text-stone-500 hover:text-red-400 transition-colors tracking-wider uppercase cursor-pointer",
+                style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
