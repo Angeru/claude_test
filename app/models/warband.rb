@@ -54,7 +54,7 @@ class Warband < ApplicationRecord
   end
 
   def total_ranking
-    warband_members.sum(:ranking) + WarbandEquipment.where(warband_member_id: warband_members.select(:id)).sum(:ranking)
+    warband_members.sum(&:total_ranking)
   end
 
   private
