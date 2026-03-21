@@ -1,8 +1,8 @@
 class WarbandSkillsController < ApplicationController
   before_action :require_login
   before_action :set_warband_member
-  before_action :authorize_warband_view!, only: [:index]
-  before_action :authorize_warband_access!, only: [:new, :create, :edit, :update, :destroy, :save_as_profile]
+  before_action :authorize_view_access!, only: [:index, :show]
+  before_action :authorize_manage_access!, only: [:new, :create, :edit, :update, :destroy, :save_as_profile]
   before_action :set_skill, only: [:show, :edit, :update, :destroy, :save_as_profile]
 
   def index
@@ -106,14 +106,14 @@ class WarbandSkillsController < ApplicationController
     @skill = @warband_member.warband_skills.find(params[:id])
   end
 
-  def authorize_warband_view!
+  def authorize_view_access!
     unless can_view_warband?(@warband_member.warband)
       redirect_to warbands_path,
                   alert: "No tienes permiso para ver estas skills"
     end
   end
 
-  def authorize_warband_access!
+  def authorize_manage_access!
     unless can_manage_warband?(@warband_member.warband)
       redirect_to warbands_path,
                   alert: "No tienes permiso para modificar estas skills"
