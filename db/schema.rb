@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_18_140000) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_22_110000) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -242,6 +242,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_18_140000) do
     t.integer "experience", default: 0, null: false
     t.integer "ranking", default: 0, null: false
     t.string "rank"
+    t.string "path"
     t.index ["member_type"], name: "index_warband_members_on_member_type"
     t.index ["warband_id"], name: "index_warband_members_on_warband_id"
   end

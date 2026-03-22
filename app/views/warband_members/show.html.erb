@@ -23,6 +23,11 @@
       <span class="px-2 py-1 text-xs tracking-wider uppercase rounded <%= @member.hero? ? 'text-amber-400/80 border border-amber-900/40 bg-amber-900/20' : 'text-stone-400/80 border border-stone-700/40 bg-stone-800/30' %>" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">
         <%= @member.display_type %>
       </span>
+      <% if @member.path.present? %>
+        <span class="px-2 py-1 text-xs tracking-wider uppercase rounded text-teal-300/80 border border-teal-800/40 bg-teal-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">
+          ⟁ <%= @member.display_path %>
+        </span>
+      <% end %>
       <span class="px-2 py-1 text-xs text-purple-400/80 border border-purple-900/40 rounded bg-purple-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.05em;">
         XP: <%= @member.experience %>
       </span>

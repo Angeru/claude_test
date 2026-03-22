@@ -64,6 +64,18 @@
       </div>
 
       <div>
+        <%= form.label :path, "Camino",
+            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
+        <%= form.select :path,
+            options_for_select([["Sin Camino", ""]] + WarbandMember::PATHS_LABELS.map { |v, l| [l, v] }, member.path.to_s),
+            {},
+            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            style: "font-family: 'Crimson Text', serif;" %>
+        <p class="text-stone-500 text-xs mt-1" style="font-family: 'Crimson Text', serif;">Solo para héroes.</p>
+      </div>
+
+      <div>
         <%= form.label :ranking, "Ranking",
             class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>

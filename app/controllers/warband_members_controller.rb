@@ -79,7 +79,7 @@ class WarbandMembersController < ApplicationController
   end
 
   def member_params
-    permitted = [ :name, :member_type, :rank, :ranking,
+    permitted = [ :name, :member_type, :rank, :path, :ranking,
                   :movimiento, :lucha, :proyectiles, :fuerza, :defensa,
                   :ataques, :heridas, :coraje, :inteligencia,
                   :might, :will, :fate, :experience ]
@@ -91,6 +91,7 @@ class WarbandMembersController < ApplicationController
 
     p = params.require(:warband_member).permit(*permitted)
     p[:rank] = nil if p[:rank].blank?
+    p[:path] = nil if p[:path].blank?
     p
   end
 end

@@ -1,6 +1,20 @@
 class WarbandMember < ApplicationRecord
   MEMBER_TYPES = %w[warrior hero].freeze
   RANKS = %w[capitan sargento].freeze
+  PATHS = %w[movimiento disparo combate punteria desafio canalizacion defensa marcha resolucion fuerza golpe].freeze
+  PATHS_LABELS = {
+    "movimiento"   => "Movimiento",
+    "disparo"      => "Disparo",
+    "combate"      => "Combate",
+    "punteria"     => "Puntería",
+    "desafio"      => "Desafío",
+    "canalizacion" => "Canalización",
+    "defensa"      => "Defensa",
+    "marcha"       => "Marcha",
+    "resolucion"   => "Resolución",
+    "fuerza"       => "Fuerza",
+    "golpe"        => "Golpe"
+  }.freeze
 
   belongs_to :warband
   has_many :warband_equipments, dependent: :destroy
@@ -25,7 +39,9 @@ class WarbandMember < ApplicationRecord
   validates :member_type, inclusion: { in: MEMBER_TYPES }
   validates :warband_id, presence: true
   validates :rank, inclusion: { in: RANKS + [ nil ] }
+  validates :path, inclusion: { in: PATHS + [ nil ] }
   validate :rank_only_for_heroes
+  validate :path_only_for_heroes
   validate :validate_rank_limits
   validate :stats_immutable_in_campaign, on: :update
 
@@ -95,6 +111,10 @@ class WarbandMember < ApplicationRecord
     end
   end
 
+  def display_path
+    PATHS_LABELS[path]
+  end
+
   private
 
   def stats_immutable_in_campaign
@@ -107,6 +127,11 @@ class WarbandMember < ApplicationRecord
   def rank_only_for_heroes
     return if rank.blank?
     errors.add(:rank, "solo los héroes pueden tener rango") unless hero?
+  end
+
+  def path_only_for_heroes
+    return if path.blank?
+    errors.add(:path, "solo los héroes pueden tener camino") unless hero?
   end
 
   def validate_rank_limits
