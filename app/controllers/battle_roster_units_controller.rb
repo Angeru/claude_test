@@ -17,6 +17,52 @@ class BattleRosterUnitsController < ApplicationController
     )
   end
 
+  def spend
+    @unit.spend!(params[:attribute])
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    )
+  end
+
+  def restore
+    @unit.restore!(params[:attribute])
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    )
+  end
+
+  def toggle_tick
+    @unit.toggle_tick!(params[:tick])
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    )
+  rescue ArgumentError
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    ), alert: "Tick inválido"
+  end
+
+  def toggle_mvp
+    @unit.set_mvp!(!@unit.mvp)
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    )
+  end
+
+  def kill
+    @unit.kill!
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    )
+  end
+
+  def unkill
+    @unit.unkill!
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    )
+  end
+
   private
 
   def set_context

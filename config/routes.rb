@@ -21,11 +21,19 @@ Rails.application.routes.draw do
         resources :battle_rosters, path: 'battle', only: [:show, :create, :destroy] do
           member do
             patch :toggle
+            get   :finalize
+            post  :complete
           end
           resources :battle_roster_units, path: 'units', only: [] do
             member do
               patch :wound
               patch :heal
+              patch :spend
+              patch :restore
+              patch :toggle_tick
+              patch :toggle_mvp
+              patch :kill
+              patch :unkill
             end
           end
         end

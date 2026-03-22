@@ -14,6 +14,9 @@ class BattleRoster < ApplicationRecord
         unit.max_wounds = member.heridas
         unit.current_wounds = member.heridas
         unit.defeated = false
+        unit.current_might = member.might
+        unit.current_will  = member.will
+        unit.current_fate  = member.fate
       end
     end
   end

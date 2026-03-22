@@ -1,0 +1,133 @@
+<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:raw_content) { true } %>
+
+<%= render layout: "shared/dark_layout" do %>
+  <!-- Header -->
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-4">
+    <div>
+      <div class="flex items-center gap-4 mb-3">
+        <div class="h-px w-12 bg-gradient-to-r from-transparent to-red-700/60"></div>
+        <svg viewBox="0 0 24 24" class="w-5 h-5 text-red-600/60" fill="currentColor">
+          <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        <div class="h-px w-12 bg-gradient-to-l from-transparent to-red-700/60"></div>
+      </div>
+      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+        Finalizar Batalla
+      </h1>
+      <p class="text-amber-400/80 mt-1" style="font-family: 'Cinzel', serif; font-size: 0.9rem;">
+        <%= @battle_roster.warband.name %>
+      </p>
+      <p class="text-stone-500 mt-1" style="font-family: 'Crimson Text', serif;">
+        <%= @round.display_name %> &mdash; <%= @matchup.warband_1.name %> vs <%= @matchup.warband_2.name %>
+      </p>
+    </div>
+    <%= link_to "Volver a Batalla",
+        campaign_campaign_round_matchup_battle_roster_path(@campaign, @round, @matchup, @battle_roster),
+        class: "px-4 py-2 border border-stone-700/50 text-stone-400 rounded hover:bg-stone-800/50 hover:border-stone-600/60 transition-all self-start",
+        style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" %>
+  </div>
+
+  <p class="text-stone-400 mb-8" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+    Indica el resultado de la batalla, qué miembros estaban en el objetivo y quién fue el MVP.
+  </p>
+
+  <%= form_with url: complete_campaign_campaign_round_matchup_battle_roster_path(@campaign, @round, @matchup, @battle_roster),
+                method: :post,
+                local: true do |f| %>
+
+    <!-- Resultado -->
+    <div class="mb-8 p-4 rounded-lg border border-stone-800/50 bg-stone-900/60">
+      <p class="text-xs text-amber-200/60 tracking-wider uppercase mb-4" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Resultado</p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <label class="flex items-center gap-3 cursor-pointer flex-1 px-4 py-3 rounded border border-stone-700/40 bg-stone-800/40 hover:border-amber-700/40 has-[:checked]:border-amber-600/60 has-[:checked]:bg-amber-900/20 transition-colors">
+          <input type="radio" name="result" value="warband_1_win" required
+                 class="w-4 h-4 accent-amber-500 cursor-pointer" />
+          <span class="text-stone-300" style="font-family: 'Crimson Text', serif; font-size: 1rem;">
+            Victoria de <span class="text-amber-300"><%= @matchup.warband_1.name %></span>
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer flex-1 px-4 py-3 rounded border border-stone-700/40 bg-stone-800/40 hover:border-amber-700/40 has-[:checked]:border-amber-600/60 has-[:checked]:bg-amber-900/20 transition-colors">
+          <input type="radio" name="result" value="warband_2_win" required
+                 class="w-4 h-4 accent-amber-500 cursor-pointer" />
+          <span class="text-stone-300" style="font-family: 'Crimson Text', serif; font-size: 1rem;">
+            Victoria de <span class="text-amber-300"><%= @matchup.warband_2.name %></span>
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer flex-1 px-4 py-3 rounded border border-stone-700/40 bg-stone-800/40 hover:border-amber-700/40 has-[:checked]:border-amber-600/60 has-[:checked]:bg-amber-900/20 transition-colors">
+          <input type="radio" name="result" value="draw" required
+                 class="w-4 h-4 accent-amber-500 cursor-pointer" />
+          <span class="text-stone-300" style="font-family: 'Crimson Text', serif; font-size: 1rem;">Empate</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="mb-10">
+      <!-- Column headers -->
+      <div class="hidden sm:flex items-center gap-4 px-4 pb-2 mb-1">
+        <div class="flex-1"></div>
+        <div class="w-32 text-center text-xs text-amber-200/50 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">En objetivo</div>
+        <div class="w-20 text-center text-xs text-yellow-300/50 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">MVP</div>
+      </div>
+
+      <div class="space-y-2">
+        <% @units.each do |unit| %>
+          <div class="flex flex-wrap sm:flex-nowrap items-center gap-4 px-4 py-3 rounded-lg border <%= unit.defeated? ? 'border-red-900/30 bg-red-950/20 opacity-70' : 'border-stone-800/50 bg-stone-900/60' %>">
+
+            <!-- Name + type -->
+            <div class="flex-1 min-w-0">
+              <span class="text-amber-100" style="font-family: 'Cinzel', serif; font-size: 0.9rem;">
+                <%= unit.warband_member.name %>
+              </span>
+              <span class="ml-2 text-xs px-1.5 py-0.5 rounded border
+                <%= unit.warband_member.hero? ? 'text-amber-400/70 border-amber-900/40 bg-amber-900/20' : 'text-stone-400/70 border-stone-700/40 bg-stone-800/30' %>"
+                style="font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em;">
+                <%= unit.warband_member.display_type %>
+              </span>
+              <% if unit.defeated? %>
+                <span class="ml-2 text-xs text-red-400" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">DERROTADO</span>
+              <% end %>
+            </div>
+
+            <!-- En objetivo checkbox -->
+            <div class="w-32 flex justify-center">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox"
+                       name="units[<%= unit.id %>][on_objective]"
+                       value="1"
+                       <%= "checked" if unit.on_objective %>
+                       class="w-4 h-4 rounded accent-amber-500 cursor-pointer" />
+                <span class="sm:hidden text-sm text-stone-300" style="font-family: 'Crimson Text', serif;">En objetivo</span>
+              </label>
+            </div>
+
+            <!-- MVP radio -->
+            <div class="w-20 flex justify-center">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio"
+                       name="mvp_unit_id"
+                       value="<%= unit.id %>"
+                       <%= "checked" if unit.mvp %>
+                       class="w-4 h-4 accent-yellow-500 cursor-pointer" />
+                <span class="sm:hidden text-sm text-yellow-300/80" style="font-family: 'Crimson Text', serif;">MVP</span>
+              </label>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-wrap gap-3">
+      <%= f.submit "Confirmar y Finalizar",
+          class: "px-6 py-2 border border-red-800/50 text-red-400 rounded hover:bg-red-900/20 hover:border-red-700/60 transition-all cursor-pointer",
+          style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" %>
+      <%= link_to "Cancelar",
+          campaign_campaign_round_matchup_battle_roster_path(@campaign, @round, @matchup, @battle_roster),
+          class: "px-4 py-2 border border-stone-700/50 text-stone-400 rounded hover:bg-stone-800/50 hover:border-stone-600/60 transition-all",
+          style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" %>
+    </div>
+
+  <% end %>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_22_110000) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_22_160000) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -19,6 +19,15 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_22_110000) do
     t.boolean "defeated", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "current_might", default: 0, null: false
+    t.integer "current_will", default: 0, null: false
+    t.integer "current_fate", default: 0, null: false
+    t.boolean "wounded_enemy", default: false, null: false
+    t.boolean "fate_protected", default: false, null: false
+    t.boolean "courage_broken", default: false, null: false
+    t.integer "kills", default: 0, null: false
+    t.boolean "on_objective", default: false, null: false
+    t.boolean "mvp", default: false, null: false
     t.index ["battle_roster_id", "warband_member_id"], name: "idx_battle_roster_units_on_roster_and_member", unique: true
     t.index ["battle_roster_id"], name: "index_battle_roster_units_on_battle_roster_id"
     t.index ["warband_member_id"], name: "index_battle_roster_units_on_warband_member_id"
