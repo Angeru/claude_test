@@ -10,6 +10,11 @@ class BattleRostersController < ApplicationController
     @units = @battle_roster.battle_roster_units
                            .includes(warband_member: [:warband_equipments, :warband_skills])
                            .order('warband_members.member_type DESC, warband_members.name ASC')
+    if @matchup.completed?
+      @all_rosters = @matchup.battle_rosters
+                             .includes(battle_roster_units: { warband_member: [] })
+                             .order(:id)
+    end
   end
 
   def create
