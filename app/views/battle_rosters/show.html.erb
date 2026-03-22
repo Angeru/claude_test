@@ -13,9 +13,9 @@
         <div class="h-px w-12 bg-gradient-to-l from-transparent to-red-700/60"></div>
       </div>
       <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
-        <%= @matchup.completed? ? "Resultados" : "Modo Batalla" %>
+        <%= @battle_roster.active? ? "Modo Batalla" : "Resultados" %>
       </h1>
-      <% if @matchup.completed? %>
+      <% if !@battle_roster.active? %>
         <p class="text-stone-500 mt-1" style="font-family: 'Crimson Text', serif;">
           <%= @round.display_name %> &mdash; <%= @matchup.warband_1.name %> vs <%= @matchup.warband_2.name %>
         </p>
@@ -50,7 +50,7 @@
       <% end %>
     </div>
     <div class="flex flex-wrap gap-3">
-      <% unless @matchup.completed? %>
+      <% if @battle_roster.active? %>
         <%= button_to @battle_roster.active? ? "Pausar" : "Reactivar",
             toggle_campaign_campaign_round_matchup_battle_roster_path(@campaign, @round, @matchup, @battle_roster),
             method: :patch,
@@ -68,7 +68,7 @@
   </div>
 
   <!-- Units Grid -->
-  <% if @matchup.completed? %>
+  <% if !@battle_roster.active? %>
     <% @result_warbands.each_with_index do |entry, i| %>
       <div class="<%= i > 0 ? 'mt-10' : '' %>">
         <h2 class="text-amber-300/80 tracking-[0.1em] uppercase mb-4" style="font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600;">

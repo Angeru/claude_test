@@ -21,7 +21,7 @@
     <div class="text-center mb-4">
       <p class="text-xs text-amber-200/60 tracking-wider uppercase mb-2" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Heridas</p>
       <div class="flex items-center justify-center gap-4">
-        <% if @battle_roster.active? && !@matchup.completed? %>
+        <% if @battle_roster.active? %>
           <%= button_to wound_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
               @campaign, @round, @matchup, @battle_roster, unit),
               method: :patch,
@@ -38,7 +38,7 @@
           <span class="text-xl text-stone-600" style="font-family: 'Cinzel', serif;"> / <%= unit.max_wounds %></span>
         </div>
 
-        <% if @battle_roster.active? && !@matchup.completed? %>
+        <% if @battle_roster.active? %>
           <%= button_to heal_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
               @campaign, @round, @matchup, @battle_roster, unit),
               method: :patch,
@@ -68,7 +68,7 @@
           <% current = unit.send(:"current_#{attr}") %>
           <div class="flex items-center gap-2">
             <span class="w-4 text-center text-xs font-bold <%= color %>" style="font-family: 'Cinzel', serif; font-size: 0.6rem;"><%= label %></span>
-            <% if @battle_roster.active? && !@matchup.completed? %>
+            <% if @battle_roster.active? %>
               <%= button_to spend_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
                   @campaign, @round, @matchup, @battle_roster, unit),
                   params: { attribute: attr },
@@ -84,7 +84,7 @@
               <% end %>
             </div>
             <span class="text-xs <%= color %>" style="font-family: 'Crimson Text', serif;"><%= current %>/<%= max %></span>
-            <% if @battle_roster.active? && !@matchup.completed? %>
+            <% if @battle_roster.active? %>
               <%= button_to restore_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
                   @campaign, @round, @matchup, @battle_roster, unit),
                   params: { attribute: attr },
@@ -109,7 +109,7 @@
           ["courage_broken", "Superó coraje estando Roto"]
         ].each do |tick, label| %>
           <% checked = unit.public_send(tick) %>
-          <% if @matchup.completed? %>
+          <% if !@battle_roster.active? %>
             <div class="w-full flex items-center gap-2 px-2 py-1.5 rounded border <%= checked ? 'bg-amber-900/30 border-amber-700/50 text-amber-300' : 'bg-stone-900/50 border-stone-700/30 text-stone-500' %>">
               <span class="flex-shrink-0 w-4 h-4 rounded border-2 flex items-center justify-center <%= checked ? 'border-amber-500 bg-amber-600/40' : 'border-stone-600' %>">
                 <% if checked %>
@@ -140,7 +140,7 @@
       </div>
     </div>
 
-    <% if @matchup.completed? %>
+    <% if !@battle_roster.active? %>
       <!-- Resultado Final (solo lectura) -->
       <div class="mt-4 pt-4 border-t border-stone-800/50">
         <p class="text-xs text-amber-200/60 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Fin de Batalla</p>
@@ -171,7 +171,7 @@
     <div class="mt-4 pt-4 border-t border-stone-800/50">
       <p class="text-xs text-amber-200/60 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Heroes o monstruos eliminados</p>
       <div class="flex items-center justify-center gap-3">
-        <% if @battle_roster.active? && !@matchup.completed? %>
+        <% if @battle_roster.active? %>
           <%= button_to unkill_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
               @campaign, @round, @matchup, @battle_roster, unit),
               method: :patch,
@@ -181,7 +181,7 @@
           <% end %>
         <% end %>
         <span class="text-red-400 font-bold" style="font-family: 'Cinzel', serif; font-size: 1.1rem;"><%= unit.kills %></span>
-        <% if @battle_roster.active? && !@matchup.completed? %>
+        <% if @battle_roster.active? %>
           <%= button_to kill_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
               @campaign, @round, @matchup, @battle_roster, unit),
               method: :patch,

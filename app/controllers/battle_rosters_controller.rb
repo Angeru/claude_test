@@ -10,7 +10,7 @@ class BattleRostersController < ApplicationController
     @units = @battle_roster.battle_roster_units
                            .includes(warband_member: [:warband_equipments, :warband_skills])
                            .order('warband_members.member_type DESC, warband_members.name ASC')
-    if @matchup.completed?
+    if !@battle_roster.active?
       rosters = @matchup.battle_rosters
                         .includes(battle_roster_units: { warband_member: [] })
                         .index_by(&:warband_id)
@@ -21,16 +21,17 @@ class BattleRostersController < ApplicationController
   end
 
   def create
-    if @matchup.completed?
-      redirect_to campaign_campaign_round_path(@matchup.campaign_round.campaign, @matchup.campaign_round),
-                  alert: "Este emparejamiento ya ha finalizado"
-      return
-    end
-
     warband = find_user_warband
     unless warband
       redirect_to campaign_campaign_round_path(@matchup.campaign_round.campaign, @matchup.campaign_round),
                   alert: "No tienes una warband en este emparejamiento"
+      return
+    end
+
+    existing = @matchup.battle_rosters.find_by(warband: warband)
+    if existing && !existing.active?
+      redirect_to campaign_campaign_round_path(@matchup.campaign_round.campaign, @matchup.campaign_round),
+                  alert: "Ya has finalizado tu batalla en este emparejamiento"
       return
     end
 
@@ -84,7 +85,7 @@ class BattleRostersController < ApplicationController
     end
 
     result = params[:result]
-    if Matchup::RESULTS.include?(result) && result != 'pending'
+    if Matchup::RESULTS.include?(result) && result != 'pending' && @matchup.pending?
       winner_id = case result
                   when 'warband_1_win' then @matchup.warband_1_id
                   when 'warband_2_win' then @matchup.warband_2_id
@@ -92,7 +93,7 @@ class BattleRostersController < ApplicationController
       @matchup.update!(result: result, winner_id: winner_id)
     end
 
-    @matchup.battle_rosters.update_all(active: false)
+    @battle_roster.update!(active: false)
     redirect_to campaign_campaign_round_path(@campaign, @round),
                 notice: "Batalla finalizada"
   end
