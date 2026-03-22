@@ -92,7 +92,7 @@ class BattleRostersController < ApplicationController
       @matchup.update!(result: result, winner_id: winner_id)
     end
 
-    @battle_roster.update!(active: false)
+    @matchup.battle_rosters.update_all(active: false)
     redirect_to campaign_campaign_round_path(@campaign, @round),
                 notice: "Batalla finalizada"
   end
