@@ -69,22 +69,30 @@
 
   <!-- Units Grid -->
   <% if @matchup.completed? %>
-    <% @all_rosters.each do |roster| %>
-      <h2 class="text-amber-300/80 tracking-[0.1em] uppercase mb-4 mt-8 first:mt-0" style="font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600;">
-        <%= roster.warband.name %>
-        <span class="ml-3 text-stone-500 font-normal" style="font-size: 0.75rem;">
-          <span class="text-emerald-400"><%= roster.alive_count %></span> en pie &mdash;
-          <span class="text-red-400"><%= roster.defeated_count %></span> derrotados
-        </span>
-      </h2>
-      <% units = roster.battle_roster_units.includes(:warband_member).order('warband_members.member_type DESC, warband_members.name ASC') %>
-      <% if units.any? %>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <% units.each do |unit| %>
-            <%= render 'unit_card', unit: unit %>
+    <% @result_warbands.each_with_index do |entry, i| %>
+      <div class="<%= i > 0 ? 'mt-10' : '' %>">
+        <h2 class="text-amber-300/80 tracking-[0.1em] uppercase mb-4" style="font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 600;">
+          <%= entry[:warband].name %>
+          <% if entry[:roster] %>
+            <span class="ml-3 text-stone-500 font-normal" style="font-size: 0.75rem;">
+              <span class="text-emerald-400"><%= entry[:roster].alive_count %></span> en pie &mdash;
+              <span class="text-red-400"><%= entry[:roster].defeated_count %></span> derrotados
+            </span>
           <% end %>
-        </div>
-      <% end %>
+        </h2>
+        <% if entry[:roster] %>
+          <% units = entry[:roster].battle_roster_units.sort_by { |u| [u.warband_member.hero? ? 0 : 1, u.warband_member.name] } %>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <% units.each do |unit| %>
+              <%= render 'unit_card', unit: unit %>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-stone-500" style="font-family: 'Crimson Text', serif; font-size: 1rem;">
+            No se registraron datos de batalla para esta warband.
+          </p>
+        <% end %>
+      </div>
     <% end %>
   <% elsif @units.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

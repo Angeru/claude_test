@@ -11,9 +11,12 @@ class BattleRostersController < ApplicationController
                            .includes(warband_member: [:warband_equipments, :warband_skills])
                            .order('warband_members.member_type DESC, warband_members.name ASC')
     if @matchup.completed?
-      @all_rosters = @matchup.battle_rosters
-                             .includes(battle_roster_units: { warband_member: [] })
-                             .order(:id)
+      rosters = @matchup.battle_rosters
+                        .includes(battle_roster_units: { warband_member: [] })
+                        .index_by(&:warband_id)
+      @result_warbands = [@matchup.warband_1, @matchup.warband_2].map do |warband|
+        { warband: warband, roster: rosters[warband.id] }
+      end
     end
   end
 
