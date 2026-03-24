@@ -29,6 +29,9 @@
         <% end %>
       <% end %>
       <% if @is_subscribed %>
+        <%= link_to campaign_campaign_rounds_path(@campaign), class: "px-4 py-2 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
+          Ver Rondas
+        <% end %>
         <%= button_to "Desuscribirse", unsubscribe_campaign_path(@campaign),
             method: :delete,
             class: "px-4 py-2 border border-red-800/50 text-red-400 rounded hover:bg-red-900/20 hover:border-red-700/60 transition-all cursor-pointer",
