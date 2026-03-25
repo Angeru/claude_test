@@ -63,6 +63,13 @@ class BattleRosterUnitsController < ApplicationController
     )
   end
 
+  def flee
+    @unit.flee!
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    )
+  end
+
   private
 
   def set_context

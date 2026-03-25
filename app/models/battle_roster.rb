@@ -21,6 +21,11 @@ class BattleRoster < ApplicationRecord
     end
   end
 
+  def broken?
+    total = total_count
+    total > 0 && defeated_count > total / 2
+  end
+
   def defeated_count
     battle_roster_units.where(defeated: true).count
   end
@@ -31,6 +36,12 @@ class BattleRoster < ApplicationRecord
 
   def total_count
     battle_roster_units.count
+  end
+
+  def award_experience!
+    battle_roster_units.includes(:warband_member).each do |unit|
+      unit.warband_member.increment!(:experience, unit.experience_earned)
+    end
   end
 
   private

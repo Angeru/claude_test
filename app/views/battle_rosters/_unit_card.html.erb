@@ -103,11 +103,12 @@
     <div class="mt-4 pt-4 border-t border-stone-800/50">
       <p class="text-xs text-amber-200/60 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Logros</p>
       <div class="space-y-1">
-        <% [
+        <% ticks = [
           ["wounded_enemy",  "Hirió a un enemigo"],
-          ["fate_protected", "Evitó herida con Fate"],
-          ["courage_broken", "Superó coraje estando Roto"]
-        ].each do |tick, label| %>
+          ["fate_protected", "Evitó herida con Fate"]
+        ]
+        ticks += [["courage_broken", "Superó coraje estando Roto"]] if !@battle_roster.active? || !@battle_roster.broken?
+        ticks.each do |tick, label| %>
           <% checked = unit.public_send(tick) %>
           <% if !@battle_roster.active? %>
             <div class="w-full flex items-center gap-2 px-2 py-1.5 rounded border <%= checked ? 'bg-amber-900/30 border-amber-700/50 text-amber-300' : 'bg-stone-900/50 border-stone-700/30 text-stone-500' %>">
@@ -163,6 +164,33 @@
             </span>
             <span style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">MVP</span>
           </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Test de Coraje (solo cuando banda rota y unidad viva) -->
+    <% if @battle_roster.active? && @battle_roster.broken? && !unit.defeated? %>
+      <div class="mt-4 pt-4 border-t border-red-900/40">
+        <p class="text-xs text-red-400/80 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">
+          Test de Coraje
+          <span class="ml-1 text-red-300/60">(C: <%= unit.warband_member.coraje %>)</span>
+        </p>
+        <div class="flex gap-2">
+          <%= button_to toggle_tick_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
+              @campaign, @round, @matchup, @battle_roster, unit),
+              params: { tick: "courage_broken" },
+              method: :patch,
+              class: "flex-1 px-2 py-2 rounded border text-xs font-bold tracking-wider uppercase transition-colors #{unit.courage_broken ? 'bg-emerald-900/40 border-emerald-700/60 text-emerald-300' : 'bg-stone-900/50 border-stone-700/40 text-stone-400 hover:border-emerald-800/50 hover:text-emerald-400'}",
+              style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" do %>
+            <% if unit.courage_broken %>✓ Superó<% else %>Superó<% end %>
+          <% end %>
+          <%= button_to flee_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
+              @campaign, @round, @matchup, @battle_roster, unit),
+              method: :patch,
+              class: "flex-1 px-2 py-2 rounded border border-red-800/50 bg-red-950/30 text-red-400 hover:bg-red-900/30 hover:border-red-700/60 text-xs font-bold tracking-wider uppercase transition-colors",
+              style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" do %>
+            Huye
+          <% end %>
         </div>
       </div>
     <% end %>

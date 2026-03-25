@@ -94,6 +94,11 @@ class BattleRostersController < ApplicationController
     end
 
     @battle_roster.update!(active: false)
+
+    if @matchup.battle_rosters.where(active: true).none?
+      @matchup.battle_rosters.each(&:award_experience!)
+    end
+
     redirect_to campaign_campaign_round_path(@campaign, @round),
                 notice: "Batalla finalizada"
   end

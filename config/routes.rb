@@ -34,6 +34,7 @@ Rails.application.routes.draw do
               patch :toggle_mvp
               patch :kill
               patch :unkill
+              patch :flee
             end
           end
         end

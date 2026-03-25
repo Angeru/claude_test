@@ -60,6 +60,20 @@ class BattleRosterUnit < ApplicationRecord
     end
   end
 
+  def experience_earned
+    xp = 1                     # 1 por participar
+    xp += 1 if wounded_enemy   # 1 por herir al menos una vez
+    xp += kills                # 1 por cada héroe o monstruo eliminado
+    xp += 1 if fate_protected  # 1 por prevenir una herida con fate
+    xp += 1 if on_objective    # 1 por terminar en un objetivo
+    xp += 1 if mvp             # 1 por ser MVP
+    xp
+  end
+
+  def flee!
+    update!(defeated: true, current_wounds: 0)
+  end
+
   def kill!
     increment!(:kills)
   end
