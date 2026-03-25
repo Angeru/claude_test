@@ -37,6 +37,7 @@
     </div>
   </div>
 
+  <% if @matchup.persisted? %>
   <!-- Combat Results -->
   <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-6">
     <h3 class="text-amber-200/80 tracking-wider uppercase mb-6" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">
@@ -100,12 +101,13 @@
       <%= f.text_area :notes, rows: 3, class: "w-full bg-stone-900 border border-amber-900/40 rounded py-2 px-3 text-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-700 focus:border-amber-700", style: "font-family: 'Crimson Text', serif;", placeholder: "Notas sobre el combate, eventos especiales, etc." %>
     </div>
   </div>
+  <% end %>
 
   <div class="flex justify-end space-x-4 pt-2">
     <%= link_to "Cancelar", campaign_campaign_round_path(@campaign_round.campaign, @campaign_round),
         class: "text-stone-400 hover:text-amber-400 transition-colors tracking-wider uppercase",
         style: "font-family: 'Cinzel', serif; font-size: 0.75rem;" %>
-    <%= f.submit "Guardar Resultado",
+    <%= f.submit @matchup.persisted? ? "Guardar Resultado" : "Crear Emparejamiento",
         class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
         style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
   </div>
