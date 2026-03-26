@@ -3,24 +3,24 @@ class MemberProfile < ApplicationRecord
   RANKS = %w[capitan sargento].freeze
   STAT_FIELDS = %w[movimiento lucha proyectiles fuerza defensa ataques heridas coraje inteligencia might will fate].freeze
 
-  belongs_to :user
+  belongs_to :user, optional: true
 
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
   validates :member_type, inclusion: { in: MEMBER_TYPES }
   validates :rank, inclusion: { in: RANKS + [ nil ] }
   validate :rank_only_for_heroes
 
-  validates :movimiento, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 12 }
-  validates :lucha, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  validates :proyectiles, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  validates :fuerza, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  validates :defensa, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  validates :ataques, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  validates :heridas, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  validates :coraje, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
-  validates :inteligencia, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
+  validates :movimiento, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 20 }
+  validates :lucha, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :proyectiles, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :fuerza, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :defensa, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :ataques, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :heridas, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 30 }
+  validates :coraje, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :inteligencia, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
   validates :might, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
-  validates :will, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
+  validates :will, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 30 }
   validates :fate, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 10 }
   validates :experience, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :ranking, numericality: { only_integer: true, greater_than_or_equal_to: 0 }

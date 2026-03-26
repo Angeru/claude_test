@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_22_160000) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_25_235853) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -118,7 +118,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_22_160000) do
   end
 
   create_table "member_profiles", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.string "name", null: false
     t.string "member_type", default: "warrior", null: false
     t.string "rank"
