@@ -24,6 +24,9 @@
         <%= link_to campaign_campaign_rounds_path(@campaign), class: "px-4 py-2 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
           Gestionar Rondas
         <% end %>
+        <%= link_to standings_campaign_path(@campaign), class: "px-4 py-2 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
+          Clasificación
+        <% end %>
         <%= link_to manage_warbands_campaign_path(@campaign), class: "px-4 py-2 border border-purple-800/50 text-purple-400 rounded hover:bg-purple-900/20 hover:border-purple-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
           Gestionar Warbands
         <% end %>
@@ -31,6 +34,9 @@
       <% if @is_subscribed %>
         <%= link_to campaign_campaign_rounds_path(@campaign), class: "px-4 py-2 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
           Ver Rondas
+        <% end %>
+        <%= link_to standings_campaign_path(@campaign), class: "px-4 py-2 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
+          Clasificación
         <% end %>
         <%= button_to "Desuscribirse", unsubscribe_campaign_path(@campaign),
             method: :delete,

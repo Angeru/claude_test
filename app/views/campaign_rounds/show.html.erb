@@ -122,10 +122,10 @@
               <!-- Actions -->
               <% if can_manage_campaign?(@campaign) %>
                 <div class="ml-6 flex-shrink-0 flex space-x-3">
-                  <%= link_to "Editar", edit_campaign_campaign_round_matchup_path(@round, matchup),
+                  <%= link_to "Editar", edit_campaign_campaign_round_matchup_path(@campaign, @round, matchup),
                       class: "text-amber-400 hover:text-amber-300 transition-colors tracking-wider uppercase",
                       style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
-                  <%= button_to "Eliminar", campaign_campaign_round_matchup_path(@round, matchup),
+                  <%= button_to "Eliminar", campaign_campaign_round_matchup_path(@campaign, @round, matchup),
                       method: :delete,
                       data: { turbo_confirm: "¿Estas seguro?" },
                       class: "text-red-500/70 hover:text-red-400 transition-colors tracking-wider uppercase bg-transparent border-0 p-0 cursor-pointer",

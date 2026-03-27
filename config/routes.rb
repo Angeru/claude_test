@@ -23,6 +23,8 @@ Rails.application.routes.draw do
             patch :toggle
             get   :finalize
             post  :complete
+            get   :injury_rolls
+            post  :apply_injuries
           end
           resources :battle_roster_units, path: 'units', only: [] do
             member do
@@ -44,6 +46,7 @@ Rails.application.routes.draw do
       post :subscribe
       delete :unsubscribe
       get :manage_warbands
+      get :standings
     end
     collection do
       get :my_campaigns

@@ -1,7 +1,7 @@
 class BattleRostersController < ApplicationController
   before_action :require_login
   before_action :set_matchup
-  before_action :set_battle_roster, only: [:show, :destroy, :toggle, :finalize, :complete]
+  before_action :set_battle_roster, only: [:show, :destroy, :toggle, :finalize, :complete, :injury_rolls, :apply_injuries]
   before_action :authorize_participant!
 
   def show
@@ -99,8 +99,64 @@ class BattleRostersController < ApplicationController
       @matchup.battle_rosters.each(&:award_experience!)
     end
 
+    influence = 2
+    influence += case @matchup.result
+                 when "draw"
+                   1
+                 when "warband_1_win"
+                   @matchup.warband_1_id == @battle_roster.warband_id ? 2 : 0
+                 when "warband_2_win"
+                   @matchup.warband_2_id == @battle_roster.warband_id ? 2 : 0
+                 else
+                   0
+                 end
+    @battle_roster.warband.increment!(:influence, influence)
+
+    defeated_members = @battle_roster.battle_roster_units.where(defeated: true)
+    if defeated_members.any?
+      redirect_to injury_rolls_campaign_campaign_round_matchup_battle_roster_path(@campaign, @round, @matchup, @battle_roster),
+                  notice: "Batalla finalizada. Realiza las tiradas de heridas para los guerreros caídos."
+    else
+      redirect_to campaign_campaign_round_path(@campaign, @round),
+                  notice: "Batalla finalizada"
+    end
+  end
+
+  def injury_rolls
+    @campaign = @matchup.campaign_round.campaign
+    @round = @matchup.campaign_round
+    @defeated_warriors = @battle_roster.battle_roster_units
+                                       .joins(:warband_member)
+                                       .where(defeated: true, warband_members: { member_type: "warrior" })
+                                       .includes(:warband_member)
+                                       .order("warband_members.name ASC")
+    @defeated_heroes = @battle_roster.battle_roster_units
+                                     .joins(:warband_member)
+                                     .where(defeated: true, warband_members: { member_type: "hero" })
+                                     .includes(warband_member: :warband_skills)
+                                     .order("warband_members.name ASC")
+  end
+
+  def apply_injuries
+    @campaign = @matchup.campaign_round.campaign
+    @round = @matchup.campaign_round
+
+    (params[:injuries] || {}).each do |member_id, data|
+      roll = data[:roll].to_i
+      next unless roll.between?(2, 12)
+
+      member = WarbandMember.find_by(id: member_id)
+      next unless member
+
+      if member.warrior?
+        apply_warrior_injury(member, roll, data)
+      else
+        apply_hero_injury(member, roll, data)
+      end
+    end
+
     redirect_to campaign_campaign_round_path(@campaign, @round),
-                notice: "Batalla finalizada"
+                notice: "Tiradas de heridas aplicadas"
   end
 
   def toggle
@@ -111,6 +167,75 @@ class BattleRostersController < ApplicationController
   end
 
   private
+
+  def apply_warrior_injury(member, roll, data)
+    case roll
+    when 2..3 then member.update_column(:dead, true)
+    when 4..5 then member.update_column(:injured, true)
+    when 6..11 then nil # recuperación completa
+    when 12
+      bonus = data[:bonus_xp].to_i.clamp(1, 3)
+      member.increment!(:experience, bonus)
+    end
+  end
+
+  def apply_hero_injury(member, roll, data)
+    case roll
+    when 2
+      member.update_column(:dead, true)
+    when 3
+      if member.arm_injured?
+        member.update_column(:dead, true)
+      else
+        member.update_column(:arm_injured, true)
+      end
+    when 4
+      if member.leg_injured?
+        member.update_column(:dead, true)
+      else
+        member.update_column(:leg_injured, true)
+        member.update_column(:movimiento, [ member.movimiento - 1, 0 ].max)
+      end
+    when 5
+      new_count = member.disgrace_count + 1
+      if new_count >= 3
+        member.update_column(:dead, true)
+      else
+        member.update_column(:disgrace_count, new_count)
+        skill_name = new_count == 1 ? "Deshonrado" : "Temeroso"
+        skill_desc = new_count == 1 ? "No puede proporcionar Stand Fast!" : "Fearful"
+        member.warband_skills.create!(name: skill_name, description: skill_desc, skill_type: "special")
+      end
+    when 6
+      member.update_column(:injured, true)
+    when 7..10
+      apply_recovery(member, data[:recovery_choice])
+    when 11
+      member.update_column(:fate, member.fate + 1)
+    when 12
+      influence = data[:bonus_influence].to_i.clamp(1, 6)
+      member.warband.increment!(:influence, influence)
+      apply_recovery(member, data[:recovery_choice])
+    end
+  end
+
+  def apply_recovery(member, choice)
+    case choice
+    when "arm"
+      member.update_column(:arm_injured, false)
+    when "leg"
+      member.update_column(:leg_injured, false)
+      member.update_column(:movimiento, member.movimiento + 1)
+    when "disgrace"
+      new_count = [ member.disgrace_count - 1, 0 ].max
+      if new_count < member.disgrace_count
+        skill_to_remove = member.warband_skills.find_by(name: "Temeroso") ||
+                          member.warband_skills.find_by(name: "Deshonrado")
+        skill_to_remove&.destroy
+        member.update_column(:disgrace_count, new_count)
+      end
+    end
+  end
 
   def set_matchup
     @matchup = Matchup.find(params[:matchup_id])

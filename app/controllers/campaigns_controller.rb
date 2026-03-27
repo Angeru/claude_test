@@ -1,6 +1,6 @@
 class CampaignsController < ApplicationController
   before_action :require_login
-  before_action :set_campaign, only: [:show, :subscribe, :unsubscribe, :manage_warbands]
+  before_action :set_campaign, only: [:show, :subscribe, :unsubscribe, :manage_warbands, :standings]
 
   def index
     @campaigns = Campaign.active.includes(:user, :subscribers).order(created_at: :desc)
@@ -71,6 +71,49 @@ class CampaignsController < ApplicationController
     else
       redirect_to my_campaigns_campaigns_path, alert: "No estás suscrito a esta campaña"
     end
+  end
+
+  def standings
+    unless can_view_campaign?(@campaign)
+      redirect_to campaign_path(@campaign), alert: "No tienes permiso para ver esta campaña"
+      return
+    end
+
+    points = Hash.new { |h, k| h[k] = { wins: 0, draws: 0, losses: 0, played: 0 } }
+
+    @campaign.campaign_rounds.each do |round|
+      round.matchups.each do |matchup|
+        next if matchup.pending?
+
+        w1 = matchup.warband_1_id
+        w2 = matchup.warband_2_id
+
+        case matchup.result
+        when "warband_1_win"
+          points[w1][:wins]   += 1
+          points[w2][:losses] += 1
+        when "warband_2_win"
+          points[w2][:wins]   += 1
+          points[w1][:losses] += 1
+        when "draw"
+          points[w1][:draws] += 1
+          points[w2][:draws] += 1
+        end
+
+        points[w1][:played] += 1
+        points[w2][:played] += 1
+      end
+    end
+
+    warbands_by_id = @campaign.warbands.index_by(&:id)
+
+    @standings = points.map do |warband_id, stats|
+      warband = warbands_by_id[warband_id]
+      next unless warband
+
+      pts = stats[:wins] * 3 + stats[:draws]
+      { warband: warband, points: pts, **stats }
+    end.compact.sort_by { |s| [-s[:points], -s[:wins], s[:warband].name] }
   end
 
   def manage_warbands
