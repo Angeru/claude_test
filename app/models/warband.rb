@@ -9,6 +9,7 @@ class Warband < ApplicationRecord
   has_many :warriors, -> { where(member_type: "warrior") }, class_name: "WarbandMember"
 
   validates :name, presence: true, length: { minimum: 3 }
+  validates :warband_class, inclusion: { in: WARBAND_CLASSES, message: "debe ser una clase válida" }, allow_blank: true
   validates :user_id, presence: true
   validates :gold, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :influence, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -18,6 +19,46 @@ class Warband < ApplicationRecord
   after_create  :log_creation
   after_update  :log_update_changes
   after_destroy :log_destruction
+
+  WARBAND_CLASSES = [
+    "Minas Tirith",
+    "Osgiliath and Ithilien",
+    "Fiefdoms",
+    "Fornost",
+    "Arnor",
+    "The last alliance",
+    "Rohan",
+    "Helms deep",
+    "Paths of the druadan",
+    "Erebor and Dale",
+    "Defenders of the north",
+    "Lothlorien",
+    "Rivendell",
+    "Halls of Thranduil",
+    "Durin's folk",
+    "Iron hills",
+    "Lake town",
+    "Wanderers in the wild",
+    "The shire",
+    "Mordor",
+    "Cirith ungol",
+    "Minas Morgul",
+    "Angmar and Carn Dun",
+    "Burning the Westfold",
+    "Muster of Isengard",
+    "Wolves of Isengard",
+    "Hill tribes of Dunland",
+    "Sharkey's Rogues",
+    "Moria",
+    "Mirkwood",
+    "Harad",
+    "City of Umbar",
+    "Easterlings",
+    "Grand army of the south",
+    "Dol Guldur",
+    "Goblin-town",
+    "Gundabad"
+  ].freeze
 
   EXCLUDED_FIELDS = %w[id created_at updated_at warband_id warband_member_id].freeze
 
@@ -54,7 +95,7 @@ class Warband < ApplicationRecord
   end
 
   def total_ranking
-    warband_members.sum(&:total_ranking)
+    warband_members.where(dead: false, injured: false).sum(&:total_ranking)
   end
 
   private

@@ -2,7 +2,7 @@
 <% content_for(:raw_content) { true } %>
 
 <%= render layout: "shared/dark_layout" do %>
-  <%= link_to warband_warband_member_path(@warband_member.warband, @warband_member), class: "inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors mb-6", style: "font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;" do %>
+  <%= link_to warband_warband_member_path(@warband_member.warband, @warband_member, anchor: 'skills'), class: "inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors mb-6", style: "font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;" do %>
     <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     <%= @warband_member.name %>
   <% end %>

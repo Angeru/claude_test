@@ -9,7 +9,11 @@ class BattleRoster < ApplicationRecord
   scope :active, -> { where(active: true) }
 
   def populate_units!
-    warband.warband_members.find_each do |member|
+    warband.warband_members.where(dead: false).find_each do |member|
+      if member.injured?
+        member.update_column(:injured, false)
+        next
+      end
       battle_roster_units.find_or_create_by!(warband_member: member) do |unit|
         unit.max_wounds = member.heridas
         unit.current_wounds = member.heridas

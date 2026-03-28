@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_25_235853) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_28_120000) do
   create_table "battle_roster_units", force: :cascade do |t|
     t.integer "battle_roster_id", null: false
     t.integer "warband_member_id", null: false
@@ -138,8 +138,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_25_235853) do
     t.integer "ranking", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "warband_class"
     t.index ["member_type"], name: "index_member_profiles_on_member_type"
     t.index ["user_id"], name: "index_member_profiles_on_user_id"
+    t.index ["warband_class"], name: "index_member_profiles_on_warband_class"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -252,6 +254,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_25_235853) do
     t.integer "ranking", default: 0, null: false
     t.string "rank"
     t.string "path"
+    t.boolean "dead", default: false, null: false
+    t.boolean "injured", default: false, null: false
+    t.boolean "arm_injured", default: false, null: false
+    t.boolean "leg_injured", default: false, null: false
+    t.integer "disgrace_count", default: 0, null: false
     t.index ["member_type"], name: "index_warband_members_on_member_type"
     t.index ["warband_id"], name: "index_warband_members_on_warband_id"
   end

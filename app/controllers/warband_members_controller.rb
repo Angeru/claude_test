@@ -16,17 +16,17 @@ class WarbandMembersController < ApplicationController
 
   def new
     @member = @warband.warband_members.build
-    @profiles = current_user.member_profiles.by_name
+    @profiles = MemberProfile.for_warband_class(@warband.warband_class).by_name
 
     if params[:profile_id].present?
-      profile = current_user.member_profiles.find_by(id: params[:profile_id])
+      profile = MemberProfile.for_warband_class(@warband.warband_class).find_by(id: params[:profile_id])
       profile&.apply_to_member(@member)
     end
   end
 
   def create
     @member = @warband.warband_members.build(member_params)
-    @profiles = current_user.member_profiles.by_name
+    @profiles = MemberProfile.for_warband_class(@warband.warband_class).by_name
 
     if @member.save
       redirect_to warband_warband_members_path(@warband),

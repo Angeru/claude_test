@@ -43,7 +43,7 @@ class WarbandEquipmentsController < ApplicationController
     @equipment = @warband_member.warband_equipments.build(equipment_params)
 
     if @equipment.save
-      redirect_to warband_warband_member_warband_equipments_path(@warband_member.warband, @warband_member),
+      redirect_to warband_warband_member_path(@warband_member.warband, @warband_member, anchor: 'equipo'),
                   notice: "Equipo añadido exitosamente"
     else
       render :new, status: :unprocessable_entity
@@ -55,7 +55,7 @@ class WarbandEquipmentsController < ApplicationController
 
   def update
     if @equipment.update(equipment_params)
-      redirect_to warband_warband_member_warband_equipments_path(@warband_member.warband, @warband_member),
+      redirect_to warband_warband_member_path(@warband_member.warband, @warband_member, anchor: 'equipo'),
                   notice: "Equipo actualizado exitosamente"
     else
       render :edit, status: :unprocessable_entity
@@ -64,7 +64,7 @@ class WarbandEquipmentsController < ApplicationController
 
   def destroy
     @equipment.destroy
-    redirect_to warband_warband_member_warband_equipments_path(@warband_member.warband, @warband_member),
+    redirect_to warband_warband_member_path(@warband_member.warband, @warband_member, anchor: 'equipo'),
                 notice: "Equipo eliminado exitosamente"
   end
 

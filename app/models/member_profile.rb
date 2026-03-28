@@ -28,6 +28,8 @@ class MemberProfile < ApplicationRecord
   scope :by_name, -> { order(:name) }
   scope :heroes, -> { where(member_type: "hero") }
   scope :warriors, -> { where(member_type: "warrior") }
+  scope :global, -> { where(user_id: nil) }
+  scope :for_warband_class, ->(klass) { global.where(warband_class: klass) }
 
   def hero?
     member_type == "hero"

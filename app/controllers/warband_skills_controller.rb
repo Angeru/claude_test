@@ -42,7 +42,7 @@ class WarbandSkillsController < ApplicationController
     @skill = @warband_member.warband_skills.build(skill_params)
 
     if @skill.save
-      redirect_to warband_warband_member_warband_skills_path(@warband_member.warband, @warband_member),
+      redirect_to warband_warband_member_path(@warband_member.warband, @warband_member, anchor: 'skills'),
                   notice: "Skill añadida exitosamente"
     else
       render :new, status: :unprocessable_entity
@@ -54,7 +54,7 @@ class WarbandSkillsController < ApplicationController
 
   def update
     if @skill.update(skill_params)
-      redirect_to warband_warband_member_warband_skills_path(@warband_member.warband, @warband_member),
+      redirect_to warband_warband_member_path(@warband_member.warband, @warband_member, anchor: 'skills'),
                   notice: "Skill actualizada exitosamente"
     else
       render :edit, status: :unprocessable_entity
@@ -63,7 +63,7 @@ class WarbandSkillsController < ApplicationController
 
   def destroy
     @skill.destroy
-    redirect_to warband_warband_member_warband_skills_path(@warband_member.warband, @warband_member),
+    redirect_to warband_warband_member_path(@warband_member.warband, @warband_member, anchor: 'skills'),
                 notice: "Skill eliminada exitosamente"
   end
 
