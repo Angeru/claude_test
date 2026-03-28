@@ -19,7 +19,22 @@
       "Bash(find:*)",
       "Bash(bin/rails s:*)",
       "Bash(pkill:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "WebFetch(domain:v2024.mesbg-list-builder.com)",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/database\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/database?page=2\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/database/2\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/api\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/api/units\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/api/database\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/data.json\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/public/database.json\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/assets/\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com\" -H \"Accept: application/json\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/database.json\")",
+      "Bash(curl -s \"https://v2024.mesbg-list-builder.com/assets/index-JOr8T4VD.js\")",
+      "Bash(curl:*)",
+      "Bash(bin/rails profiles:import 2>&1)"
     ]
   }
 }
