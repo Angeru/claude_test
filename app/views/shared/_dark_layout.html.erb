@@ -1,12 +1,12 @@
 <div class="relative min-h-screen overflow-hidden">
-  <!-- Background layers -->
-  <div class="absolute inset-0 bg-gradient-to-b from-stone-950 via-stone-900 to-stone-950"></div>
-  <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 fill=%22none%22/><path d=%22M0 50h100M50 0v100%22 stroke=%22%23a0845c%22 stroke-width=%220.5%22 opacity=%220.3%22/></svg>'); background-size: 100px 100px;"></div>
+  <!-- Background layers: warm parchment -->
+  <div class="absolute inset-0 bg-gradient-to-b from-amber-50 via-stone-100 to-amber-50"></div>
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22><rect width=%22100%22 height=%22100%22 fill=%22none%22/><path d=%22M0 50h100M50 0v100%22 stroke=%22%236b5a3e%22 stroke-width=%220.5%22 opacity=%220.5%22/></svg>'); background-size: 100px 100px;"></div>
 
   <!-- Top decorative border -->
   <div class="relative z-10">
-    <div class="h-1 bg-gradient-to-r from-transparent via-amber-700 to-transparent"></div>
-    <div class="h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent"></div>
+    <div class="h-1 bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-400/60 to-transparent"></div>
   </div>
 
   <!-- Navigation -->
@@ -14,12 +14,12 @@
 
   <!-- Flash messages -->
   <% if notice %>
-    <div class="fixed top-4 right-4 z-50 mb-4 p-4 bg-emerald-900/80 border border-emerald-600/50 text-emerald-200 rounded shadow-lg" style="font-family: 'Crimson Text', serif;">
+    <div class="fixed top-4 right-4 z-50 mb-4 p-4 bg-emerald-50 border border-emerald-300/60 text-emerald-800 rounded shadow-lg shadow-emerald-100/50" style="font-family: 'Crimson Text', serif;">
       <%= notice %>
     </div>
   <% end %>
   <% if alert %>
-    <div class="fixed top-4 right-4 z-50 mb-4 p-4 bg-red-900/80 border border-red-600/50 text-red-200 rounded shadow-lg" style="font-family: 'Crimson Text', serif;">
+    <div class="fixed top-4 right-4 z-50 mb-4 p-4 bg-red-50 border border-red-300/60 text-red-700 rounded shadow-lg shadow-red-100/50" style="font-family: 'Crimson Text', serif;">
       <%= alert %>
     </div>
   <% end %>
@@ -33,7 +33,7 @@
 
   <!-- Bottom decorative border -->
   <div class="relative z-10 mt-auto">
-    <div class="h-px bg-gradient-to-r from-transparent via-amber-700 to-transparent"></div>
-    <div class="h-1 bg-gradient-to-r from-transparent via-amber-900/50 to-transparent"></div>
+    <div class="h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
+    <div class="h-1 bg-gradient-to-r from-transparent via-amber-300/50 to-transparent"></div>
   </div>
 </div>

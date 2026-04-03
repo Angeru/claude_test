@@ -1,7 +1,7 @@
 <%= form_with model: warband, class: "space-y-5" do |form| %>
   <% if warband.errors.any? %>
-    <div class="rounded-lg border border-red-800/40 bg-red-900/20 p-4">
-      <h3 class="text-red-300 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;"><%= pluralize(warband.errors.count, "error") %> impidieron guardar:</h3>
+    <div class="rounded-lg border border-red-300/60 bg-red-50/80 p-4">
+      <h3 class="text-red-700 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;"><%= pluralize(warband.errors.count, "error") %> impidieron guardar:</h3>
       <ul class="list-disc list-inside text-red-400/80 text-sm space-y-1" style="font-family: 'Crimson Text', serif;">
         <% warband.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,13 +10,13 @@
     </div>
   <% end %>
 
-  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-6 space-y-5">
+  <div class="rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 p-6 space-y-5">
     <div>
       <%= form.label :name, "Nombre de la Warband",
-          class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+          class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
           style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
       <%= form.text_field :name,
-          class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+          class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
           style: "font-family: 'Crimson Text', serif;",
           required: true,
           placeholder: "Ej: Los Lobos de Fenris" %>
@@ -24,12 +24,12 @@
 
     <div>
       <%= form.label :warband_class, "Clase de Warband",
-          class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+          class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
           style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
       <%= form.select :warband_class,
           options_for_select(Warband::WARBAND_CLASSES, warband.warband_class),
           { include_blank: "Selecciona una clase..." },
-          class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+          class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
           style: "font-family: 'Crimson Text', serif;" %>
       <p class="text-stone-500 text-xs mt-2" style="font-family: 'Crimson Text', serif;">
         La clase de warband de la que es originaria esta banda
@@ -39,20 +39,20 @@
     <div class="grid grid-cols-2 gap-4">
       <div>
         <%= form.label :gold, "Oro",
-            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
         <%= form.number_field :gold,
-            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
             style: "font-family: 'Crimson Text', serif;",
             min: 0, required: true %>
       </div>
 
       <div>
         <%= form.label :influence, "Influencia",
-            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
         <%= form.number_field :influence,
-            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
             style: "font-family: 'Crimson Text', serif;",
             min: 0, required: true %>
       </div>
@@ -60,14 +60,14 @@
 
     <div>
       <%= form.label :campaign_id, "Asignar a Campana (opcional)",
-          class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+          class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
           style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
       <%= form.collection_select :campaign_id,
           current_user.campaigns.active,
           :id,
           :name,
           { include_blank: "Sin asignar (disponible)" },
-          class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+          class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
           style: "font-family: 'Crimson Text', serif;" %>
       <p class="text-stone-500 text-xs mt-2" style="font-family: 'Crimson Text', serif;">
         Solo puedes asignar a campanas en las que estes suscrito
@@ -77,10 +77,10 @@
 
   <div class="flex items-center justify-between pt-2">
     <%= form.submit warband.new_record? ? "Crear Warband" : "Actualizar Warband",
-        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
+        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-white rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-200/60 cursor-pointer",
         style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
     <%= link_to "Cancelar", warbands_path,
-        class: "text-stone-400 hover:text-amber-400 transition-colors tracking-wider uppercase",
+        class: "text-stone-600 hover:text-amber-700 transition-colors tracking-wider uppercase",
         style: "font-family: 'Cinzel', serif; font-size: 0.75rem;" %>
   </div>
 <% end %>

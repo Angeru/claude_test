@@ -34,7 +34,8 @@
       "Bash(curl -s \"https://v2024.mesbg-list-builder.com/database.json\")",
       "Bash(curl -s \"https://v2024.mesbg-list-builder.com/assets/index-JOr8T4VD.js\")",
       "Bash(curl:*)",
-      "Bash(bin/rails profiles:import 2>&1)"
+      "Bash(bin/rails profiles:import 2>&1)",
+      "Bash(xargs -r sed -i 's/bg-stone-950/bg-amber-50/g; s/bg-stone-900/bg-white/g')"
     ]
   }
 }

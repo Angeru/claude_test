@@ -1,4 +1,4 @@
-<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:body_class) { "bg-amber-50" } %>
 <% content_for(:raw_content) { true } %>
 
 <%= render layout: "shared/dark_layout" do %>
@@ -12,11 +12,11 @@
         </svg>
         <div class="h-px w-12 bg-gradient-to-l from-transparent to-amber-700/60"></div>
       </div>
-      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+      <h1 class="text-stone-800 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
         <%= @round.display_name %>
       </h1>
       <% if @round.scenario.present? %>
-        <p class="text-stone-400 mt-2" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;">
+        <p class="text-stone-600 mt-2" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;">
           Escenario: <%= @round.scenario %>
         </p>
       <% end %>
@@ -28,16 +28,16 @@
     </div>
     <div class="flex flex-wrap gap-3">
       <% if can_manage_campaign?(@campaign) %>
-        <%= link_to edit_campaign_campaign_round_path(@campaign, @round), class: "px-4 py-2 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
+        <%= link_to edit_campaign_campaign_round_path(@campaign, @round), class: "px-4 py-2 border border-amber-400/60 text-amber-700 rounded hover:bg-amber-100/60 hover:border-amber-500 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
           Editar Ronda
         <% end %>
         <%= button_to "Eliminar Ronda", campaign_campaign_round_path(@campaign, @round),
             method: :delete,
             data: { turbo_confirm: "¿Estas seguro? Se eliminaran todos los emparejamientos." },
-            class: "px-4 py-2 border border-red-800/50 text-red-400 rounded hover:bg-red-900/20 hover:border-red-700/60 transition-all cursor-pointer",
+            class: "px-4 py-2 border border-red-800/50 text-red-400 rounded hover:bg-red-50/80 hover:border-red-700/60 transition-all cursor-pointer",
             style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" %>
       <% end %>
-      <%= link_to campaign_campaign_rounds_path(@campaign), class: "px-4 py-2 border border-stone-700/50 text-stone-400 rounded hover:bg-stone-800/50 hover:border-stone-600/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
+      <%= link_to campaign_campaign_rounds_path(@campaign), class: "px-4 py-2 border border-stone-300 text-stone-600 rounded hover:bg-amber-50/80 hover:border-stone-600/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
         Volver a Rondas
       <% end %>
     </div>
@@ -51,7 +51,7 @@
       <div class="h-px w-8 bg-gradient-to-l from-transparent to-amber-800/40"></div>
     </div>
     <% if can_manage_campaign?(@campaign) %>
-      <%= link_to new_campaign_campaign_round_matchup_path(@campaign, @round), class: "px-4 py-2 bg-gradient-to-b from-emerald-700 to-emerald-900 text-emerald-100 rounded border border-emerald-600/50 hover:from-emerald-600 hover:to-emerald-800 transition-all shadow-lg shadow-emerald-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
+      <%= link_to new_campaign_campaign_round_matchup_path(@campaign, @round), class: "px-4 py-2 bg-gradient-to-b from-emerald-700 to-emerald-900 text-white rounded border border-emerald-600/50 hover:from-emerald-600 hover:to-emerald-800 transition-all shadow-lg shadow-emerald-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
         Nuevo Emparejamiento
       <% end %>
     <% end %>
@@ -60,24 +60,24 @@
   <% if @matchups.any? %>
     <div class="space-y-5">
       <% @matchups.each do |matchup| %>
-        <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 overflow-hidden">
+        <div class="rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 overflow-hidden">
           <div class="px-6 py-5">
             <div class="flex items-center justify-between">
               <div class="flex-1 grid grid-cols-3 gap-4 items-center">
                 <!-- Warband 1 -->
                 <div class="text-right">
-                  <p class="text-amber-100 tracking-wider" style="font-family: 'Cinzel', serif; font-size: 0.95rem;"><%= matchup.warband_1.name %></p>
+                  <p class="text-stone-800 tracking-wider" style="font-family: 'Cinzel', serif; font-size: 0.95rem;"><%= matchup.warband_1.name %></p>
                   <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;"><%= matchup.warband_1.user.name %></p>
                   <% if matchup.completed? %>
                     <div class="mt-2 space-y-1">
-                      <p class="text-stone-300 text-sm" style="font-family: 'Crimson Text', serif;"><span class="text-amber-200/70">Puntos:</span> <%= matchup.warband_1_score %></p>
-                      <p class="text-stone-300 text-sm" style="font-family: 'Crimson Text', serif;"><span class="text-amber-200/70">Bajas:</span> <%= matchup.warband_1_casualties %></p>
+                      <p class="text-stone-600 text-sm" style="font-family: 'Crimson Text', serif;"><span class="text-stone-600">Puntos:</span> <%= matchup.warband_1_score %></p>
+                      <p class="text-stone-600 text-sm" style="font-family: 'Crimson Text', serif;"><span class="text-stone-600">Bajas:</span> <%= matchup.warband_1_casualties %></p>
                       <div class="flex justify-end gap-2">
                         <% if matchup.warband_1_primary_objective %>
-                          <span class="px-2 py-0.5 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-900/20" style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Obj. 1°</span>
+                          <span class="px-2 py-0.5 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-100/60" style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Obj. 1°</span>
                         <% end %>
                         <% if matchup.warband_1_secondary_objective %>
-                          <span class="px-2 py-0.5 text-xs text-blue-400/80 border border-blue-900/40 rounded bg-blue-900/20" style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Obj. 2°</span>
+                          <span class="px-2 py-0.5 text-xs text-blue-400/80 border border-blue-900/40 rounded bg-blue-100/50" style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Obj. 2°</span>
                         <% end %>
                       </div>
                     </div>
@@ -88,11 +88,11 @@
                 <div class="text-center">
                   <p class="text-2xl font-bold text-amber-700/60" style="font-family: 'Cinzel Decorative', serif;">VS</p>
                   <% if matchup.completed? %>
-                    <p class="mt-2 px-3 py-1 rounded text-xs inline-block <%= matchup.draw? ? 'text-stone-300 border border-stone-700/40 bg-stone-800/30' : 'text-amber-300 border border-amber-800/40 bg-amber-900/20' %>" style="font-family: 'Cinzel', serif; letter-spacing: 0.05em;">
+                    <p class="mt-2 px-3 py-1 rounded text-xs inline-block <%= matchup.draw? ? 'text-stone-600 border border-stone-300/60 bg-stone-100/60' : 'text-amber-600 border border-amber-400/50 bg-amber-100/60' %>" style="font-family: 'Cinzel', serif; letter-spacing: 0.05em;">
                       <%= matchup.winner_name %>
                     </p>
                   <% else %>
-                    <span class="mt-2 px-3 py-1 rounded text-xs inline-block text-orange-400/80 border border-orange-900/40 bg-orange-900/20" style="font-family: 'Cinzel', serif; letter-spacing: 0.05em;">
+                    <span class="mt-2 px-3 py-1 rounded text-xs inline-block text-orange-400/80 border border-orange-900/40 bg-orange-100/50" style="font-family: 'Cinzel', serif; letter-spacing: 0.05em;">
                       Pendiente
                     </span>
                   <% end %>
@@ -100,18 +100,18 @@
 
                 <!-- Warband 2 -->
                 <div class="text-left">
-                  <p class="text-amber-100 tracking-wider" style="font-family: 'Cinzel', serif; font-size: 0.95rem;"><%= matchup.warband_2.name %></p>
+                  <p class="text-stone-800 tracking-wider" style="font-family: 'Cinzel', serif; font-size: 0.95rem;"><%= matchup.warband_2.name %></p>
                   <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;"><%= matchup.warband_2.user.name %></p>
                   <% if matchup.completed? %>
                     <div class="mt-2 space-y-1">
-                      <p class="text-stone-300 text-sm" style="font-family: 'Crimson Text', serif;"><span class="text-amber-200/70">Puntos:</span> <%= matchup.warband_2_score %></p>
-                      <p class="text-stone-300 text-sm" style="font-family: 'Crimson Text', serif;"><span class="text-amber-200/70">Bajas:</span> <%= matchup.warband_2_casualties %></p>
+                      <p class="text-stone-600 text-sm" style="font-family: 'Crimson Text', serif;"><span class="text-stone-600">Puntos:</span> <%= matchup.warband_2_score %></p>
+                      <p class="text-stone-600 text-sm" style="font-family: 'Crimson Text', serif;"><span class="text-stone-600">Bajas:</span> <%= matchup.warband_2_casualties %></p>
                       <div class="flex gap-2">
                         <% if matchup.warband_2_primary_objective %>
-                          <span class="px-2 py-0.5 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-900/20" style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Obj. 1°</span>
+                          <span class="px-2 py-0.5 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-100/60" style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Obj. 1°</span>
                         <% end %>
                         <% if matchup.warband_2_secondary_objective %>
-                          <span class="px-2 py-0.5 text-xs text-blue-400/80 border border-blue-900/40 rounded bg-blue-900/20" style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Obj. 2°</span>
+                          <span class="px-2 py-0.5 text-xs text-blue-400/80 border border-blue-900/40 rounded bg-blue-100/50" style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Obj. 2°</span>
                         <% end %>
                       </div>
                     </div>
@@ -123,7 +123,7 @@
               <% if can_manage_campaign?(@campaign) %>
                 <div class="ml-6 flex-shrink-0 flex space-x-3">
                   <%= link_to "Editar", edit_campaign_campaign_round_matchup_path(@campaign, @round, matchup),
-                      class: "text-amber-400 hover:text-amber-300 transition-colors tracking-wider uppercase",
+                      class: "text-amber-700 hover:text-amber-600 transition-colors tracking-wider uppercase",
                       style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
                   <%= button_to "Eliminar", campaign_campaign_round_matchup_path(@campaign, @round, matchup),
                       method: :delete,
@@ -135,9 +135,9 @@
             </div>
 
             <% if matchup.notes.present? %>
-              <div class="mt-4 pt-4 border-t border-stone-800/50">
-                <p class="text-stone-400 text-sm" style="font-family: 'Crimson Text', serif;">
-                  <span class="text-amber-200/70">Notas:</span> <%= matchup.notes %>
+              <div class="mt-4 pt-4 border-t border-stone-200/80">
+                <p class="text-stone-600 text-sm" style="font-family: 'Crimson Text', serif;">
+                  <span class="text-stone-600">Notas:</span> <%= matchup.notes %>
                 </p>
               </div>
             <% end %>
@@ -146,11 +146,11 @@
             <% if logged_in? %>
               <% user_warband = current_user.warbands.find { |w| [matchup.warband_1_id, matchup.warband_2_id].include?(w.id) } %>
               <% if user_warband %>
-                <div class="mt-4 pt-4 border-t border-stone-800/50">
+                <div class="mt-4 pt-4 border-t border-stone-200/80">
                   <% existing_roster = matchup.battle_rosters.find { |br| br.warband_id == user_warband.id } %>
                   <% if existing_roster && !existing_roster.active? %>
                     <%= link_to campaign_campaign_round_matchup_battle_roster_path(@campaign, @round, matchup, existing_roster),
-                        class: "inline-flex items-center px-4 py-2 bg-gradient-to-b from-stone-700 to-stone-900 text-stone-200 rounded border border-stone-600/50 hover:from-stone-600 hover:to-stone-800 transition-all shadow-lg shadow-stone-900/30",
+                        class: "inline-flex items-center px-4 py-2 bg-gradient-to-b from-stone-700 to-stone-900 text-stone-700 rounded border border-stone-600/50 hover:from-stone-600 hover:to-stone-800 transition-all shadow-lg shadow-stone-900/30",
                         style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" do %>
                       <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -185,21 +185,21 @@
       <% end %>
     </div>
   <% else %>
-    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-12 text-center">
-      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-700/40 flex items-center justify-center bg-amber-900/20">
-        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-500/60" fill="none" stroke="currentColor" stroke-width="1.5">
+    <div class="rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 p-12 text-center">
+      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-400/50 flex items-center justify-center bg-amber-100/60">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
         </svg>
       </div>
-      <h3 class="text-amber-100/80 tracking-wider uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
+      <h3 class="text-stone-700 tracking-wider uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
         Sin emparejamientos
       </h3>
-      <p class="text-stone-400 mb-6" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+      <p class="text-stone-600 mb-6" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
         Crea los emparejamientos para esta ronda.
       </p>
       <% if can_manage_campaign?(@campaign) %>
         <%= link_to "Crear Emparejamiento", new_campaign_campaign_round_matchup_path(@campaign, @round),
-            class: "px-5 py-2.5 bg-gradient-to-b from-emerald-700 to-emerald-900 text-emerald-100 rounded border border-emerald-600/50 hover:from-emerald-600 hover:to-emerald-800 transition-all shadow-lg shadow-emerald-900/30",
+            class: "px-5 py-2.5 bg-gradient-to-b from-emerald-700 to-emerald-900 text-white rounded border border-emerald-600/50 hover:from-emerald-600 hover:to-emerald-800 transition-all shadow-lg shadow-emerald-900/30",
             style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
       <% end %>
     </div>

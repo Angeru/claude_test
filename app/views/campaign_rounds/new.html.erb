@@ -1,4 +1,4 @@
-<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:body_class) { "bg-amber-50" } %>
 <% content_for(:raw_content) { true } %>
 
 <%= render layout: "shared/dark_layout", locals: { max_width: "max-w-3xl" } do %>
@@ -11,15 +11,15 @@
       </svg>
       <div class="h-px w-12 bg-gradient-to-l from-transparent to-amber-700/60"></div>
     </div>
-    <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+    <h1 class="text-stone-800 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
       Nueva Ronda
     </h1>
-    <p class="text-stone-400 mt-3" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+    <p class="text-stone-600 mt-3" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
       Crear una nueva ronda para <%= @campaign.name %>
     </p>
   </div>
 
-  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-8">
+  <div class="rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 p-8">
     <%= render "form" %>
   </div>
 <% end %>

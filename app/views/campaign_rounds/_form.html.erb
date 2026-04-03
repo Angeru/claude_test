@@ -1,10 +1,10 @@
 <%= form_with(model: [@campaign, @round], local: true, class: "space-y-5") do |f| %>
   <% if @round.errors.any? %>
-    <div class="p-4 rounded border border-red-800/40 bg-red-900/20">
-      <h3 class="text-red-300 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">
+    <div class="p-4 rounded border border-red-300/60 bg-red-50/80">
+      <h3 class="text-red-700 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">
         <%= pluralize(@round.errors.count, "error") %> impidieron guardar esta ronda:
       </h3>
-      <ul class="list-disc list-inside mt-2 text-red-300/80" style="font-family: 'Crimson Text', serif;">
+      <ul class="list-disc list-inside mt-2 text-red-700" style="font-family: 'Crimson Text', serif;">
         <% @round.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -13,26 +13,26 @@
   <% end %>
 
   <div>
-    <%= f.label :round_number, "Numero de Ronda", class: "block text-amber-200/80 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
-    <%= f.number_field :round_number, class: "w-full bg-stone-900 border border-amber-900/40 rounded py-2 px-3 text-stone-200 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-700 focus:border-amber-700", style: "font-family: 'Crimson Text', serif;", min: 1 %>
+    <%= f.label :round_number, "Numero de Ronda", class: "block text-stone-700 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+    <%= f.number_field :round_number, class: "w-full bg-white border border-amber-300/60 rounded py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500", style: "font-family: 'Crimson Text', serif;", min: 1 %>
   </div>
 
   <div>
-    <%= f.label :scenario, "Escenario (opcional)", class: "block text-amber-200/80 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
-    <%= f.text_field :scenario, class: "w-full bg-stone-900 border border-amber-900/40 rounded py-2 px-3 text-stone-200 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-700 focus:border-amber-700", style: "font-family: 'Crimson Text', serif;", placeholder: "Ej: La Batalla del Bosque Oscuro" %>
+    <%= f.label :scenario, "Escenario (opcional)", class: "block text-stone-700 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+    <%= f.text_field :scenario, class: "w-full bg-white border border-amber-300/60 rounded py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500", style: "font-family: 'Crimson Text', serif;", placeholder: "Ej: La Batalla del Bosque Oscuro" %>
   </div>
 
   <div>
-    <%= f.label :played_at, "Fecha (opcional)", class: "block text-amber-200/80 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
-    <%= f.date_field :played_at, class: "w-full bg-stone-900 border border-amber-900/40 rounded py-2 px-3 text-stone-200 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-700 focus:border-amber-700", style: "font-family: 'Crimson Text', serif;" %>
+    <%= f.label :played_at, "Fecha (opcional)", class: "block text-stone-700 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+    <%= f.date_field :played_at, class: "w-full bg-white border border-amber-300/60 rounded py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500", style: "font-family: 'Crimson Text', serif;" %>
   </div>
 
   <div class="flex justify-end space-x-4 pt-4">
     <%= link_to "Cancelar", campaign_campaign_rounds_path(@campaign),
-        class: "text-stone-400 hover:text-amber-400 transition-colors tracking-wider uppercase",
+        class: "text-stone-600 hover:text-amber-700 transition-colors tracking-wider uppercase",
         style: "font-family: 'Cinzel', serif; font-size: 0.75rem;" %>
     <%= f.submit "Guardar Ronda",
-        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
+        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-white rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-200/60 cursor-pointer",
         style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
   </div>
 <% end %>

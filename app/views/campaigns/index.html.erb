@@ -1,4 +1,4 @@
-<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:body_class) { "bg-amber-50" } %>
 <% content_for(:raw_content) { true } %>
 
 <%= render layout: "shared/dark_layout" do %>
@@ -12,18 +12,18 @@
         </svg>
         <div class="h-px w-12 bg-gradient-to-l from-transparent to-amber-700/60"></div>
       </div>
-      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+      <h1 class="text-stone-800 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
         Campanas Disponibles
       </h1>
     </div>
     <div class="flex gap-3">
-      <%= link_to new_campaign_path, class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+      <%= link_to new_campaign_path, class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-white rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-200/60", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
         Crear Campana
       <% end %>
-      <%= link_to my_campaigns_campaigns_path, class: "px-5 py-2.5 border border-purple-800/50 text-purple-400 rounded hover:bg-purple-900/20 hover:border-purple-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+      <%= link_to my_campaigns_campaigns_path, class: "px-5 py-2.5 border border-purple-800/50 text-purple-400 rounded hover:bg-purple-100/50 hover:border-purple-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
         Mis Campanas
       <% end %>
-      <%= link_to dashboard_path, class: "px-5 py-2.5 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+      <%= link_to dashboard_path, class: "px-5 py-2.5 border border-amber-400/60 text-amber-700 rounded hover:bg-amber-100/60 hover:border-amber-500 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
         Dashboard
       <% end %>
     </div>
@@ -32,25 +32,25 @@
   <% if @campaigns.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
       <% @campaigns.each do |campaign| %>
-        <div class="group relative rounded-lg overflow-hidden border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 hover:border-amber-700/50 transition-all duration-500">
-          <div class="absolute inset-0 bg-gradient-to-b from-amber-900/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div class="group relative rounded-lg overflow-hidden border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 hover:border-amber-500/70 transition-all duration-500">
+          <div class="absolute inset-0 bg-gradient-to-b from-amber-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           <div class="relative p-6">
             <div class="flex justify-between items-start mb-3">
-              <h2 class="text-amber-100 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 1.05rem;">
+              <h2 class="text-stone-800 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 1.05rem;">
                 <%= campaign.name %>
               </h2>
               <% if @subscribed_campaign_ids.include?(campaign.id) %>
-                <span class="px-2 py-1 text-xs text-purple-400/80 border border-purple-900/40 rounded bg-purple-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">
+                <span class="px-2 py-1 text-xs text-purple-400/80 border border-purple-300/50 rounded bg-purple-100/50" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">
                   Suscrito
                 </span>
               <% else %>
-                <span class="px-2 py-1 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-900/20" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">
+                <span class="px-2 py-1 text-xs text-emerald-400/80 border border-emerald-900/40 rounded bg-emerald-100/60" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">
                   Disponible
                 </span>
               <% end %>
             </div>
 
-            <p class="text-stone-400 text-sm leading-relaxed mb-4" style="font-family: 'Crimson Text', serif; font-size: 1rem;">
+            <p class="text-stone-600 text-sm leading-relaxed mb-4" style="font-family: 'Crimson Text', serif; font-size: 1rem;">
               <%= truncate(campaign.description, length: 150) %>
             </p>
 
@@ -85,19 +85,19 @@
               <% end %>
             </div>
 
-            <div class="flex gap-3 pt-4 border-t border-stone-800/50">
+            <div class="flex gap-3 pt-4 border-t border-stone-200/80">
               <%= link_to "Ver Detalles", campaign_path(campaign),
-                  class: "flex-1 text-center px-4 py-2 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30",
+                  class: "flex-1 text-center px-4 py-2 bg-gradient-to-b from-amber-700 to-amber-900 text-white rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-200/60",
                   style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" %>
               <% if @subscribed_campaign_ids.include?(campaign.id) %>
                 <%= button_to "Desuscribirse", unsubscribe_campaign_path(campaign),
                     method: :delete,
-                    class: "flex-1 px-4 py-2 border border-stone-700/50 text-stone-400 rounded hover:bg-stone-800/50 hover:text-red-400 hover:border-red-800/50 transition-all cursor-pointer",
+                    class: "flex-1 px-4 py-2 border border-stone-300 text-stone-600 rounded hover:bg-amber-50/80 hover:text-red-400 hover:border-red-800/50 transition-all cursor-pointer",
                     style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;",
                     data: { turbo_confirm: "¿Estas seguro de desuscribirte de esta campana?" } %>
               <% else %>
                 <%= link_to "Suscribirse", campaign_path(campaign, anchor: "subscribe"),
-                    class: "flex-1 text-center px-4 py-2 border border-emerald-800/50 text-emerald-400 rounded hover:bg-emerald-900/20 hover:border-emerald-700/60 transition-all",
+                    class: "flex-1 text-center px-4 py-2 border border-emerald-800/50 text-emerald-400 rounded hover:bg-emerald-100/60 hover:border-emerald-700/60 transition-all",
                     style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" %>
               <% end %>
             </div>
@@ -106,13 +106,13 @@
       <% end %>
     </div>
   <% else %>
-    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-12 text-center">
-      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-700/40 flex items-center justify-center bg-amber-900/20">
-        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-500/60" fill="none" stroke="currentColor" stroke-width="1.5">
+    <div class="rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 p-12 text-center">
+      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-400/50 flex items-center justify-center bg-amber-100/60">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
         </svg>
       </div>
-      <p class="text-stone-400 mb-5" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;">
+      <p class="text-stone-600 mb-5" style="font-family: 'Crimson Text', serif; font-size: 1.1rem;">
         No hay campanas activas disponibles en este momento.
       </p>
     </div>

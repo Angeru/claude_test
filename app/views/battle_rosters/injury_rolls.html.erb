@@ -1,4 +1,4 @@
-<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:body_class) { "bg-amber-50" } %>
 <% content_for(:raw_content) { true } %>
 
 <%= render layout: "shared/dark_layout" do %>
@@ -12,10 +12,10 @@
         </svg>
         <div class="h-px w-12 bg-gradient-to-l from-transparent to-red-700/60"></div>
       </div>
-      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+      <h1 class="text-stone-800 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
         Tiradas de Heridas
       </h1>
-      <p class="text-amber-400/80 mt-1" style="font-family: 'Cinzel', serif; font-size: 0.9rem;">
+      <p class="text-amber-700 mt-1" style="font-family: 'Cinzel', serif; font-size: 0.9rem;">
         <%= @battle_roster.warband.name %>
       </p>
       <p class="text-stone-500 mt-1" style="font-family: 'Crimson Text', serif;">
@@ -32,26 +32,26 @@
     <% if @defeated_warriors.any? %>
       <div class="mb-10">
         <div class="flex items-center gap-3 mb-4">
-          <h2 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.8rem;">Guerreros</h2>
+          <h2 class="text-stone-700 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.8rem;">Guerreros</h2>
           <div class="flex-1 h-px bg-stone-800/60"></div>
         </div>
 
         <!-- Tabla resultados guerreros -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm mb-5">
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-red-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">2 – 3</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Muerto</p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-orange-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">4 – 5</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Herido (pierde el siguiente combate)</p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-emerald-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">6 – 11</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Recuperación completa</p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
-            <span class="font-bold text-amber-300" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">12</span>
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
+            <span class="font-bold text-amber-600" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">12</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Lección aprendida (+1 a +3 XP)</p>
           </div>
         </div>
@@ -61,27 +61,27 @@
             <div class="flex flex-wrap items-start gap-4 px-4 py-4 rounded-lg border border-red-900/30 bg-red-950/20"
                  data-member-id="<%= unit.warband_member_id %>">
               <div class="flex-1 min-w-0 pt-1">
-                <span class="text-amber-100" style="font-family: 'Cinzel', serif; font-size: 0.9rem;">
+                <span class="text-stone-800" style="font-family: 'Cinzel', serif; font-size: 0.9rem;">
                   <%= unit.warband_member.name %>
                 </span>
               </div>
               <div class="flex items-center gap-3">
-                <label class="text-xs text-amber-200/60 tracking-wider uppercase whitespace-nowrap"
+                <label class="text-xs text-stone-700/60 tracking-wider uppercase whitespace-nowrap"
                        style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Resultado</label>
                 <input type="number"
                        name="injuries[<%= unit.warband_member_id %>][roll]"
                        min="2" max="12" required
-                       class="w-20 bg-stone-900 border border-stone-700/50 rounded py-1.5 px-2 text-stone-200 text-center focus:outline-none focus:ring-2 focus:ring-amber-700"
+                       class="w-20 bg-white border border-stone-300 rounded py-1.5 px-2 text-stone-700 text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
                        style="font-family: 'Crimson Text', serif; font-size: 1rem;"
                        onchange="handleWarriorRoll(this, '<%= unit.warband_member_id %>')" />
               </div>
               <div id="warrior-bonus-<%= unit.warband_member_id %>" class="hidden flex items-center gap-3">
-                <label class="text-xs text-amber-300/70 tracking-wider uppercase whitespace-nowrap"
+                <label class="text-xs text-amber-600/70 tracking-wider uppercase whitespace-nowrap"
                        style="font-family: 'Cinzel', serif; font-size: 0.6rem;">XP extra (1–3)</label>
                 <input type="number"
                        name="injuries[<%= unit.warband_member_id %>][bonus_xp]"
                        min="1" max="3" value="1"
-                       class="w-16 bg-stone-900 border border-amber-800/50 rounded py-1.5 px-2 text-amber-200 text-center focus:outline-none focus:ring-2 focus:ring-amber-700"
+                       class="w-16 bg-white border border-amber-400/60 rounded py-1.5 px-2 text-stone-700 text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
                        style="font-family: 'Crimson Text', serif; font-size: 1rem;" />
               </div>
             </div>
@@ -94,42 +94,42 @@
     <% if @defeated_heroes.any? %>
       <div class="mb-10">
         <div class="flex items-center gap-3 mb-4">
-          <h2 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.8rem;">Héroes</h2>
+          <h2 class="text-stone-700 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.8rem;">Héroes</h2>
           <div class="flex-1 h-px bg-stone-800/60"></div>
         </div>
 
         <!-- Tabla resultados héroes -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-sm mb-5">
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-red-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">2</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Muerte</p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
-            <span class="font-bold text-red-300" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">3</span>
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
+            <span class="font-bold text-red-700" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">3</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Brazo herido <span class="text-red-400/70">(2ª vez → muerte)</span></p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-orange-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">4</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Pierna herida, –1 Mov <span class="text-red-400/70">(2ª vez → muerte)</span></p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-yellow-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">5</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Deshonrado: sin Stand Fast! <span class="text-red-400/70">(3ª vez → muerte)</span></p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-blue-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">6</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Arañazo (pierde el siguiente combate)</p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-emerald-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">7–10</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Recuperación completa (elimina una herida)</p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
             <span class="font-bold text-purple-400" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">11</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Protección de los Valar (+1 Fate)</p>
           </div>
-          <div class="px-3 py-2 rounded border border-stone-800/50 bg-stone-900/50">
-            <span class="font-bold text-amber-300" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">12</span>
+          <div class="px-3 py-2 rounded border border-stone-200/80 bg-stone-100/80">
+            <span class="font-bold text-amber-600" style="font-family: 'Cinzel', serif; font-size: 0.7rem;">12</span>
             <p class="text-stone-500 mt-0.5" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Heridas de héroe (+1–6 influencia, elimina una herida)</p>
           </div>
         </div>
@@ -149,15 +149,15 @@
 
               <!-- Name + badges -->
               <div class="flex flex-wrap items-center gap-2 mb-3">
-                <span class="text-amber-100" style="font-family: 'Cinzel', serif; font-size: 0.9rem;"><%= m.name %></span>
-                <span class="text-xs px-1.5 py-0.5 rounded border text-amber-400/70 border-amber-900/40 bg-amber-900/20"
+                <span class="text-stone-800" style="font-family: 'Cinzel', serif; font-size: 0.9rem;"><%= m.name %></span>
+                <span class="text-xs px-1.5 py-0.5 rounded border text-amber-600 border-amber-300/60 bg-amber-100/60"
                       style="font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em;">Héroe</span>
                 <% if has_arm %>
-                  <span class="text-xs px-2 py-0.5 rounded border border-red-800/50 bg-red-900/20 text-red-300"
+                  <span class="text-xs px-2 py-0.5 rounded border border-red-800/50 bg-red-50/80 text-red-700"
                         style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Brazo Herido</span>
                 <% end %>
                 <% if has_leg %>
-                  <span class="text-xs px-2 py-0.5 rounded border border-orange-800/50 bg-orange-900/20 text-orange-300"
+                  <span class="text-xs px-2 py-0.5 rounded border border-orange-800/50 bg-orange-100/50 text-orange-300"
                         style="font-family: 'Cinzel', serif; font-size: 0.55rem;">Pierna Herida</span>
                 <% end %>
                 <% if m.disgrace_count > 0 %>
@@ -169,24 +169,24 @@
               <!-- Roll input -->
               <div class="flex flex-wrap items-center gap-4">
                 <div class="flex items-center gap-3">
-                  <label class="text-xs text-amber-200/60 tracking-wider uppercase whitespace-nowrap"
+                  <label class="text-xs text-stone-700/60 tracking-wider uppercase whitespace-nowrap"
                          style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Resultado (2–12)</label>
                   <input type="number"
                          name="injuries[<%= m.id %>][roll]"
                          min="2" max="12" required
-                         class="w-20 bg-stone-900 border border-stone-700/50 rounded py-1.5 px-2 text-stone-200 text-center focus:outline-none focus:ring-2 focus:ring-amber-700"
+                         class="w-20 bg-white border border-stone-300 rounded py-1.5 px-2 text-stone-700 text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
                          style="font-family: 'Crimson Text', serif; font-size: 1rem;"
                          onchange="handleHeroRoll(this, '<%= m.id %>')" />
                 </div>
 
                 <!-- Resultado 12: influencia (1–6) -->
                 <div id="hero-influence-<%= m.id %>" class="hidden flex items-center gap-3">
-                  <label class="text-xs text-amber-300/70 tracking-wider uppercase whitespace-nowrap"
+                  <label class="text-xs text-amber-600/70 tracking-wider uppercase whitespace-nowrap"
                          style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Influencia (1–6)</label>
                   <input type="number"
                          name="injuries[<%= m.id %>][bonus_influence]"
                          min="1" max="6" value="1"
-                         class="w-16 bg-stone-900 border border-amber-800/50 rounded py-1.5 px-2 text-amber-200 text-center focus:outline-none focus:ring-2 focus:ring-amber-700"
+                         class="w-16 bg-white border border-amber-400/60 rounded py-1.5 px-2 text-stone-700 text-center focus:outline-none focus:ring-2 focus:ring-amber-500"
                          style="font-family: 'Crimson Text', serif; font-size: 1rem;" />
                 </div>
               </div>
@@ -197,27 +197,27 @@
                   <p class="text-xs text-emerald-400/70 tracking-wider uppercase mb-2"
                      style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Eliminar una herida (opcional)</p>
                   <div class="flex flex-wrap gap-2">
-                    <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded border border-stone-700/40 bg-stone-900/50 hover:border-emerald-700/40 has-[:checked]:border-emerald-600/60 has-[:checked]:bg-emerald-900/20 transition-colors">
+                    <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded border border-stone-300/60 bg-stone-100/80 hover:border-emerald-400/50 has-[:checked]:border-emerald-600/60 has-[:checked]:bg-emerald-100/60 transition-colors">
                       <input type="radio" name="injuries[<%= m.id %>][recovery_choice]" value="none" checked
                              class="w-3 h-3 accent-emerald-500" />
-                      <span class="text-stone-400" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Ninguna</span>
+                      <span class="text-stone-600" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Ninguna</span>
                     </label>
                     <% if has_arm %>
-                      <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded border border-stone-700/40 bg-stone-900/50 hover:border-red-700/40 has-[:checked]:border-red-600/60 has-[:checked]:bg-red-900/20 transition-colors">
+                      <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded border border-stone-300/60 bg-stone-100/80 hover:border-red-700/40 has-[:checked]:border-red-600/60 has-[:checked]:bg-red-50/80 transition-colors">
                         <input type="radio" name="injuries[<%= m.id %>][recovery_choice]" value="arm"
                                class="w-3 h-3 accent-red-400" />
-                        <span class="text-red-300/80" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Brazo herido</span>
+                        <span class="text-red-700" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Brazo herido</span>
                       </label>
                     <% end %>
                     <% if has_leg %>
-                      <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded border border-stone-700/40 bg-stone-900/50 hover:border-orange-700/40 has-[:checked]:border-orange-600/60 has-[:checked]:bg-orange-900/20 transition-colors">
+                      <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded border border-stone-300/60 bg-stone-100/80 hover:border-orange-300/50 has-[:checked]:border-orange-600/60 has-[:checked]:bg-orange-100/50 transition-colors">
                         <input type="radio" name="injuries[<%= m.id %>][recovery_choice]" value="leg"
                                class="w-3 h-3 accent-orange-400" />
-                        <span class="text-orange-300/80" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Pierna herida (+1 Mov)</span>
+                        <span class="text-orange-700" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Pierna herida (+1 Mov)</span>
                       </label>
                     <% end %>
                     <% if has_disgrace %>
-                      <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded border border-stone-700/40 bg-stone-900/50 hover:border-yellow-700/40 has-[:checked]:border-yellow-600/60 has-[:checked]:bg-yellow-900/20 transition-colors">
+                      <label class="flex items-center gap-2 cursor-pointer px-3 py-1.5 rounded border border-stone-300/60 bg-stone-100/80 hover:border-yellow-700/40 has-[:checked]:border-yellow-600/60 has-[:checked]:bg-yellow-900/20 transition-colors">
                         <input type="radio" name="injuries[<%= m.id %>][recovery_choice]" value="disgrace"
                                class="w-3 h-3 accent-yellow-400" />
                         <span class="text-yellow-300/80" style="font-family: 'Crimson Text', serif; font-size: 0.85rem;">Deshonrado (–1 nivel)</span>
@@ -236,7 +236,7 @@
     <!-- Actions -->
     <div class="flex flex-wrap gap-3">
       <%= f.submit "Aplicar Resultados",
-          class: "px-6 py-2 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
+          class: "px-6 py-2 bg-gradient-to-b from-amber-700 to-amber-900 text-white rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-200/60 cursor-pointer",
           style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.7rem;" %>
     </div>
 

@@ -5,69 +5,52 @@ class BattleRosterUnitsController < ApplicationController
 
   def wound
     @unit.take_wound!
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   end
 
   def heal
     @unit.restore_wound!
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   end
 
   def spend
     @unit.spend!(params[:attribute])
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   end
 
   def restore
     @unit.restore!(params[:attribute])
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   end
 
   def toggle_tick
     @unit.toggle_tick!(params[:tick])
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   rescue ArgumentError
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    ), alert: "Tick inválido"
+    respond_to do |format|
+      format.turbo_stream { head :unprocessable_entity }
+      format.html { redirect_to_battle alert: "Tick inválido" }
+    end
   end
 
   def toggle_mvp
     @unit.set_mvp!(!@unit.mvp)
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   end
 
   def kill
     @unit.kill!
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   end
 
   def unkill
     @unit.unkill!
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   end
 
   def flee
     @unit.flee!
-    redirect_to campaign_campaign_round_matchup_battle_roster_path(
-      @campaign, @round, @matchup, @battle_roster
-    )
+    respond_with_streams
   end
 
   private
@@ -86,9 +69,29 @@ class BattleRosterUnitsController < ApplicationController
     is_manager = can_manage_campaign?(@campaign)
 
     unless is_owner || is_manager
-      redirect_to campaign_campaign_round_matchup_battle_roster_path(
-        @campaign, @round, @matchup, @battle_roster
-      ), alert: "No tienes permiso para modificar estas unidades"
+      redirect_to_battle alert: "No tienes permiso para modificar estas unidades"
     end
+  end
+
+  def respond_with_streams
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("battle_roster_unit_#{@unit.id}",
+            partial: 'battle_rosters/unit_card', locals: { unit: @unit }),
+          turbo_stream.replace("battle_stats_#{@battle_roster.id}",
+            partial: 'battle_rosters/battle_stats', locals: { battle_roster: @battle_roster }),
+          turbo_stream.replace("banda_rota_#{@battle_roster.id}",
+            partial: 'battle_rosters/banda_rota', locals: { battle_roster: @battle_roster })
+        ]
+      end
+      format.html { redirect_to_battle }
+    end
+  end
+
+  def redirect_to_battle(**options)
+    redirect_to campaign_campaign_round_matchup_battle_roster_path(
+      @campaign, @round, @matchup, @battle_roster
+    ), **options
   end
 end

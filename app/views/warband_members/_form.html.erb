@@ -1,7 +1,7 @@
 <%= form_with model: [@warband, member], class: "space-y-6" do |form| %>
   <% if member.errors.any? %>
-    <div class="rounded-lg border border-red-800/40 bg-red-900/20 p-4">
-      <h3 class="text-red-300 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;"><%= pluralize(member.errors.count, "error") %> impidieron guardar:</h3>
+    <div class="rounded-lg border border-red-300/60 bg-red-50/80 p-4">
+      <h3 class="text-red-700 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.85rem;"><%= pluralize(member.errors.count, "error") %> impidieron guardar:</h3>
       <ul class="list-disc list-inside text-red-400/80 text-sm space-y-1" style="font-family: 'Crimson Text', serif;">
         <% member.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -11,20 +11,20 @@
   <% end %>
 
   <!-- Basic Info -->
-  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-6">
+  <div class="rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 p-6">
     <div class="flex items-center gap-3 mb-5">
       <div class="h-px w-6 bg-amber-800/40"></div>
-      <h3 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Informacion Basica</h3>
+      <h3 class="text-stone-700 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Informacion Basica</h3>
       <div class="h-px flex-1 bg-amber-800/40"></div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div>
         <%= form.label :name, "Nombre",
-            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
         <%= form.text_field :name,
-            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
             style: "font-family: 'Crimson Text', serif;",
             required: true,
             placeholder: "Ej: Aragorn" %>
@@ -32,55 +32,54 @@
 
       <div>
         <%= form.label :member_type, "Tipo",
-            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
         <%= form.select :member_type,
             options_for_select([["Guerrero", "warrior"], ["Heroe", "hero"]], member.member_type),
             {},
-            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
             style: "font-family: 'Crimson Text', serif;" %>
       </div>
 
       <div>
-        <%= form.label :experience, "Experiencia",
-            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
-            style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
-        <%= form.number_field :experience,
-            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
-            style: "font-family: 'Crimson Text', serif;",
-            min: 0, required: true %>
+        <p class="block text-stone-700 text-xs tracking-widest uppercase mb-2"
+           style="font-family: 'Cinzel', serif; font-size: 0.65rem;">Experiencia</p>
+        <div class="w-full py-2.5 px-4 bg-stone-200/40 border border-stone-200/70 rounded text-stone-600 cursor-not-allowed"
+             style="font-family: 'Crimson Text', serif;">
+          <%= member.experience %>
+        </div>
       </div>
 
       <div>
         <%= form.label :rank, "Rango",
-            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
         <%= form.select :rank,
             options_for_select([["Sin Rango", ""], ["Capitán", "capitan"], ["Sargento", "sargento"]], member.rank.to_s),
             {},
-            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
             style: "font-family: 'Crimson Text', serif;" %>
         <p class="text-stone-500 text-xs mt-1" style="font-family: 'Crimson Text', serif;">Solo para héroes. Máx. 1 Capitán y 2 Sargentos por warband.</p>
       </div>
 
       <div>
         <%= form.label :path, "Camino",
-            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
         <%= form.select :path,
             options_for_select([["Sin Camino", ""]] + WarbandMember::PATHS_LABELS.map { |v, l| [l, v] }, member.path.to_s),
             {},
-            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
             style: "font-family: 'Crimson Text', serif;" %>
         <p class="text-stone-500 text-xs mt-1" style="font-family: 'Crimson Text', serif;">Solo para héroes.</p>
       </div>
 
       <div>
         <%= form.label :ranking, "Ranking",
-            class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+            class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
             style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
         <%= form.number_field :ranking,
-            class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+            class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
             style: "font-family: 'Crimson Text', serif;",
             min: 0, required: true %>
       </div>
@@ -88,17 +87,17 @@
   </div>
 
   <!-- Combat Stats -->
-  <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-6">
+  <div class="rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 p-6">
     <div class="flex items-center gap-3 mb-5">
       <div class="h-px w-6 bg-amber-800/40"></div>
-      <h3 class="text-amber-200/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Caracteristicas de Combate</h3>
+      <h3 class="text-stone-700 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Caracteristicas de Combate</h3>
       <div class="h-px flex-1 bg-amber-800/40"></div>
     </div>
 
     <% if @warband.in_campaign? %>
-      <div class="rounded border border-amber-800/40 bg-amber-950/30 px-4 py-3 mb-5 flex items-start gap-3">
-        <span class="text-amber-500 mt-0.5">&#9888;</span>
-        <p class="text-amber-300/70 text-sm" style="font-family: 'Crimson Text', serif;">
+      <div class="rounded border border-amber-400/50 bg-amber-950/30 px-4 py-3 mb-5 flex items-start gap-3">
+        <span class="text-amber-700 mt-0.5">&#9888;</span>
+        <p class="text-amber-600/70 text-sm" style="font-family: 'Crimson Text', serif;">
           Las estadísticas base están bloqueadas mientras la warband pertenece a una campaña. Pueden modificarse a través de <strong>habilidades</strong> o <strong>equipo</strong>.
         </p>
       </div>
@@ -118,16 +117,16 @@
       ].each do |field, label, min_val, max_val| %>
         <div>
           <%= form.label field, label,
-              class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+              class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
               style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
           <% if @warband.in_campaign? %>
-            <div class="w-full py-2.5 px-4 bg-stone-950/60 border border-stone-700/30 rounded text-stone-400 cursor-not-allowed"
+            <div class="w-full py-2.5 px-4 bg-stone-200/40 border border-stone-200/70 rounded text-stone-600 cursor-not-allowed"
                  style="font-family: 'Crimson Text', serif;">
               <%= member.send(field) %>
             </div>
           <% else %>
             <%= form.number_field field,
-                class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+                class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
                 style: "font-family: 'Crimson Text', serif;",
                 min: min_val, max: max_val, required: true %>
           <% end %>
@@ -137,10 +136,10 @@
   </div>
 
   <!-- Hero Stats (Might, Will, Fate) -->
-  <div class="rounded-lg border border-amber-800/30 bg-gradient-to-b from-amber-950/30 to-stone-950/80 p-6">
+  <div class="rounded-lg border border-amber-800/30 bg-gradient-to-b from-amber-950/30 to-amber-50/80 p-6">
     <div class="flex items-center gap-3 mb-2">
       <div class="h-px w-6 bg-amber-700/40"></div>
-      <h3 class="text-amber-300/80 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Puntos Heroicos</h3>
+      <h3 class="text-amber-600 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 0.85rem;">Puntos Heroicos</h3>
       <div class="h-px flex-1 bg-amber-700/40"></div>
     </div>
     <p class="text-stone-500 text-sm mb-5" style="font-family: 'Crimson Text', serif;">Solo para heroes (deja en 0 para guerreros)</p>
@@ -149,16 +148,16 @@
       <% [[:might, "Might"], [:will, "Will"], [:fate, "Fate"]].each do |field, label| %>
         <div>
           <%= form.label field, label,
-              class: "block text-amber-200/80 text-xs tracking-widest uppercase mb-2",
+              class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
               style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
           <% if @warband.in_campaign? %>
-            <div class="w-full py-2.5 px-4 bg-stone-950/60 border border-stone-700/30 rounded text-stone-400 cursor-not-allowed"
+            <div class="w-full py-2.5 px-4 bg-stone-200/40 border border-stone-200/70 rounded text-stone-600 cursor-not-allowed"
                  style="font-family: 'Crimson Text', serif;">
               <%= member.send(field) %>
             </div>
           <% else %>
             <%= form.number_field field,
-                class: "w-full py-2.5 px-4 bg-stone-900/80 border border-stone-700/50 rounded text-amber-100 placeholder-stone-600 focus:outline-none focus:border-amber-700/60 focus:ring-1 focus:ring-amber-700/30 transition-colors",
+                class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
                 style: "font-family: 'Crimson Text', serif;",
                 min: 0, max: 10, required: true %>
           <% end %>
@@ -169,10 +168,10 @@
 
   <div class="flex items-center justify-between pt-2">
     <%= form.submit member.new_record? ? "Crear Miembro" : "Actualizar Miembro",
-        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30 cursor-pointer",
+        class: "px-6 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-white rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-200/60 cursor-pointer",
         style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
     <%= link_to "Cancelar", warband_warband_members_path(@warband),
-        class: "text-stone-400 hover:text-amber-400 transition-colors tracking-wider uppercase",
+        class: "text-stone-600 hover:text-amber-700 transition-colors tracking-wider uppercase",
         style: "font-family: 'Cinzel', serif; font-size: 0.75rem;" %>
   </div>
 <% end %>

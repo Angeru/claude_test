@@ -1,4 +1,4 @@
-<% content_for(:body_class) { "bg-stone-950" } %>
+<% content_for(:body_class) { "bg-amber-50" } %>
 <% content_for(:raw_content) { true } %>
 
 <%= render layout: "shared/dark_layout" do %>
@@ -12,20 +12,20 @@
         </svg>
         <div class="h-px w-12 bg-gradient-to-l from-transparent to-amber-700/60"></div>
       </div>
-      <h1 class="text-amber-100 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
+      <h1 class="text-stone-800 tracking-[0.1em] uppercase" style="font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700;">
         Rondas
       </h1>
-      <p class="text-stone-400 mt-2" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+      <p class="text-stone-600 mt-2" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
         <%= @campaign.name %> &mdash; <%= @rounds.count %> rondas
       </p>
     </div>
     <div class="flex gap-3">
       <% if can_manage_campaign?(@campaign) %>
-        <%= link_to new_campaign_campaign_round_path(@campaign), class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+        <%= link_to new_campaign_campaign_round_path(@campaign), class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-white rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-200/60", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
           Nueva Ronda
         <% end %>
       <% end %>
-      <%= link_to campaign_path(@campaign), class: "px-5 py-2.5 border border-amber-800/50 text-amber-400 rounded hover:bg-amber-900/20 hover:border-amber-700/60 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
+      <%= link_to campaign_path(@campaign), class: "px-5 py-2.5 border border-amber-400/60 text-amber-700 rounded hover:bg-amber-100/60 hover:border-amber-500 transition-all", style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" do %>
         Volver a Campana
       <% end %>
     </div>
@@ -35,16 +35,16 @@
     <div class="space-y-4">
       <% @rounds.each do |round| %>
         <%= link_to campaign_campaign_round_path(@campaign, round), class: "block group" do %>
-          <div class="relative rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 hover:border-amber-700/50 transition-all duration-500 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-b from-amber-900/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <div class="relative rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 hover:border-amber-500/70 transition-all duration-500 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-amber-200/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div class="relative px-6 py-5">
               <div class="flex items-center justify-between">
                 <div class="flex-1">
-                  <p class="text-amber-100 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 1.05rem;">
+                  <p class="text-stone-800 tracking-wider uppercase" style="font-family: 'Cinzel', serif; font-size: 1.05rem;">
                     <%= round.display_name %>
                   </p>
                   <% if round.scenario.present? %>
-                    <p class="mt-1 text-stone-400 text-sm" style="font-family: 'Crimson Text', serif;">
+                    <p class="mt-1 text-stone-600 text-sm" style="font-family: 'Crimson Text', serif;">
                       Escenario: <%= round.scenario %>
                     </p>
                   <% end %>
@@ -56,14 +56,14 @@
                 </div>
                 <div class="ml-4 flex-shrink-0 flex items-center space-x-4">
                   <div class="text-right">
-                    <p class="text-amber-200/80 text-sm" style="font-family: 'Cinzel', serif; font-size: 0.75rem;">
+                    <p class="text-stone-700 text-sm" style="font-family: 'Cinzel', serif; font-size: 0.75rem;">
                       <%= round.matchups.count %> combates
                     </p>
                     <p class="text-stone-500 text-sm" style="font-family: 'Crimson Text', serif;">
                       <%= round.matchups.completed.count %> completados
                     </p>
                   </div>
-                  <svg class="h-5 w-5 text-amber-700/50 group-hover:text-amber-500 transition-colors" viewBox="0 0 20 20" fill="currentColor">
+                  <svg class="h-5 w-5 text-amber-700/50 group-hover:text-amber-700 transition-colors" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                   </svg>
                 </div>
@@ -74,21 +74,21 @@
       <% end %>
     </div>
   <% else %>
-    <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-12 text-center">
-      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-700/40 flex items-center justify-center bg-amber-900/20">
-        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-500/60" fill="none" stroke="currentColor" stroke-width="1.5">
+    <div class="rounded-lg border border-amber-300/60 bg-gradient-to-b from-white to-amber-50/60 p-12 text-center">
+      <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-400/50 flex items-center justify-center bg-amber-100/60">
+        <svg viewBox="0 0 24 24" class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
         </svg>
       </div>
-      <h3 class="text-amber-100/80 tracking-wider uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
+      <h3 class="text-stone-700 tracking-wider uppercase mb-3" style="font-family: 'Cinzel', serif; font-size: 0.95rem;">
         Sin rondas
       </h3>
-      <p class="text-stone-400 mb-6" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
+      <p class="text-stone-600 mb-6" style="font-family: 'Crimson Text', serif; font-size: 1.05rem;">
         Comienza creando la primera ronda de la campana.
       </p>
       <% if can_manage_campaign?(@campaign) %>
         <%= link_to "Crear Primera Ronda", new_campaign_campaign_round_path(@campaign),
-            class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-amber-100 rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-900/30",
+            class: "px-5 py-2.5 bg-gradient-to-b from-amber-700 to-amber-900 text-white rounded border border-amber-600/50 hover:from-amber-600 hover:to-amber-800 transition-all shadow-lg shadow-amber-200/60",
             style: "font-family: 'Cinzel', serif; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem;" %>
       <% end %>
     </div>
