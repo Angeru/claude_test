@@ -33,6 +33,21 @@
     <% end %>
   </div>
 
+  <script>
+    function showMemberTab(memberId, name) {
+      document.querySelectorAll('.mc-panel-' + memberId).forEach(function(p) { p.classList.add('hidden'); });
+      document.getElementById('mc-panel-' + name + '-' + memberId).classList.remove('hidden');
+      document.querySelectorAll('.mc-tab-btn-' + memberId).forEach(function(b) {
+        b.classList.remove('text-emerald-400/80', 'border-emerald-600/60', 'text-purple-400/80', 'border-purple-600/60');
+        b.classList.add('text-stone-400', 'border-transparent');
+      });
+      var btn = document.getElementById('mc-tab-btn-' + name + '-' + memberId);
+      btn.classList.remove('text-stone-400', 'border-transparent');
+      var activeColor = name === 'skills' ? ['text-purple-400/80', 'border-purple-600/60'] : ['text-emerald-400/80', 'border-emerald-600/60'];
+      btn.classList.add(activeColor[0], activeColor[1]);
+    }
+  </script>
+
   <% if @members.empty? %>
     <div class="rounded-lg border border-amber-900/30 bg-gradient-to-b from-stone-900/80 to-stone-950/80 p-12 text-center">
       <div class="w-16 h-16 mx-auto mb-5 rounded-full border border-amber-700/40 flex items-center justify-center bg-amber-900/20">

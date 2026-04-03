@@ -8,18 +8,6 @@ class Warband < ApplicationRecord
   has_many :heroes, -> { where(member_type: "hero") }, class_name: "WarbandMember"
   has_many :warriors, -> { where(member_type: "warrior") }, class_name: "WarbandMember"
 
-  validates :name, presence: true, length: { minimum: 3 }
-  validates :warband_class, inclusion: { in: WARBAND_CLASSES, message: "debe ser una clase válida" }, allow_blank: true
-  validates :user_id, presence: true
-  validates :gold, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :influence, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validate :campaign_must_be_subscribed
-  validate :user_can_only_have_one_warband_per_campaign
-
-  after_create  :log_creation
-  after_update  :log_update_changes
-  after_destroy :log_destruction
-
   WARBAND_CLASSES = [
     "Minas Tirith",
     "Osgiliath and Ithilien",
@@ -61,6 +49,18 @@ class Warband < ApplicationRecord
   ].freeze
 
   EXCLUDED_FIELDS = %w[id created_at updated_at warband_id warband_member_id].freeze
+
+  validates :name, presence: true, length: { minimum: 3 }
+  validates :warband_class, inclusion: { in: WARBAND_CLASSES, message: "debe ser una clase válida" }, allow_blank: true
+  validates :user_id, presence: true
+  validates :gold, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :influence, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validate :campaign_must_be_subscribed
+  validate :user_can_only_have_one_warband_per_campaign
+
+  after_create  :log_creation
+  after_update  :log_update_changes
+  after_destroy :log_destruction
 
   scope :available, -> { where(campaign_id: nil) }
   scope :in_campaign, -> { where.not(campaign_id: nil) }

@@ -6,8 +6,8 @@ class WarbandMembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   def index
-    @members = @warband.warband_members.by_name
-    @heroes = @warband.warband_members.heroes.by_rank_then_name
+    @members = @warband.warband_members.includes(:warband_equipments, :warband_skills).by_name
+    @heroes = @warband.warband_members.includes(:warband_equipments, :warband_skills).heroes.by_rank_then_name
     @warriors = @members.warriors
   end
 
@@ -82,7 +82,7 @@ class WarbandMembersController < ApplicationController
     permitted = [ :name, :member_type, :rank, :path, :ranking,
                   :movimiento, :lucha, :proyectiles, :fuerza, :defensa,
                   :ataques, :heridas, :coraje, :inteligencia,
-                  :might, :will, :fate, :experience ]
+                  :might, :will, :fate ]
 
     # When the warband is in a campaign, stats cannot be directly modified
     if @warband.in_campaign?

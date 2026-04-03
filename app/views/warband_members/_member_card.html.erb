@@ -71,51 +71,120 @@
       </div>
     <% end %>
 
-    <!-- Equipment -->
-    <% if member.warband_equipments.any? %>
-      <div class="mb-3 pb-3 border-b border-stone-800/50">
-        <div class="text-xs text-amber-600/70 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Equipo (<%= member.warband_equipments.count %>)</div>
-        <div class="flex flex-wrap gap-1">
-          <% member.warband_equipments.limit(3).each do |equipment| %>
-            <span class="px-2 py-1 text-xs text-blue-300/80 border border-blue-900/30 rounded bg-blue-900/15" style="font-family: 'Crimson Text', serif; font-size: 0.75rem;">
-              <%= equipment.name %>
-            </span>
-          <% end %>
-          <% if member.warband_equipments.count > 3 %>
-            <span class="px-2 py-1 text-xs text-stone-500" style="font-family: 'Crimson Text', serif;">
-              +<%= member.warband_equipments.count - 3 %> mas
-            </span>
-          <% end %>
-        </div>
+    <!-- Tabs: Equipo / Skills -->
+    <div class="border-t border-stone-800/50 mt-2 pt-4">
+      <div class="flex gap-1 mb-4 border-b border-stone-800/60">
+        <button onclick="showMemberTab(<%= member.id %>, 'equipo')" id="mc-tab-btn-equipo-<%= member.id %>"
+                class="mc-tab-btn-<%= member.id %> px-4 py-2 text-emerald-400/80 border-b-2 border-emerald-600/60 -mb-px"
+                style="font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;">
+          Equipo (<%= member.warband_equipments.size %>)
+        </button>
+        <button onclick="showMemberTab(<%= member.id %>, 'skills')" id="mc-tab-btn-skills-<%= member.id %>"
+                class="mc-tab-btn-<%= member.id %> px-4 py-2 text-stone-400 border-b-2 border-transparent hover:text-stone-300 transition-colors -mb-px"
+                style="font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;">
+          Skills (<%= member.warband_skills.size %>)
+        </button>
       </div>
-    <% end %>
 
-    <!-- Skills -->
-    <% if member.warband_skills.any? %>
-      <div class="mb-3 pb-3 border-b border-stone-800/50">
-        <div class="text-xs text-amber-600/70 font-semibold mb-2" style="font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em;">Skills (<%= member.warband_skills.count %>)</div>
-        <div class="flex flex-wrap gap-1">
-          <% member.warband_skills.limit(3).each do |skill| %>
-            <span class="px-2 py-1 text-xs text-purple-300/80 border border-purple-900/30 rounded bg-purple-900/15" style="font-family: 'Crimson Text', serif; font-size: 0.75rem;">
-              <%= skill.name %>
-            </span>
+      <!-- Panel: Equipo -->
+      <div id="mc-panel-equipo-<%= member.id %>" class="mc-panel-<%= member.id %>">
+        <% if member.warband_equipments.any? %>
+          <div class="divide-y divide-stone-800/50">
+            <% member.warband_equipments.each do |equipment| %>
+              <div class="py-2 flex items-start justify-between gap-3">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-amber-100 truncate" style="font-family: 'Cinzel', serif; font-size: 0.8rem;"><%= equipment.name %></span>
+                    <span class="px-1.5 py-0.5 text-xs text-blue-300/80 border border-blue-900/30 rounded bg-blue-900/15 shrink-0" style="font-family: 'Cinzel', serif; font-size: 0.55rem;"><%= equipment.display_type %></span>
+                  </div>
+                  <% if equipment.has_modifiers? %>
+                    <p class="text-stone-500 text-xs mt-0.5" style="font-family: 'Crimson Text', serif;"><%= equipment.modifier_summary %></p>
+                  <% end %>
+                </div>
+                <% if can_manage_warband?(@warband) %>
+                  <div class="flex gap-1 shrink-0">
+                    <%= link_to "✎", edit_warband_warband_member_warband_equipment_path(@warband, member, equipment),
+                        class: "px-2 py-1 border border-amber-800/40 text-amber-400 rounded hover:bg-amber-900/20 transition-all",
+                        style: "font-size: 0.7rem;" %>
+                    <%= button_to "✕", warband_warband_member_warband_equipment_path(@warband, member, equipment),
+                        method: :delete,
+                        data: { turbo_confirm: "¿Eliminar #{equipment.name}?" },
+                        class: "px-2 py-1 border border-red-800/40 text-red-400 rounded hover:bg-red-900/20 transition-all",
+                        style: "font-size: 0.7rem;" %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <% if can_manage_warband?(@warband) %>
+            <div class="mt-3">
+              <%= link_to "+ Añadir equipo", new_warband_warband_member_warband_equipment_path(@warband, member),
+                  class: "text-emerald-400/70 hover:text-emerald-300 transition-colors",
+                  style: "font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;" %>
+            </div>
           <% end %>
-          <% if member.warband_skills.count > 3 %>
-            <span class="px-2 py-1 text-xs text-stone-500" style="font-family: 'Crimson Text', serif;">
-              +<%= member.warband_skills.count - 3 %> mas
-            </span>
+        <% else %>
+          <p class="text-stone-600 text-xs mb-2" style="font-family: 'Crimson Text', serif;">Sin equipo asignado.</p>
+          <% if can_manage_warband?(@warband) %>
+            <%= link_to "+ Añadir equipo", new_warband_warband_member_warband_equipment_path(@warband, member),
+                class: "text-emerald-400/70 hover:text-emerald-300 transition-colors",
+                style: "font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;" %>
           <% end %>
-        </div>
+        <% end %>
       </div>
-    <% end %>
+
+      <!-- Panel: Skills -->
+      <div id="mc-panel-skills-<%= member.id %>" class="mc-panel-<%= member.id %> hidden">
+        <% if member.warband_skills.any? %>
+          <div class="divide-y divide-stone-800/50">
+            <% member.warband_skills.each do |skill| %>
+              <div class="py-2 flex items-start justify-between gap-3">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <span class="text-amber-100 truncate" style="font-family: 'Cinzel', serif; font-size: 0.8rem;"><%= skill.name %></span>
+                    <span class="px-1.5 py-0.5 text-xs text-purple-300/80 border border-purple-900/30 rounded bg-purple-900/15 shrink-0" style="font-family: 'Cinzel', serif; font-size: 0.55rem;"><%= skill.display_type %></span>
+                  </div>
+                  <% if skill.has_modifiers? %>
+                    <p class="text-stone-500 text-xs mt-0.5" style="font-family: 'Crimson Text', serif;"><%= skill.modifier_summary %></p>
+                  <% end %>
+                </div>
+                <% if can_manage_warband?(@warband) %>
+                  <div class="flex gap-1 shrink-0">
+                    <%= link_to "✎", edit_warband_warband_member_warband_skill_path(@warband, member, skill),
+                        class: "px-2 py-1 border border-amber-800/40 text-amber-400 rounded hover:bg-amber-900/20 transition-all",
+                        style: "font-size: 0.7rem;" %>
+                    <%= button_to "✕", warband_warband_member_warband_skill_path(@warband, member, skill),
+                        method: :delete,
+                        data: { turbo_confirm: "¿Eliminar #{skill.name}?" },
+                        class: "px-2 py-1 border border-red-800/40 text-red-400 rounded hover:bg-red-900/20 transition-all",
+                        style: "font-size: 0.7rem;" %>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <% if can_manage_warband?(@warband) %>
+            <div class="mt-3">
+              <%= link_to "+ Añadir skill", new_warband_warband_member_warband_skill_path(@warband, member),
+                  class: "text-purple-400/70 hover:text-purple-300 transition-colors",
+                  style: "font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;" %>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="text-stone-600 text-xs mb-2" style="font-family: 'Crimson Text', serif;">Sin skills asignadas.</p>
+          <% if can_manage_warband?(@warband) %>
+            <%= link_to "+ Añadir skill", new_warband_warband_member_warband_skill_path(@warband, member),
+                class: "text-purple-400/70 hover:text-purple-300 transition-colors",
+                style: "font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
 
     <!-- Actions -->
     <div class="flex flex-wrap gap-3 mt-4 pt-3 border-t border-stone-800/50">
-      <%= link_to "Equipo", warband_warband_member_warband_equipments_path(@warband, member),
-          class: "text-emerald-400/80 hover:text-emerald-300 text-sm transition-colors tracking-wider uppercase",
-          style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
-      <%= link_to "Skills", warband_warband_member_warband_skills_path(@warband, member),
-          class: "text-purple-400/80 hover:text-purple-300 text-sm transition-colors tracking-wider uppercase",
+      <%= link_to "Ver", warband_warband_member_path(@warband, member),
+          class: "text-amber-400/80 hover:text-amber-300 text-sm transition-colors tracking-wider uppercase",
           style: "font-family: 'Cinzel', serif; font-size: 0.6rem;" %>
       <% if can_manage_warband?(@warband) %>
         <%= link_to "Editar", edit_warband_warband_member_path(@warband, member),
