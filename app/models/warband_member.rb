@@ -43,7 +43,6 @@ class WarbandMember < ApplicationRecord
   validate :rank_only_for_heroes
   validate :path_only_for_heroes
   validate :validate_rank_limits
-  validate :stats_immutable_in_campaign, on: :update
 
   # Numeric validations for all attributes
   validates :movimiento, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 12 }
@@ -116,13 +115,6 @@ class WarbandMember < ApplicationRecord
   end
 
   private
-
-  def stats_immutable_in_campaign
-    return unless warband&.in_campaign?
-    changed_stats = STAT_FIELDS.select { |f| send(:"#{f}_changed?") }
-    return if changed_stats.empty?
-    errors.add(:base, "Las estadísticas base no pueden modificarse mientras la warband pertenece a una campaña")
-  end
 
   def rank_only_for_heroes
     return if rank.blank?

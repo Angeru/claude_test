@@ -84,11 +84,6 @@ class WarbandMembersController < ApplicationController
                   :ataques, :heridas, :coraje, :inteligencia,
                   :might, :will, :fate ]
 
-    # When the warband is in a campaign, stats cannot be directly modified
-    if @warband.in_campaign?
-      permitted -= WarbandMember::STAT_FIELDS.map(&:to_sym)
-    end
-
     p = params.require(:warband_member).permit(*permitted)
     p[:rank] = nil if p[:rank].blank?
     p[:path] = nil if p[:path].blank?

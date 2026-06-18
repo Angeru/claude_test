@@ -58,6 +58,13 @@ proxy:
     interval: 5
     timeout: 60
 
+# Command aliases (run with: kamal <alias>)
+aliases:
+  console: app exec --interactive --reuse "bin/rails console"
+  shell: app exec --interactive --reuse "bash"
+  logs: app logs -f
+  dbconsole: app exec --interactive --reuse "bin/rails dbconsole"
+
 # SSH config
 ssh:
   user: deploy

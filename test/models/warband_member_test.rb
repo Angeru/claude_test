@@ -1,13 +1,12 @@
 require "test_helper"
 
 class WarbandMemberTest < ActiveSupport::TestCase
-  test "should not update stats when warband is in a campaign" do
+  test "should allow updating stats when warband is in a campaign" do
     member = warband_members(:one)
     assert member.warband.in_campaign?, "Fixture warband should be in a campaign"
 
     member.lucha = member.lucha + 1
-    assert_not member.save
-    assert_includes member.errors[:base].join, "estadísticas base"
+    assert member.save, member.errors.full_messages.inspect
   end
 
   test "should allow updating non-stat fields when warband is in a campaign" do

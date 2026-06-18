@@ -94,15 +94,6 @@
       <div class="h-px flex-1 bg-amber-800/40"></div>
     </div>
 
-    <% if @warband.in_campaign? %>
-      <div class="rounded border border-amber-400/50 bg-amber-950/30 px-4 py-3 mb-5 flex items-start gap-3">
-        <span class="text-amber-700 mt-0.5">&#9888;</span>
-        <p class="text-amber-600/70 text-sm" style="font-family: 'Crimson Text', serif;">
-          Las estadísticas base están bloqueadas mientras la warband pertenece a una campaña. Pueden modificarse a través de <strong>habilidades</strong> o <strong>equipo</strong>.
-        </p>
-      </div>
-    <% end %>
-
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
       <% [
         [:movimiento, "Movimiento", 0, 12],
@@ -119,17 +110,10 @@
           <%= form.label field, label,
               class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
               style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
-          <% if @warband.in_campaign? %>
-            <div class="w-full py-2.5 px-4 bg-stone-200/40 border border-stone-200/70 rounded text-stone-600 cursor-not-allowed"
-                 style="font-family: 'Crimson Text', serif;">
-              <%= member.send(field) %>
-            </div>
-          <% else %>
-            <%= form.number_field field,
-                class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
-                style: "font-family: 'Crimson Text', serif;",
-                min: min_val, max: max_val, required: true %>
-          <% end %>
+          <%= form.number_field field,
+              class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
+              style: "font-family: 'Crimson Text', serif;",
+              min: min_val, max: max_val, required: true %>
         </div>
       <% end %>
     </div>
@@ -150,17 +134,10 @@
           <%= form.label field, label,
               class: "block text-stone-700 text-xs tracking-widest uppercase mb-2",
               style: "font-family: 'Cinzel', serif; font-size: 0.65rem;" %>
-          <% if @warband.in_campaign? %>
-            <div class="w-full py-2.5 px-4 bg-stone-200/40 border border-stone-200/70 rounded text-stone-600 cursor-not-allowed"
-                 style="font-family: 'Crimson Text', serif;">
-              <%= member.send(field) %>
-            </div>
-          <% else %>
-            <%= form.number_field field,
-                class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
-                style: "font-family: 'Crimson Text', serif;",
-                min: 0, max: 10, required: true %>
-          <% end %>
+          <%= form.number_field field,
+              class: "w-full py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 placeholder-stone-600 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
+              style: "font-family: 'Crimson Text', serif;",
+              min: 0, max: 10, required: true %>
         </div>
       <% end %>
     </div>
