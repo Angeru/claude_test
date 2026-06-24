@@ -87,8 +87,19 @@ class WarbandMember < ApplicationRecord
     warband_equipments.sum(field) + warband_skills.sum(field)
   end
 
+  # Coste sumado del equipo y las skills del miembro
+  def gear_cost
+    warband_equipments.sum(:cost) + warband_skills.sum(:cost)
+  end
+
+  # Puntos de ranking aportados por los stats heroicos (5 por punto)
+  def heroic_ranking_bonus
+    (might + will + fate) * 5
+  end
+
+  # Ranking real: ranking base + costes de equipo y skills + bonus heroico
   def total_ranking
-    ranking + warband_equipments.sum(:ranking) + warband_skills.sum(:ranking) + (might + will + fate) * 5
+    ranking + gear_cost + heroic_ranking_bonus
   end
 
   def hero?

@@ -79,7 +79,7 @@ class WarbandMembersController < ApplicationController
   end
 
   def member_params
-    permitted = [ :name, :member_type, :rank, :path, :ranking,
+    permitted = [ :name, :member_type, :rank, :path, :ranking, :experience,
                   :movimiento, :lucha, :proyectiles, :fuerza, :defensa,
                   :ataques, :heridas, :coraje, :inteligencia,
                   :might, :will, :fate ]

@@ -44,10 +44,26 @@
       <div>
         <p class="block text-stone-700 text-xs tracking-widest uppercase mb-2"
            style="font-family: 'Cinzel', serif; font-size: 0.65rem;">Experiencia</p>
-        <div class="w-full py-2.5 px-4 bg-stone-200/40 border border-stone-200/70 rounded text-stone-600 cursor-not-allowed"
-             style="font-family: 'Crimson Text', serif;">
-          <%= member.experience %>
-        </div>
+        <% if member.new_record? %>
+          <div class="w-full py-2.5 px-4 bg-stone-200/40 border border-stone-200/70 rounded text-stone-600 cursor-not-allowed"
+               style="font-family: 'Crimson Text', serif;">
+            <%= member.experience %>
+          </div>
+        <% else %>
+          <div class="flex items-stretch gap-2">
+            <button type="button" onclick="adjustExperience(-1)"
+                    class="shrink-0 w-10 flex items-center justify-center bg-white/90 border border-stone-300 rounded text-amber-700 text-lg leading-none hover:bg-amber-100/60 hover:border-amber-500 transition-colors"
+                    aria-label="Restar experiencia">−</button>
+            <%= form.number_field :experience,
+                id: "warband_member_experience",
+                min: 0, step: 1,
+                class: "w-full text-center py-2.5 px-4 bg-white/90 border border-stone-300 rounded text-stone-800 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 transition-colors",
+                style: "font-family: 'Crimson Text', serif;" %>
+            <button type="button" onclick="adjustExperience(1)"
+                    class="shrink-0 w-10 flex items-center justify-center bg-white/90 border border-stone-300 rounded text-amber-700 text-lg leading-none hover:bg-amber-100/60 hover:border-amber-500 transition-colors"
+                    aria-label="Sumar experiencia">+</button>
+          </div>
+        <% end %>
       </div>
 
       <div>
@@ -84,6 +100,18 @@
             min: 0, required: true %>
       </div>
     </div>
+
+    <% if member.persisted? %>
+      <div class="mt-5 flex items-center justify-between rounded border border-emerald-300/60 bg-emerald-100/50 px-4 py-3"
+           data-gear-cost="<%= member.gear_cost %>">
+        <span class="text-stone-700 text-xs tracking-widest uppercase" style="font-family: 'Cinzel', serif; font-size: 0.65rem;">
+          Ranking total
+        </span>
+        <span id="member_total_ranking" class="text-emerald-700 text-lg font-semibold" style="font-family: 'Cinzel', serif;">
+          <%= member.total_ranking %>
+        </span>
+      </div>
+    <% end %>
   </div>
 
   <!-- Combat Stats -->
@@ -152,3 +180,40 @@
         style: "font-family: 'Cinzel', serif; font-size: 0.75rem;" %>
   </div>
 <% end %>
+
+<script>
+  function adjustExperience(delta) {
+    var input = document.getElementById('warband_member_experience');
+    if (!input) return;
+    var value = parseInt(input.value, 10);
+    if (isNaN(value)) value = 0;
+    value += delta;
+    if (value < 0) value = 0;
+    input.value = value;
+  }
+
+  (function() {
+    var label = document.getElementById('member_total_ranking');
+    if (!label) return;
+
+    function intVal(id) {
+      var el = document.getElementById(id);
+      var n = el ? parseInt(el.value, 10) : 0;
+      return isNaN(n) ? 0 : n;
+    }
+
+    function updateTotalRanking() {
+      var gearCost = parseInt(label.parentElement.dataset.gearCost, 10) || 0;
+      var ranking = intVal('warband_member_ranking');
+      var heroic = (intVal('warband_member_might') + intVal('warband_member_will') + intVal('warband_member_fate')) * 5;
+      label.textContent = ranking + gearCost + heroic;
+    }
+
+    ['warband_member_ranking', 'warband_member_might', 'warband_member_will', 'warband_member_fate'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', updateTotalRanking);
+    });
+
+    updateTotalRanking();
+  })();
+</script>

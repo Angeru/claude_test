@@ -38,12 +38,12 @@
       document.querySelectorAll('.mc-panel-' + memberId).forEach(function(p) { p.classList.add('hidden'); });
       document.getElementById('mc-panel-' + name + '-' + memberId).classList.remove('hidden');
       document.querySelectorAll('.mc-tab-btn-' + memberId).forEach(function(b) {
-        b.classList.remove('text-emerald-400/80', 'border-emerald-600/60', 'text-purple-400/80', 'border-purple-600/60');
+        b.classList.remove('text-emerald-700', 'border-emerald-600/60', 'text-purple-700', 'border-purple-600/60');
         b.classList.add('text-stone-600', 'border-transparent');
       });
       var btn = document.getElementById('mc-tab-btn-' + name + '-' + memberId);
       btn.classList.remove('text-stone-600', 'border-transparent');
-      var activeColor = name === 'skills' ? ['text-purple-400/80', 'border-purple-600/60'] : ['text-emerald-400/80', 'border-emerald-600/60'];
+      var activeColor = name === 'skills' ? ['text-purple-700', 'border-purple-600/60'] : ['text-emerald-700', 'border-emerald-600/60'];
       btn.classList.add(activeColor[0], activeColor[1]);
     }
   </script>

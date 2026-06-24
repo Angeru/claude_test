@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   # Session timeout configuration
-  SESSION_TIMEOUT = 15.minutes
+  SESSION_TIMEOUT = 1.hour
 
   # Check session timeout before processing any action
   before_action :check_session_timeout
