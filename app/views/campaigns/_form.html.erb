@@ -11,24 +11,24 @@
   <% end %>
 
   <div>
-    <%= form.label :name, "Nombre de la Campana", class: "block text-stone-700 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+    <%= form.label :name, "Nombre de la Campana", class: "block text-stone-900 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
     <%= form.text_field :name, class: "w-full bg-white border border-amber-300/60 rounded py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500", style: "font-family: 'Crimson Text', serif;", placeholder: "Ej: Campana de Verano 2026", required: true %>
     <p class="text-xs text-stone-500 mt-1" style="font-family: 'Crimson Text', serif;">Minimo 3 caracteres</p>
   </div>
 
   <div>
-    <%= form.label :description, "Descripcion", class: "block text-stone-700 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+    <%= form.label :description, "Descripcion", class: "block text-stone-900 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
     <%= form.text_area :description, rows: 6, class: "w-full bg-white border border-amber-300/60 rounded py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500", style: "font-family: 'Crimson Text', serif;", placeholder: "Describe tu campana, sus objetivos, reglas especiales, etc.", required: true %>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
-      <%= form.label :start_date, "Fecha de Inicio (Opcional)", class: "block text-stone-700 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+      <%= form.label :start_date, "Fecha de Inicio (Opcional)", class: "block text-stone-900 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
       <%= form.datetime_local_field :start_date, class: "w-full bg-white border border-amber-300/60 rounded py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500", style: "font-family: 'Crimson Text', serif;" %>
     </div>
 
     <div>
-      <%= form.label :end_date, "Fecha de Fin (Opcional)", class: "block text-stone-700 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
+      <%= form.label :end_date, "Fecha de Fin (Opcional)", class: "block text-stone-900 text-sm mb-2 tracking-wider uppercase", style: "font-family: 'Cinzel', serif; font-size: 0.7rem;" %>
       <%= form.datetime_local_field :end_date, class: "w-full bg-white border border-amber-300/60 rounded py-2 px-3 text-stone-700 leading-tight focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500", style: "font-family: 'Crimson Text', serif;" %>
     </div>
   </div>

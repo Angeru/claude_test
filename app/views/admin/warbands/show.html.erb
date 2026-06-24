@@ -14,17 +14,17 @@
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">ID</label>
+            <label class="block text-sm font-medium text-stone-900 mb-1">ID</label>
             <p class="text-gray-900"><%= @warband.id %></p>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">Nombre</label>
+            <label class="block text-sm font-medium text-stone-900 mb-1">Nombre</label>
             <p class="text-gray-900 font-semibold"><%= @warband.name %></p>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">Usuario</label>
+            <label class="block text-sm font-medium text-stone-900 mb-1">Usuario</label>
             <p class="text-gray-900">
               <%= link_to @warband.user.name, admin_user_path(@warband.user), class: "text-blue-600 hover:text-blue-900" %>
               <span class="text-gray-500 text-sm">(<%= @warband.user.email %>)</span>
@@ -32,7 +32,7 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">Estado</label>
+            <label class="block text-sm font-medium text-stone-900 mb-1">Estado</label>
             <% if @warband.available? %>
               <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full bg-green-100 text-green-800">Disponible</span>
             <% else %>
@@ -89,12 +89,12 @@
 
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">Fecha de Creación</label>
+            <label class="block text-sm font-medium text-stone-900 mb-1">Fecha de Creación</label>
             <p class="text-gray-900"><%= l(@warband.created_at, format: :long) %></p>
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-600 mb-1">Última Actualización</label>
+            <label class="block text-sm font-medium text-stone-900 mb-1">Última Actualización</label>
             <p class="text-gray-900"><%= l(@warband.updated_at, format: :long) %></p>
           </div>
         </div>

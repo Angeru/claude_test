@@ -40,7 +40,7 @@
 
     <!-- Wounds Tracker -->
     <div class="text-center mb-4">
-      <p class="text-xs text-stone-700/60 tracking-wider uppercase mb-2" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Heridas</p>
+      <p class="text-xs text-stone-800 tracking-wider uppercase mb-2" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Heridas</p>
       <div class="flex items-center justify-center gap-4">
         <% if @battle_roster.active? %>
           <%= button_to wound_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
@@ -122,7 +122,7 @@
 
     <!-- Battle Ticks -->
     <div class="mt-4 pt-4 border-t border-stone-200/80">
-      <p class="text-xs text-stone-700/60 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Logros</p>
+      <p class="text-xs text-stone-800 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Logros</p>
       <div class="space-y-1">
         <% ticks = [["wounded_enemy", "Hirió a un enemigo"]]
         ticks << ["fate_protected", "Evitó herida con Fate"] if unit.warband_member.fate > 0
@@ -163,7 +163,7 @@
     <% if !@battle_roster.active? %>
       <!-- Resultado Final (solo lectura) -->
       <div class="mt-4 pt-4 border-t border-stone-200/80">
-        <p class="text-xs text-stone-700/60 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Fin de Batalla</p>
+        <p class="text-xs text-stone-800 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Fin de Batalla</p>
         <div class="space-y-1">
           <div class="w-full flex items-center gap-2 px-2 py-1.5 rounded border <%= unit.on_objective ? 'bg-amber-100/70 border-amber-700/50 text-amber-600' : 'bg-stone-900/50 border-stone-200/70 text-stone-500' %>">
             <span class="flex-shrink-0 w-4 h-4 rounded border-2 flex items-center justify-center <%= unit.on_objective ? 'border-amber-500 bg-amber-600/40' : 'border-stone-600' %>">
@@ -216,7 +216,7 @@
 
     <!-- Bajas -->
     <div class="mt-4 pt-4 border-t border-stone-200/80">
-      <p class="text-xs text-stone-700/60 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Heroes o monstruos eliminados</p>
+      <p class="text-xs text-stone-800 tracking-wider uppercase mb-2 text-center" style="font-family: 'Cinzel', serif; font-size: 0.6rem;">Heroes o monstruos eliminados</p>
       <div class="flex items-center justify-center gap-3">
         <% if @battle_roster.active? %>
           <%= button_to unkill_campaign_campaign_round_matchup_battle_roster_battle_roster_unit_path(
